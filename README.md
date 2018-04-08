@@ -1,3 +1,6 @@
+Sebastian Lindmark
+Andreas Järvelä
+
 Functional requirements
 
 
@@ -11,3 +14,4 @@ MongoDB will be the main database of the project, storing user credentials, user
 Flask will be used to create the server API for communication between client and database.
 OAuth 2.0 will be used together with Google API for login, perhaps even Auth0.
 Sass will be used to extend CSS and hopefully contribute with some magic.
+
