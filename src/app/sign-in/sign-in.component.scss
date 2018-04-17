@@ -1,0 +1,61 @@
+$light-color: #9FDDE9;
+$main-color: #6CA6B1;
+$dark-color: #234B52;
+
+#sign-in-container {
+    max-width: 330px;
+    padding-bottom: 50px;
+    vertical-align: middle;
+    background-color: white;
+    margin-top: 20px;
+    border: 1px solid #d3d3d3;
+}
+
+.custom-button {
+    border: none;
+    border-radius: 0px !important;
+    padding: 5px !important;
+    margin-top: 20px;
+    background-color: $main-color;
+}
+
+.custom-input {
+    border-radius: 0px;
+    margin-bottom: 5px;
+    box-shadow: none;
+}
+
+.custom-input:focus {
+    outline: none !important;
+    border:1px solid $main-color;
+    box-shadow: 0 0 1px $main-color;
+}
+
+.form-signin {
+    margin-top: 10px;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover  { 
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: $main-color;
+    color: $main-color;
+}
+
+.nav-tabs>li>a {
+    color: $main-color;
+    border-radius: 0;    
+}
+
+.nav-tabs>li>a:hover {
+    background-color: transparent !important;
+    border-left-color: transparent !important;
+    border-top-color: transparent!important;
+    border-right-color: transparent !important;
+    border-bottom: 1px solid $light-color;
+}
+
+p {
+    font-weight: bold;
+}

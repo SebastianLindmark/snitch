@@ -1,4 +1,5 @@
 $general-color: #333;
+$navbar-height: 50px;
 
 p {
     color: white;
@@ -6,7 +7,12 @@ p {
 
 .custom-navbar {
     background-color: $general-color;
-    height: 50px;
+    height: $navbar-height;
+    line-height: $navbar-height;
     width: 100%;
+    p {
+        color: white;
+        margin-left: 20px;
+    }
 }
 
