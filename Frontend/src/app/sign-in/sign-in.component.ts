@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../_services/authentication.service'
+import { User } from '../_models/user';
+import { CurrentUserService } from '../_services/current-user.service';
 
 
 @Component({
@@ -14,7 +16,7 @@ export class SignInComponent implements OnInit {
   public password = "";
   public passwordAgain = "";
 
-  constructor(private authentication : AuthenticationService) { }
+  constructor(private authentication : AuthenticationService, private currentUser : CurrentUserService) { }
 
   displaySignIn = true;
 
@@ -32,7 +34,8 @@ export class SignInComponent implements OnInit {
 
   logIn(){
     this.authentication.login(this.username,this.password).subscribe(data => {
-      console.log("Successfully logged in user");
+      this.currentUser.registerState().subscribe(user => {console.log("Received logged in user " + user.username)});
+      this.currentUser.setUser(data);
     },
   
     error => {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CurrentUserService } from '../_services/current-user.service';
 
 @Component({
   selector: 'app-navigation',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private currentUser : CurrentUserService) { }
 
   ngOnInit() {
+
+    this.currentUser.registerState().subscribe(user => {});
+
   }
 
 }

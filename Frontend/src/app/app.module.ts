@@ -9,6 +9,8 @@ import { GoogleSignInComponent } from './google-sign-in/google-sign-in.component
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AuthenticationService } from './_services/authentication.service';
 import { HttpClient,HttpClientModule } from '@angular/common/http';
+import { CurrentUserService } from './_services/current-user.service';
+import { UserObserverExampleComponent } from './user-observer-example/user-observer-example.component';
 
 
 @NgModule({
@@ -17,6 +19,7 @@ import { HttpClient,HttpClientModule } from '@angular/common/http';
     NavigationComponent,
     GoogleSignInComponent,
     SignInComponent,
+    UserObserverExampleComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,7 @@ import { HttpClient,HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthenticationService,HttpClient],
+  providers: [AuthenticationService,HttpClient, CurrentUserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
