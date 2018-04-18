@@ -17,8 +17,12 @@ module.exports = {
     },
 
 
-    exists_user : function(username){
-        
+    exists_user : function(username,callback){
+        var query = `SELECT * FROM user WHERE username = "${username}"`;
+        db_conn.get(query,function(response){
+            var exists = response !== undefined;
+            callback(exists);
+        })
     },
 
 }

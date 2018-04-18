@@ -2,9 +2,9 @@ const sqlite3 = require('sqlite3');
 
 
 var db = new sqlite3.Database('./db.sqlite3');
-//var sqliteJson = require('sqlite-json');
+var sqliteJson = require('sqlite-json');
 //console.log(sqliteJson);
-//var exporter = sqliteJson('./db.sqlite3');
+var exporter = sqliteJson('./db.sqlite3');
 
 
 module.exports = {
@@ -14,11 +14,14 @@ module.exports = {
     },
 
     get : function(query,callback){
-        exporter.json('select * FROM user', function (err, json) {
-        callback(json);
+        db.get(query, (err,row) =>{
+            console.log("result");            
+            callback(row);
         });
+        
     },
 
+    
 
     drop_tables : function(){
         console.log("Dropping tables");
