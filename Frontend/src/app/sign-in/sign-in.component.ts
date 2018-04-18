@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {AuthenticationService} from '../_services/authentication.service'
 import { User } from '../_models/user';
 import { CurrentUserService } from '../_services/current-user.service';
@@ -11,6 +11,16 @@ import { CurrentUserService } from '../_services/current-user.service';
 })
 export class SignInComponent implements OnInit {
 
+  private displaySignIn = false;
+
+  @Input() 
+  set showLogIn(showLogIn: boolean) {
+    this.displaySignIn = showLogIn;
+  }
+
+  @Input() close: boolean;
+  @Output() closeEvent = new EventEmitter<boolean>();
+
   public username = "";
   public email = "";
   public password = "";
@@ -18,7 +28,7 @@ export class SignInComponent implements OnInit {
 
   constructor(private authentication : AuthenticationService, private currentUser : CurrentUserService) { }
 
-  displaySignIn = true;
+
 
   public activePage = "active";
 
@@ -30,11 +40,13 @@ export class SignInComponent implements OnInit {
     this.displaySignIn = true;
   }
 
-  
+  closeThisComponent(){
+    console.log("hello!");
+     this.closeEvent.emit(true);
+  }
 
   logIn(){
     this.authentication.login(this.username,this.password).subscribe(data => {
-      this.currentUser.registerState().subscribe(user => {console.log("Received logged in user " + user.username)});
       this.currentUser.setUser(data);
     },
   

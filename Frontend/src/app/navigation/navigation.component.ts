@@ -8,12 +8,22 @@ import { CurrentUserService } from '../_services/current-user.service';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor(private currentUser : CurrentUserService) { }
+  public pressedLogIn = true;
+  public activateSignInComponent = false;
+  constructor(private currentUser :CurrentUserService) { }
 
   ngOnInit() {
-
     this.currentUser.registerState().subscribe(user => {});
+  }
 
+  clickedLogIn(){
+    this.pressedLogIn = true;
+    this.activateSignInComponent = true;
+  }
+
+  clickedSignUp(){
+    this.pressedLogIn = false;
+    this.activateSignInComponent = true;
   }
 
 }
