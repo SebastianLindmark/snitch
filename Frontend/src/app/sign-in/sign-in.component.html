@@ -11,7 +11,7 @@
     <input [(ngModel)]="username" type="text" id="login-username" class="form-control custom-input" required="true" autofocus="">
     <p class="mb-3 font-weight-normal text-left">Password</p>
     <input [(ngModel)]="password" type="password" id="login-passoword" class="form-control custom-input" required="true">
-    <button (click)="logIn(emailInput.value)" class="btn btn-primary btn-block custom-button">Log In</button>
+    <button (click)="logIn()" class="btn btn-primary btn-block custom-button">Log In</button>
   </div>
 
   <ng-template #signUpBlock>
@@ -24,7 +24,7 @@
         <input [(ngModel)]="password" type="password" id="login-passoword" class="form-control custom-input" required="true">
         <p class="mb-3 font-weight-normal text-left">Confirm Password</p>
         <input [(ngModel)]="passwordAgain" type="password" id="login-passoword" class="form-control custom-input" required="true">
-        <button (click)="logIn(emailInput.value)" class="btn btn-primary btn-block custom-button">Sign Up</button>
+        <button (click)="logIn()" class="btn btn-primary btn-block custom-button">Sign Up</button>
 
     </div>
   </ng-template>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthenticationService} from '../_services/authentication.service'
+
 
 @Component({
   selector: 'app-sign-in',
@@ -12,6 +14,8 @@ export class SignInComponent implements OnInit {
   public password = "";
   public passwordAgain = "";
 
+  constructor(private authentication : AuthenticationService) { }
+
   displaySignIn = true;
 
   public activePage = "active";
@@ -24,10 +28,18 @@ export class SignInComponent implements OnInit {
     this.displaySignIn = true;
   }
 
-  constructor() { }
+  
 
-  logIn(value){
+  logIn(){
+    this.authentication.login(this.username,this.password).subscribe(data => {
+      console.log("Successfully logged in user");
+    },
+  
+    error => {
+      console.log("Could not retreive user");
+    }
 
+  );
   }
 
   ngOnInit() {
