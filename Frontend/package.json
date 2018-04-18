@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
     "@ng-bootstrap/ng-bootstrap": "^1.1.1",
+    "@uirouter/angular": "^1.0.1",
     "bootstrap-css-only": "^4.1.0",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
