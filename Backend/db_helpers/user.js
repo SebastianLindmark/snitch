@@ -16,6 +16,7 @@ module.exports = {
         
     },
 
+    
 
     exists_user : function(username,callback){
         var query = `SELECT * FROM user WHERE username = "${username}"`;

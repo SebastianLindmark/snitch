@@ -1,11 +1,17 @@
 const express = require('express');
 var bodyParser = require('body-parser')
+var cors = require('cors')
 const app = express();
+
+app.use(cors());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 
 
 var database_helper = require("./database_helper");
 database_helper.reset_database();
-
 
 var hostPort = 8000;
 
@@ -25,9 +31,28 @@ app.route('/api/user/sign_up').get((req, res) => {
     }else{
         res.statusCode = 404;
         res.send("User already exists");
-    }
-    
+    } 
 });
+
+app.route('/api/user/login').post((req, res) => {    
+    console.log(req.body);
+	var username = req.body.username;
+    var password = req.body.password;	
+    
+    function existsUser(exists){
+        if(exists){
+            database_helper.user.get_user(username, function(response) {
+                res.send(response);
+            });
+        }else{
+            res.statusCode = 404;
+            res.send("User does not exist");
+        }
+    }
+
+    database_helper.user.exists_user(username,existsUser);
+});
+
 
 app.route('/api/user/get').post((req, res) => {
         var username = req.body.username;
