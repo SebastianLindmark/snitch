@@ -9,6 +9,8 @@ export class NavigationComponent implements OnInit {
 
   public pressedLogIn = true;
   public activateSignInComponent = false;
+  public closeWindow = false;
+  
   constructor() { }
 
   ngOnInit() {

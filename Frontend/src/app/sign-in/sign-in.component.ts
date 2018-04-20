@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {AuthenticationService} from '../_services/authentication.service'
-
+import {UIRouterModule} from "@uirouter/angular";
 
 @Component({
   selector: 'app-sign-in',
