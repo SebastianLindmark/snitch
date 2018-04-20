@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {AuthenticationService} from '../_services/authentication.service'
 import {UIRouterModule} from "@uirouter/angular";
+import { User } from '../_models/user';
+import { CurrentUserService } from '../_services/current-user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -24,7 +26,7 @@ export class SignInComponent implements OnInit {
   public password = "";
   public passwordAgain = "";
 
-  constructor(private authentication : AuthenticationService) { }
+  constructor(private authentication : AuthenticationService, private currentUser : CurrentUserService) { }
 
 
 
@@ -45,7 +47,7 @@ export class SignInComponent implements OnInit {
 
   logIn(){
     this.authentication.login(this.username,this.password).subscribe(data => {
-      console.log("Successfully logged in user");
+      this.currentUser.setUser(data);
     },
   
     error => {

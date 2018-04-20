@@ -13,14 +13,10 @@ export class AuthenticationService {
 
   login(username : string, password : string){
       var request = this.http.post<User>(this.BASE_URL + '/api/user/login',{username: username, password : password});
-      return request.map((res : User) => {
-        console.log("Received response");
-        console.log(res);   
-
+      return request.map((res : User) => {  
         return res;
       }
     );
   }
-
 
 }

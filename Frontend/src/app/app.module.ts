@@ -14,7 +14,8 @@ import { HttpClient,HttpClientModule } from '@angular/common/http';
 import {UIRouterModule} from "@uirouter/angular";
 import { HelpComponent } from './help/help.component';
 import { FooterComponent } from './footer/footer.component';
-
+import { CurrentUserService } from './_services/current-user.service';
+import { UserObserverExampleComponent } from './user-observer-example/user-observer-example.component';
 
 let browseState = { name: 'browse', url: '/browse',  component: BrowseComponent };
 let helpState = { name: 'help', url: '/help',  component: HelpComponent };
@@ -28,7 +29,8 @@ let helpState = { name: 'help', url: '/help',  component: HelpComponent };
     SignInComponent,
     BrowseComponent,
     HelpComponent,
-    FooterComponent
+    FooterComponent,
+    UserObserverExampleComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,7 @@ let helpState = { name: 'help', url: '/help',  component: HelpComponent };
     HttpClientModule,
     UIRouterModule.forRoot({states : [browseState, helpState], useHash: true})
   ],
-  providers: [AuthenticationService,HttpClient],
+  providers: [AuthenticationService,HttpClient, CurrentUserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
