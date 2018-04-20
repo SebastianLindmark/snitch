@@ -1,18 +1,28 @@
-$general-color: #333;
-$navbar-height: 50px;
+$light-color: #458490;
+$main-color: #6CA6B1;
+$dark-color: #2A6D7A;
+
+:host {
+    display: block;
+
+}
 
 p {
     color: white;
 }
 
+a {
+    color: white !important;
+}
+
 .custom-navbar {
-    background-color: $general-color;
-    height: $navbar-height;
-    line-height: $navbar-height;
-    width: 100%;
-    p {
-        color: white;
-        margin-left: 20px;
-    }
+    margin: 0;
+    background-color: $dark-color;
+    border-radius: 0;
+}
+
+.nav-link {
+    margin-right: 20px;
+    font-size: 14px;
 }
 
