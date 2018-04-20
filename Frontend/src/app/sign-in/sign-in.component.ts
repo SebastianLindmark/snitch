@@ -19,7 +19,7 @@ export class SignInComponent implements OnInit {
   }
 
   @Input() close: boolean;
-  @Output() closeEvent = new EventEmitter<boolean>();
+  @Output() closeEvent: any = new EventEmitter<boolean>();
 
   public username = "";
   public email = "";
@@ -42,7 +42,7 @@ export class SignInComponent implements OnInit {
 
   closeThisComponent(){
     console.log("hello!");
-     this.closeEvent.emit(true);
+    this.closeEvent.emit(true);
   }
 
   logIn(){
