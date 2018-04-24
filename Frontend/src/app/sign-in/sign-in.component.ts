@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input,NgZone, ViewChild,ElementRef, Output, EventEmitter } from '@angular/core';
 import {AuthenticationService} from '../_services/authentication.service'
 import {UIRouterModule} from "@uirouter/angular";
 import { User } from '../_models/user';
@@ -27,7 +27,7 @@ export class SignInComponent implements OnInit {
   public password = "";
   public passwordAgain = "";
 
-  constructor(private authentication : AuthenticationService, private currentUser : CurrentUserService) { }
+  constructor(private zone: NgZone, private authentication : AuthenticationService, private currentUser : CurrentUserService) { }
 
 
   public activePage = "active";
@@ -41,6 +41,7 @@ export class SignInComponent implements OnInit {
   }
 
   public closeThisComponent(){
+    console.log("Running emit");
     this.closeEvent.emit(true);
   }
 
@@ -99,7 +100,13 @@ export class SignInComponent implements OnInit {
         console.log('Name: ' + profile.getName());
         console.log('Image URL: ' + profile.getImageUrl());
         console.log('Email: ' + profile.getEmail());
-        //YOUR CODE HERE
+        this.zone.run(() => {
+          var user = new User(-1337,profile.getId(),profile.getEmail())
+          this.currentUser.setUser(user);
+          this.closeThisComponent();
+        })
+        
+        
       }, (error) => {
         alert(JSON.stringify(error, undefined, 2));
       });
