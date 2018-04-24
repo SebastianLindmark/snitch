@@ -19,4 +19,13 @@ export class AuthenticationService {
     );
   }
 
+  register(username : string, email : string, password : string){
+    var request = this.http.post<any>(this.BASE_URL + '/api/user/signup',{username: username, email : email, password : password});
+    return request.map((res : any) => {  
+      return res;
+    }
+  );
+}
+
+
 }

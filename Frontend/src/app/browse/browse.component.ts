@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CurrentUserService } from '../_services/current-user.service';
 
 @Component({
   selector: 'app-browse',
@@ -7,7 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BrowseComponent implements OnInit {
 
-  constructor() { }
+  public text = "Please sign in";
+
+  constructor(private currentUser : CurrentUserService) {
+    this.currentUser.registerState().subscribe((response : any) => {
+      if(response.logged_in){
+        this.text = "Welcome " + response.user.username;
+      }        
+    });
+
+   }
 
   ngOnInit() {
   }

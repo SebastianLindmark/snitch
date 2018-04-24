@@ -16,7 +16,7 @@
 
   <div *ngIf="displaySignIn; else signUpBlock" class="form-signin">
 
-    <form (ngSubmit)="logIn()" #userForm="ngForm">
+    <form (ngSubmit)="logIn()" #loginForm="ngForm">
 
       <p class="font-weight text-left">Username</p>
       <input [(ngModel)]="username" type="text" id="login-username" name="username" class="form-control custom-input" required
@@ -34,8 +34,7 @@
         <div [hidden]="!pwd.hasError('minlength')">Password too short</div>
       </div>
 
-
-      <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-primary btn-block custom-button">Log In</button>
+      <button type="submit" [disabled]="!loginForm.form.valid" class="btn btn-primary btn-block custom-button">Log In</button>
     </form>
 
 
@@ -43,17 +42,25 @@
   </div>
 
   <ng-template #signUpBlock>
-    <div class="form-signin">
-      <p class="text-left">Username</p>
-      <input [(ngModel)]="username" type="text" id="login-username" class="form-control custom-input" required="true" autofocus="">
-      <p class="text-left">Email</p>
-      <input [(ngModel)]="email" type="password" id="login-passoword" class="form-control custom-input" required="true">
-      <p class="text-left">Password</p>
-      <input [(ngModel)]="password" type="password" id="login-passoword" class="form-control custom-input" required="true">
-      <p class="text-left">Confirm Password</p>
-      <input [(ngModel)]="passwordAgain" type="password" id="login-passoword" class="form-control custom-input" required="true">
+      <form (ngSubmit)="register()" #signupForm="ngForm">
+        <div class="form-signin">
+          <p class="text-left">Username</p>
+          <input [(ngModel)]="username" type="text" id="login-username" name="signup-username" class="form-control custom-input" required="true" autofocus="">
+          <p class="text-left">Email</p>
+          <input [(ngModel)]="email" type="email" id="signup-email" name="signup-email" class="form-control custom-input" email required #signupemail="ngModel">
+          <div [hidden] ="signupemail.valid ||signupemail.pristine" class="alert alert-danger"> Invalid email format</div>
+          <p class="text-left">Password</p>
+          <input [(ngModel)]="password" type="password" name="signup-password" id="signup-password" class="form-control custom-input" minlength="8" #signuppwd="ngModel" required>
+          <div [hidden]="!signuppwd.hasError('minlength')" class="alert alert-danger">Password too short</div>
+          
+          <p class="text-left">Confirm Password</p>
+          <input [(ngModel)]="passwordAgain" type="password" name="signup-password-again" id="signup-password-again" class="form-control custom-input"  #signuppwdrepeat="ngModel" required>
 
+          <div [hidden] ="passwordMatches()" class="alert alert-danger"> Passwords do not match</div>
+        </div>
 
-    </div>
+        <button type="submit" [disabled]="!signupForm.form.valid || !passwordMatches()" class="btn btn-primary btn-block custom-button">Sign Up</button>
+
+      </form>
   </ng-template>
 </div>

@@ -44,19 +44,38 @@ export class SignInComponent implements OnInit {
     this.closeEvent.emit(true);
   }
 
-  logIn(){
-    this.authentication.login(this.username,this.password).subscribe(data => {
-      this.currentUser.setUser(data);
-    },
-  
-    error => {
-      console.log("Could not retreive user");
-    }
+  passwordMatches(){
+    return this.password == this.passwordAgain
+  }
 
+  logIn(){
+      this.authentication.login(this.username,this.password).subscribe(data => {
+        this.currentUser.setUser(data);
+        this.closeEvent.emit(true);
+      },
+    
+      error => {
+        console.log("not retreive user");
+      }
+    );
+  }
+
+
+  register(){
+
+    this.authentication.register(this.username,this.email,this.password).subscribe(data => {
+      this.logIn();
+    },
+
+    error => {
+      console.log("Could not register user");
+      console.log(error);
+    }
   );
   }
 
 
+<<<<<<< HEAD
   public auth2: any;
   public googleInit() {
     gapi.load('auth2', () => {
@@ -89,6 +108,8 @@ export class SignInComponent implements OnInit {
   }
 
 
+=======
+>>>>>>> 71f808a70821bef5e4a2f0ef01f68d494c193e79
   ngOnInit() {
     this.googleInit();
   }
