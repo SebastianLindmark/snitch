@@ -50,27 +50,27 @@ export class SignInComponent implements OnInit {
   }
 
   logIn(){
-    this.authentication.login(this.username,this.password).subscribe(data => {
-      this.currentUser.setUser(data);
-      this.closeEvent.emit(true);
-    },
-  
-    error => {
-      console.log("not retreive user");
-    }
-  );
+      this.authentication.login(this.username,this.password).subscribe(data => {
+        this.currentUser.setUser(data);
+        this.closeEvent.emit(true);
+      },
+    
+      error => {
+        console.log("not retreive user");
+      }
+    );
   }
 
 
   register(){
 
     this.authentication.register(this.username,this.email,this.password).subscribe(data => {
-      this.currentUser.setUser(data);
-      this.closeEvent.emit(true);
+      this.logIn();
     },
-  
+
     error => {
-      console.log("Could not retreive user");
+      console.log("Could not register user");
+      console.log(error);
     }
   );
   }
