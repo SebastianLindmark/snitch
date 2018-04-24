@@ -1,33 +1,58 @@
-<div style="width: 100%; height: 100%; background-color: black; z-index: 9998; position: absolute; top:0; left: 0; opacity: 0.5;" (click)="closeThisComponent()">
+<div style="width: 100%; height: 100%; background-color: black; z-index: 9998; position: absolute; top:0; left: 0; opacity: 0.5;"
+  (click)="closeThisComponent()">
 
 </div>
 
 <div id="sign-in-container" class="container text-center">
-    <p id="close-button"class="glyphicon glyphicon-remove" (click)="closeThisComponent()"></p>
+  <p id="close-button" class="glyphicon glyphicon-remove" (click)="closeThisComponent()"></p>
   <ul class="nav nav-tabs">
-    <li role="presentation" [class.active]="displaySignIn"><a class="custom-tab-button"(click)="signInTab()">Log In</a></li>
-    <li role="presentation" [class.active]="!displaySignIn"><a class="custom-tab-button" (click)="signUpTab()">Sign Up</a></li>
+    <li role="presentation" [class.active]="displaySignIn">
+      <a class="custom-tab-button" (click)="signInTab()">Log In</a>
+    </li>
+    <li role="presentation" [class.active]="!displaySignIn">
+      <a class="custom-tab-button" (click)="signUpTab()">Sign Up</a>
+    </li>
   </ul>
 
   <div *ngIf="displaySignIn; else signUpBlock" class="form-signin">
-    <p class="font-weight text-left">Username</p>
-    <input [(ngModel)]="username" type="text" id="login-username" class="form-control custom-input" required="true" autofocus="">
-    <p class="text-left">Password</p>
-    <input [(ngModel)]="password" type="password" id="login-passoword" class="form-control custom-input" required="true">
-    <button (click)="logIn()" class="btn btn-primary btn-block custom-button">Log In</button>
+
+    <form (ngSubmit)="logIn()" #userForm="ngForm">
+
+      <p class="font-weight text-left">Username</p>
+      <input [(ngModel)]="username" type="text" id="login-username" name="username" class="form-control custom-input" required
+        autofocus pattern="[a-zA-Z][a-zA-Z ]+" #name="ngModel">
+
+      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+        <div [hidden]="!name.hasError('required')">Name is required</div>
+        <div [hidden]="!name.hasError('pattern')">No special characters allowed</div>
+      </div>
+
+      <p class="text-left">Password</p>
+      <input [(ngModel)]="password" type="password" id="login-password" name="password" class="form-control custom-input" required minlength="8" #pwd="ngModel">
+      <div [hidden]="pwd.valid || pwd.pristine" class="alert alert-danger">
+        <div [hidden]="!pwd.hasError('required')">Password is required</div>
+        <div [hidden]="!pwd.hasError('minlength')">Password too short</div>
+      </div>
+
+
+      <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-primary btn-block custom-button">Log In</button>
+    </form>
+
+
+
   </div>
 
   <ng-template #signUpBlock>
     <div class="form-signin">
-        <p class="text-left">Username</p>
-        <input [(ngModel)]="username" type="text" id="login-username" class="form-control custom-input" required="true" autofocus="">
-        <p class="text-left">Email</p>
-        <input [(ngModel)]="email" type="password" id="login-passoword" class="form-control custom-input" required="true">
-        <p class="text-left">Password</p>
-        <input [(ngModel)]="password" type="password" id="login-passoword" class="form-control custom-input" required="true">
-        <p class="text-left">Confirm Password</p>
-        <input [(ngModel)]="passwordAgain" type="password" id="login-passoword" class="form-control custom-input" required="true">
-        <button (click)="logIn()" class="btn btn-primary btn-block custom-button">Sign Up</button>
+      <p class="text-left">Username</p>
+      <input [(ngModel)]="username" type="text" id="login-username" class="form-control custom-input" required="true" autofocus="">
+      <p class="text-left">Email</p>
+      <input [(ngModel)]="email" type="password" id="login-passoword" class="form-control custom-input" required="true">
+      <p class="text-left">Password</p>
+      <input [(ngModel)]="password" type="password" id="login-passoword" class="form-control custom-input" required="true">
+      <p class="text-left">Confirm Password</p>
+      <input [(ngModel)]="passwordAgain" type="password" id="login-passoword" class="form-control custom-input" required="true">
+
 
     </div>
   </ng-template>
