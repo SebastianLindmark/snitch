@@ -25,12 +25,16 @@ export class SignInComponent implements OnInit {
   public email = "";
   public password = "";
   public passwordAgain = "";
+  public submitted = false;
 
   constructor(private authentication : AuthenticationService, private currentUser : CurrentUserService) { }
 
 
-
   public activePage = "active";
+
+  onSubmit(){
+    this.submitted = true;
+  }
 
   signUpTab(){
     this.displaySignIn = false;
