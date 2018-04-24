@@ -3,6 +3,24 @@ $light-color: #9FDDE9;
 $main-color: #6CA6B1;
 $dark-color: #2A6D7A;
 
+#googleBtn {
+    font-family: Roboto;
+    width: 200px;
+    height: 25px;
+    margin-top: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid lightblue;
+    cursor: pointer;
+}
+
+#googleBtn:hover{
+    background-color: lightblue;
+    box-shadow: 2px lightblue;
+}
+
 #sign-in-container {
     max-width: 330px;
     padding-bottom: 50px;
@@ -22,9 +40,10 @@ $dark-color: #2A6D7A;
 #close-button {
     color: $main-color;
     position: absolute;
-    right: 5px;
-    top: 5px;
-    font-size: 14px;
+    right: 10px;
+    font-family: 'FontAwesome';
+    top: 0;
+    font-size: 24px;
 }
 
 #close-button:hover {

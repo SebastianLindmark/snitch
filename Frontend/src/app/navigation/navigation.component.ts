@@ -15,6 +15,7 @@ export class NavigationComponent implements OnInit {
 
   constructor(private currentUser :CurrentUserService) { }
 
+
   ngOnInit() {
     this.currentUser.registerState().subscribe(user => {});
   }

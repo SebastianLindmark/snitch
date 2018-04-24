@@ -3,7 +3,8 @@
 </div>
 
 <div id="sign-in-container" class="container text-center">
-    <p id="close-button"class="glyphicon glyphicon-remove cursor-pointer" (click)="closeThisComponent()"></p>
+    <div id="googleBtn">Sign In With Google</div>
+    <p id="close-button"class="fas fa-window-close cursor-pointer" (click)="closeThisComponent()"></p>
   <ul class="nav nav-tabs">
     <li role="presentation" [class.active]="displaySignIn">
       <a class="custom-tab-button" (click)="signInTab()">Log In</a>

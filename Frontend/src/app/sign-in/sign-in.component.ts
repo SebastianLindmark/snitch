@@ -3,6 +3,7 @@ import {AuthenticationService} from '../_services/authentication.service'
 import {UIRouterModule} from "@uirouter/angular";
 import { User } from '../_models/user';
 import { CurrentUserService } from '../_services/current-user.service';
+declare const gapi: any;
 
 @Component({
   selector: 'app-sign-in',
@@ -19,22 +20,17 @@ export class SignInComponent implements OnInit {
   }
 
   @Input() close: boolean;
-  @Output() closeEvent: any = new EventEmitter<boolean>();
+  @Output() closeEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public username = "";
   public email = "";
   public password = "";
   public passwordAgain = "";
-  public submitted = false;
 
   constructor(private authentication : AuthenticationService, private currentUser : CurrentUserService) { }
 
 
   public activePage = "active";
-
-  onSubmit(){
-    this.submitted = true;
-  }
 
   signUpTab(){
     this.displaySignIn = false;
@@ -44,8 +40,7 @@ export class SignInComponent implements OnInit {
     this.displaySignIn = true;
   }
 
-  closeThisComponent(){
-    console.log("hello!");
+  public closeThisComponent(){
     this.closeEvent.emit(true);
   }
 
@@ -61,7 +56,43 @@ export class SignInComponent implements OnInit {
   );
   }
 
-  ngOnInit() {
+
+  public auth2: any;
+  public googleInit() {
+    gapi.load('auth2', () => {
+      this.auth2 = gapi.auth2.init({
+        client_id: '160715832214-50hk5tjj9355otgtqjb4lsjsfhgem2r5.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        scope: 'profile email'
+      });
+      this.attachSignin(document.getElementById('googleBtn'));
+    });
   }
+
+
+
+  public attachSignin(element) {
+    this.auth2.attachClickHandler(element, {},
+      (googleUser) => {
+
+        let profile = googleUser.getBasicProfile();
+        console.log('Token || ' + googleUser.getAuthResponse().id_token);
+        console.log('ID: ' + profile.getId());
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+        //YOUR CODE HERE
+      }, (error) => {
+        alert(JSON.stringify(error, undefined, 2));
+      });
+
+  }
+
+
+  ngOnInit() {
+    this.googleInit();
+  }
+
+
 
 }
