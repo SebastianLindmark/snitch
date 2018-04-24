@@ -19,7 +19,7 @@
 
       <p class="font-weight text-left">Username</p>
       <input [(ngModel)]="username" type="text" id="login-username" name="username" class="form-control custom-input" required
-        autofocus pattern="[a-zA-Z][a-zA-Z ]+" #name="ngModel">
+        autofocus pattern="[a-zA-Z]+" #name="ngModel">
 
       <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
         <div [hidden]="!name.hasError('required')">Name is required</div>
