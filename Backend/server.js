@@ -20,22 +20,25 @@ app.route('/').get((req, res) => {
 });
 
 
-app.route('/api/user/sign_up').get((req, res) => {    
+app.route('/api/user/signup').post((req, res) => {    
     var email = req.body.email;
 	var username = req.body.username;
     var password = req.body.password;	
     
-    if(!database_helper.user.exists_user(username)){
-        database_helper.user.insert_user(email,username,password);	
-        res.send("Successfully created user")
-    }else{
-        res.statusCode = 404;
-        res.send("User already exists");
-    } 
+    function existsUser(exists){
+        
+        if(!exists){
+            database_helper.user.insert_user(email,username,password);	
+            res.send("");
+        }else{
+            res.statusCode = 404;
+            res.send("User already exists");
+        }
+    }
+    database_helper.user.exists_user(username,existsUser);
 });
 
 app.route('/api/user/login').post((req, res) => {    
-    console.log(req.body);
 	var username = req.body.username;
     var password = req.body.password;	
     
