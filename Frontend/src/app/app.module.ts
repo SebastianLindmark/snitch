@@ -16,6 +16,7 @@ import { HelpComponent } from './help/help.component';
 import { FooterComponent } from './footer/footer.component';
 import { CurrentUserService } from './_services/current-user.service';
 import { UserObserverExampleComponent } from './user-observer-example/user-observer-example.component';
+import { RepeatValidatorDirective } from './repeat-validator.directive';
 
 let browseState = { name: 'browse', url: '/browse',  component: BrowseComponent };
 let helpState = { name: 'help', url: '/help',  component: HelpComponent };
@@ -30,7 +31,8 @@ let helpState = { name: 'help', url: '/help',  component: HelpComponent };
     BrowseComponent,
     HelpComponent,
     FooterComponent,
-    UserObserverExampleComponent
+    UserObserverExampleComponent,
+    RepeatValidatorDirective
   ],
   imports: [
     BrowserModule,

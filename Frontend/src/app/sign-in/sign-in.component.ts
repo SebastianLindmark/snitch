@@ -32,10 +32,6 @@ export class SignInComponent implements OnInit {
 
   public activePage = "active";
 
-  onSubmit(){
-    this.submitted = true;
-  }
-
   signUpTab(){
     this.displaySignIn = false;
   }
@@ -49,17 +45,36 @@ export class SignInComponent implements OnInit {
     this.closeEvent.emit(true);
   }
 
+  passwordMatches(){
+    return this.password == this.passwordAgain
+  }
+
   logIn(){
     this.authentication.login(this.username,this.password).subscribe(data => {
       this.currentUser.setUser(data);
+      this.closeEvent.emit(true);
+    },
+  
+    error => {
+      console.log("not retreive user");
+    }
+  );
+  }
+
+
+  register(){
+
+    this.authentication.register(this.username,this.email,this.password).subscribe(data => {
+      this.currentUser.setUser(data);
+      this.closeEvent.emit(true);
     },
   
     error => {
       console.log("Could not retreive user");
     }
-
   );
   }
+
 
   ngOnInit() {
   }
