@@ -24,8 +24,19 @@ $dark-color: #2A6D7A;
     position: absolute;
     right: 5px;
     top: 5px;
-    //margin-left: 98%;
-    //margin-top: 5px;
+    font-size: 14px;
+}
+
+#close-button:hover {
+    color: $light-color;
+}
+
+#close-button:active {
+    color: $main-color;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }
 
 .custom-tab-button{
