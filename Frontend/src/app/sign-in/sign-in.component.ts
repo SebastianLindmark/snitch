@@ -75,7 +75,6 @@ export class SignInComponent implements OnInit {
   }
 
 
-<<<<<<< HEAD
   public auth2: any;
   public googleInit() {
     gapi.load('auth2', () => {
@@ -108,8 +107,6 @@ export class SignInComponent implements OnInit {
   }
 
 
-=======
->>>>>>> 71f808a70821bef5e4a2f0ef01f68d494c193e79
   ngOnInit() {
     this.googleInit();
   }
