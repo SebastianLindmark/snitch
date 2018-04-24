@@ -28,6 +28,11 @@ $dark-color: #2A6D7A;
     //margin-top: 5px;
 }
 
+.custom-tab-button{
+    font-size : 13px;
+}
+
+
 .custom-button {
     border: none;
     border-radius: 0px !important;
@@ -77,6 +82,8 @@ $dark-color: #2A6D7A;
     border-bottom: 1px solid $light-color;
 }
 
+
 p {
     font-weight: bold;
+    font-size: 12px;
 }
