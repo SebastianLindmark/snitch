@@ -49,42 +49,50 @@ export class SignInComponent implements OnInit {
     return this.password == this.passwordAgain
   }
 
-  logIn(){
-      this.authentication.login(this.username,this.password).subscribe(data => {
-        this.currentUser.setUser(data);
-        this.closeThisComponent();
-      },
-    
-      error => {
-        console.log("not retreive user");
-      }
-    );
+
+  login(loginFunction){
+    loginFunction.subscribe(data => {
+      this.currentUser.setUser(data);
+      this.closeThisComponent();
+    },
+    error => {
+      console.log(error);
+      console.log("not retreive user");
+    }
+  );
+  }
+
+  google_login(username, googleID){
+      var loginFunction = this.authentication.loginGoogleAccount(username,googleID)
+      this.login(loginFunction);
+  }
+
+  custom_logIn(username,password){
+      var loginFunction = this.authentication.login(this.username,this.password);
+      this.login(loginFunction);
   }
 
 
   custom_register(username, email,password){
-    var registerFunction = this.authentication.registerCustomUser(username,email,password);
-    this.register(registerFunction);
-  }
-
-  google_register(username,email,profileID){
-    var registerFunction = this.authentication.registerGoogleUser(username,email,profileID);
-    this.register(registerFunction);
-  }
-
-
-  register(register_function){
-    register_function.subscribe(data => {
-      this.logIn();
+    var registerFunction = this.authentication.registerCustomUser(username,email,password).subscribe(data => {
+      this.custom_logIn(username,password);
     },
     error => {
       console.log("Could not register user");
       console.log(error);
-    }
-  )
+    });
   }
 
-
+  google_register(username,email,googleID){
+    var registerFunction = this.authentication.registerGoogleUser(username,email,googleID).subscribe(data => {
+      this.google_login(username,googleID);
+    },
+    error => {
+      console.log("Could not register user");
+      console.log(error);
+    });
+    
+  }
 
 
   public auth2: any;

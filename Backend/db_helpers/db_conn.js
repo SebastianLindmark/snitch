@@ -10,16 +10,16 @@ var exporter = sqliteJson('./db.sqlite3');
 module.exports = {
 
     insert : function(query, callback = null){
-        db.run(query, (err,row) =>{
+        db.run(query, function(err){
             if(callback) {
-                callback(this.lastId);
+                callback(this.lastID);
             }
         });
     },
 
     get : function(query,callback){
-        db.get(query, (err,row) =>{
-            console.log("result");            
+        db.get(query, function(err,row){
+
             callback(row);
         });
         

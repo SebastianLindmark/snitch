@@ -12,7 +12,15 @@ export class AuthenticationService {
   constructor(private http : HttpClient) { }
 
   login(username : string, password : string){
-      var request = this.http.post<User>(this.BASE_URL + '/api/user/login',{username: username, password : password});
+      var request = this.http.post<User>(this.BASE_URL + '/api/user/custom_login',{username: username, password : password});
+      return request.map((res : User) => {  
+        return res;
+      }
+    );
+  }
+
+  loginGoogleAccount(username : string, googleID : string){
+    var request = this.http.post<User>(this.BASE_URL + '/api/user/google_login',{username: username, googleID : googleID});
       return request.map((res : User) => {  
         return res;
       }
@@ -26,8 +34,8 @@ export class AuthenticationService {
     }
   )}
 
-  registerGoogleUser(username : string, email : string, profileID : string){
-    var request = this.http.post<any>(this.BASE_URL + '/api/user/google_login',{username: username, email : email, profileID : profileID});
+  registerGoogleUser(username : string, email : string, googleID : string){
+    var request = this.http.post<any>(this.BASE_URL + '/api/user/google_signup',{username: username, email : email, googleID : googleID});
     return request.map((res : any) => {  
       return res;
     }

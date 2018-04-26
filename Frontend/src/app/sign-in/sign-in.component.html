@@ -8,7 +8,7 @@
         <div class="google-button-left-square fa fa-google"></div>
         Sign in with Google   
     </div>
-    
+
     <p id="close-button"class="fas fa-window-close cursor-pointer" (click)="closeThisComponent()"></p>
   <ul class="nav nav-tabs">
     <li role="presentation" class="nav-item" [class.active]="displaySignIn">
@@ -21,7 +21,7 @@
 
   <div *ngIf="displaySignIn; else signUpBlock" class="form-signin">
 
-    <form (ngSubmit)="logIn()" #loginForm="ngForm">
+    <form (ngSubmit)="customLogIn()" #loginForm="ngForm">
 
       <p class="font-weight text-left">Username</p>
       <input [(ngModel)]="username" type="text" id="login-username" name="username" class="form-control custom-input" required
