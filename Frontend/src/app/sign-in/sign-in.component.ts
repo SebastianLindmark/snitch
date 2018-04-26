@@ -112,6 +112,7 @@ export class SignInComponent implements OnInit {
 
         this.zone.run(() => {
           this.google_register(parsedUsername,email,profileID);
+          this.closeThisComponent();
         })
         
       }, (error) => {
