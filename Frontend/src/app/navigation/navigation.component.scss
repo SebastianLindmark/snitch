@@ -16,7 +16,7 @@ a {
 
 .custom-navbar {
     margin: 0;
-    background-color: $dark-color;
+    background-color: #2A6D7A;
     border-radius: 0;
 }
 
@@ -25,3 +25,9 @@ a {
     font-size: 14px;
 }
 
+.custom-button {
+    border: none;
+    border-radius: 0px !important;
+    background-color: #458692;
+    color: white;
+}
