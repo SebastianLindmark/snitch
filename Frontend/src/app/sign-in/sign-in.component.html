@@ -3,9 +3,12 @@
 </div>
 
 <div id="sign-in-container" class="container text-center">
-    <div id="googleBtn" class="google-button" #googleBtn >Sign In With Google
-        <i class="fa fa-google"></i>
+  
+    <div id="googleBtn" class="google-button-right-square">      
+        <div class="google-button-left-square fa fa-google"></div>
+        Sign in with Google   
     </div>
+    
     <p id="close-button"class="fas fa-window-close cursor-pointer" (click)="closeThisComponent()"></p>
   <ul class="nav nav-tabs">
     <li role="presentation" class="nav-item" [class.active]="displaySignIn">
