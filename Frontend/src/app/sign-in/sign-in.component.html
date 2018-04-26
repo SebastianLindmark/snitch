@@ -3,14 +3,16 @@
 </div>
 
 <div id="sign-in-container" class="container text-center">
-    <div id="googleBtn" #googleBtn >Sign In With Google</div>
+    <div id="googleBtn" class="google-button" #googleBtn >Sign In With Google
+        <i class="fa fa-google"></i>
+    </div>
     <p id="close-button"class="fas fa-window-close cursor-pointer" (click)="closeThisComponent()"></p>
   <ul class="nav nav-tabs">
-    <li role="presentation" [class.active]="displaySignIn">
-      <a class="custom-tab-button" (click)="signInTab()">Log In</a>
+    <li role="presentation" class="nav-item" [class.active]="displaySignIn">
+      <a class="nav-link custom-tab-button" (click)="signInTab()">Log In</a>
     </li>
-    <li role="presentation" [class.active]="!displaySignIn">
-      <a class="custom-tab-button" (click)="signUpTab()">Sign Up</a>
+    <li role="presentation" class="nav-item" [class.active]="!displaySignIn">
+      <a class="nav-link custom-tab-button" (click)="signUpTab()">Sign Up</a>
     </li>
   </ul>
 
@@ -42,7 +44,7 @@
   </div>
 
   <ng-template #signUpBlock>
-      <form (ngSubmit)="register()" #signupForm="ngForm">
+      <form (ngSubmit)="custom_register(username,email,password)" #signupForm="ngForm">
         <div class="form-signin">
           <p class="text-left">Username</p>
           <input [(ngModel)]="username" type="text" id="login-username" name="signup-username" class="form-control custom-input" required="true" autofocus="">

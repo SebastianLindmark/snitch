@@ -52,7 +52,7 @@ export class SignInComponent implements OnInit {
   logIn(){
       this.authentication.login(this.username,this.password).subscribe(data => {
         this.currentUser.setUser(data);
-        this.closeEvent.emit(true);
+        this.closeThisComponent();
       },
     
       error => {
@@ -62,18 +62,29 @@ export class SignInComponent implements OnInit {
   }
 
 
-  register(){
+  custom_register(username, email,password){
+    var registerFunction = this.authentication.registerCustomUser(username,email,password);
+    this.register(registerFunction);
+  }
 
-    this.authentication.register(this.username,this.email,this.password).subscribe(data => {
+  google_register(username,email,profileID){
+    var registerFunction = this.authentication.registerGoogleUser(username,email,profileID);
+    this.register(registerFunction);
+  }
+
+
+  register(register_function){
+    register_function.subscribe(data => {
       this.logIn();
     },
-
     error => {
       console.log("Could not register user");
       console.log(error);
     }
-  );
+  )
   }
+
+
 
 
   public auth2: any;
@@ -94,18 +105,14 @@ export class SignInComponent implements OnInit {
     this.auth2.attachClickHandler(element, {},
       (googleUser) => {
 
-        let profile = googleUser.getBasicProfile();
-        console.log('Token || ' + googleUser.getAuthResponse().id_token);
-        console.log('ID: ' + profile.getId());
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail());
+        let profile = googleUser.getBasicProfile();        
+        var email = profile.getEmail();
+        var parsedUsername =  email.substring(0,email.indexOf("@"));
+        var profileID = profile.getId();
+
         this.zone.run(() => {
-          var user = new User(-1337,profile.getId(),profile.getEmail())
-          this.currentUser.setUser(user);
-          this.closeThisComponent();
+          this.google_register(parsedUsername,email,profileID);
         })
-        
         
       }, (error) => {
         alert(JSON.stringify(error, undefined, 2));
@@ -119,5 +126,12 @@ export class SignInComponent implements OnInit {
   }
 
 
+  /*
+  ---HELPER FUNCTIONS FOR GOOGLE AUTH---
+  console.log('Token || ' + googleUser.getAuthResponse().id_token);
+  console.log('ID: ' + profile.getId());
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail());*/
 
 }
