@@ -52,10 +52,25 @@ app.route('/api/user/login').post((req, res) => {
             res.send("User does not exist");
         }
     }
-
     database_helper.user.exists_user(username,existsUser);
 });
 
+app.route('/api/user/google_signup').post((req, res) => {    
+    var username = req.body.username;
+    var email = req.body.email;
+    var googleID = req.body.googleID;
+    
+    function existsUser(exists){
+        if(!exists){
+            database_helper.user.insert_google_user(email,username,googleID);	
+            res.send("");
+        }else{
+            res.statusCode = 404;
+            res.send("User already exists");
+        }
+    }
+    database_helper.user.exists_user(username,existsUser);
+});
 
 app.route('/api/user/get').post((req, res) => {
         var username = req.body.username;
@@ -72,9 +87,13 @@ app.route('/api/user/get').post((req, res) => {
     });	
 });
 
-
 app.route('/api/test/add').get((req,res) => {
     database_helper.user.insert_user("sebbe@gmail.com","sebbe","passw");
+    res.send("Done");
+});
+
+app.route('/api/test/addg').get((req,res) => {
+    database_helper.user.insert_google_user("sebbe@gmail.com","sebbe", "123234543234543");
     res.send("Done");
 });
 
