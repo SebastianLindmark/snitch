@@ -19,12 +19,21 @@ export class AuthenticationService {
     );
   }
 
-  register(username : string, email : string, password : string){
-    var request = this.http.post<any>(this.BASE_URL + '/api/user/signup',{username: username, email : email, password : password});
+  registerCustomUser(username : string, email : string, password : string){
+    var request = this.http.post<any>(this.BASE_URL + '/api/user/custom_signup',{username: username, email : email, password : password});
+    return request.map((res : any) => {  
+      return res;
+    }
+  )}
+
+  registerGoogleUser(username : string, email : string, profileID : string){
+    var request = this.http.post<any>(this.BASE_URL + '/api/user/google_login',{username: username, email : email, profileID : profileID});
     return request.map((res : any) => {  
       return res;
     }
   );
+
+
 }
 
 
