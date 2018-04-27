@@ -17,6 +17,7 @@ import { FooterComponent } from './footer/footer.component';
 import { CurrentUserService } from './_services/current-user.service';
 import { UserObserverExampleComponent } from './user-observer-example/user-observer-example.component';
 import { RepeatValidatorDirective } from './repeat-validator.directive';
+import { SearchbarComponent } from './searchbar/searchbar.component';
 
 let browseState = { name: 'browse', url: '/browse',  component: BrowseComponent };
 let helpState = { name: 'help', url: '/help',  component: HelpComponent };
@@ -32,7 +33,8 @@ let helpState = { name: 'help', url: '/help',  component: HelpComponent };
     HelpComponent,
     FooterComponent,
     UserObserverExampleComponent,
-    RepeatValidatorDirective
+    RepeatValidatorDirective,
+    SearchbarComponent
   ],
   imports: [
     BrowserModule,

@@ -15,19 +15,60 @@ a {
 }
 
 .custom-navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
     margin: 0;
-    background-color: #2A6D7A;
+    background-color: #CD0505;
     border-radius: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+    border-bottom: 1px solid #A80000;
 }
 
 .nav-link {
     margin-right: 20px;
-    font-size: 14px;
+    font-size: 16px;
+}
+
+.navbar-brand {
+    font-size: 32px;
+    color: white;
+    padding: 0;
+    margin: 0 20px 0 0;
 }
 
 .custom-button {
     border: none;
     border-radius: 0px !important;
-    background-color: #458692;
+    background-color: #D90202;
+    border-left: 1px solid #A80000;
     color: white;
+    padding: 5px 10px 5px 10px;
+    height: 100%;
+    margin-right: 0 !important;
+    font-size: 14px;
+}
+
+.custom-button:hover, .custom-button:active {
+    background-color: #F63232 !important;
+    box-shadow: none !important;
+    border-color: #A80000 !important;
+}
+
+.custom-button:focus {
+    background-color: #D90202 !important;
+    box-shadow: none !important;
+    border-color: #A80000 !important;
+}
+
+.navbar-collapse {
+    height: 50px;
+}
+
+app-searchbar {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
 }

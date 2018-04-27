@@ -1,0 +1,38 @@
+:host {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#search-bar-container{
+    background-color: white;
+    color: lightgray;
+    height: 30px;
+}
+
+#custom-input {
+    display: block;
+    border-radius: 0;
+    border: none !important;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    float:right;
+}
+
+#custom-input:focus {
+    box-shadow: none;
+}
+
+#search-bar-icon {
+}
+
+#icon-container {
+    line-height: 30px;
+    float: left;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+::placeholder {
+    color: lightgray;
+}

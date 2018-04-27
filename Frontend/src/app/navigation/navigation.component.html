@@ -1,6 +1,6 @@
 <app-sign-in *ngIf="activateSignInComponent && !closeWindow" (closeEvent)="closeWindow=$event" [showLogIn]="pressedLogIn"></app-sign-in>
 <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <i class="navbar-brand fa fa-twitch"></i>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -9,12 +9,7 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" uiSrefActive="active"><a class="nav-link" uiSref="browse">Browse</a></li>
       <li class="nav-item" uiSrefActive="active"><a class="nav-link" uiSref="help">Help</a></li>
-      <form class="form-inline">
-        <div id="custom-input">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        </div>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+      <app-searchbar></app-searchbar>
     </ul>
     
     <button type="button" class="btn btn-outline-success my-2 my-sm-0 mr-2 custom-button" (click)="clickedLogIn()">Log In</button>

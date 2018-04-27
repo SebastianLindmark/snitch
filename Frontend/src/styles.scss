@@ -23,6 +23,7 @@ p {
 app-root {
     display: block;
     min-height: calc(100% - #{$footer-height});
+    padding-top: 50px;
 }
 
 app-footer {
