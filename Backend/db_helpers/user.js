@@ -9,6 +9,7 @@ module.exports = {
         db_conn.insert(query, function(response){
             var query2 = `INSERT INTO password(id,password) VALUES ("${response}", "${password}")`;
             db_conn.insert(query2);
+            console.log("custom user inserted");
         });
     },
 
@@ -17,6 +18,7 @@ module.exports = {
         db_conn.insert(query, function(response){
             var query2 = `INSERT INTO googleuser(id,token) VALUES("${response}", "${google_id}")`;
             db_conn.insert(query2);
+            console.log("Google user inserted");
         });
     },
 

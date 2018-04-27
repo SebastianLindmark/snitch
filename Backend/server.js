@@ -24,7 +24,7 @@ app.route('/api/user/custom_signup').post((req, res) => {
     var email = req.body.email;
 	var username = req.body.username;
     var password = req.body.password;	
-    
+    console.log("Custom user signup");
     function existsUser(exists){
         
         if(!exists){
@@ -41,7 +41,7 @@ app.route('/api/user/custom_signup').post((req, res) => {
 app.route('/api/user/custom_login').post((req, res) => {    
 	var username = req.body.username;
     var password = req.body.password;	
-
+    console.log("Custom user login");
     function existsUser(user){
         if(user){
             database_helper.user.get_user_password(user.id, function(response) {
@@ -63,21 +63,28 @@ app.route('/api/user/custom_login').post((req, res) => {
 app.route('/api/user/google_login').post((req, res) => {    
     var username = req.body.username;
     var googleID = req.body.googleID;
+
     function getUser(user){
         if(user !== undefined){
+            console.log("Checking if google user exists in the database")
             database_helper.user.exists_google_user(username,googleID, function(exists){
                 if(exists){
+                    console.log("User exists, logging in.")
                     res.send(user);
                 }else{
+                    console.log("User does not exist, login failed.")
                     res.statusCode = 404;
                     res.send("The user is not a google user");
                 }
             })
         }else{
+            console.log("The user does not exist in the database")
             res.statusCode = 404;
             res.send("User does not exist");
         }
     }
+
+    console.log("The username in " + username);
     database_helper.user.get_user(username,getUser);
 });
 
@@ -91,6 +98,7 @@ app.route('/api/user/google_signup').post((req, res) => {
     function existsUser(exists){
     
         if(!exists){
+            console.log("Signing up google user");
             database_helper.user.insert_google_user(email,username,googleID);	
             res.send("");
         }else{
