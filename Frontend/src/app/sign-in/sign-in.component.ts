@@ -62,20 +62,20 @@ export class SignInComponent implements OnInit {
   );
   }
 
-  google_login(username, googleID){
+  googleLogin(username, googleID){
       var loginFunction = this.authentication.loginGoogleAccount(username,googleID)
       this.login(loginFunction);
   }
 
-  custom_logIn(username,password){
+  customLogIn(username,password){
       var loginFunction = this.authentication.login(this.username,this.password);
       this.login(loginFunction);
   }
 
 
-  custom_register(username, email,password){
+  customRegister(username, email,password){
     var registerFunction = this.authentication.registerCustomUser(username,email,password).subscribe(data => {
-      this.custom_logIn(username,password);
+      this.customLogIn(username,password);
     },
     error => {
       console.log("Could not register user");
@@ -83,9 +83,9 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  google_register(username,email,googleID){
+  googleRegister(username,email,googleID){
     var registerFunction = this.authentication.registerGoogleUser(username,email,googleID).subscribe(data => {
-      this.google_login(username,googleID);
+      this.googleLogin(username,googleID);
     },
     error => {
       console.log("Could not register user");
@@ -108,7 +108,6 @@ export class SignInComponent implements OnInit {
   }
 
 
-
   public attachSignin(element) {
     this.auth2.attachClickHandler(element, {},
       (googleUser) => {
@@ -119,7 +118,7 @@ export class SignInComponent implements OnInit {
         var profileID = profile.getId();
 
         this.zone.run(() => {
-          this.google_register(parsedUsername,email,profileID);
+          this.googleRegister(parsedUsername,email,profileID);
           this.closeThisComponent();
         })
         
