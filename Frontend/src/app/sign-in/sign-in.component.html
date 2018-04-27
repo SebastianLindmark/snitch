@@ -47,7 +47,7 @@
   </div>
 
   <ng-template #signUpBlock>
-      <form (ngSubmit)="custom_register(username,email,password)" #signupForm="ngForm">
+      <form (ngSubmit)="customRegister(username,email,password)" #signupForm="ngForm">
         <div class="form-signin">
           <p class="text-left">Username</p>
           <input [(ngModel)]="username" type="text" id="login-username" name="signup-username" class="form-control custom-input" required="true" autofocus="">
