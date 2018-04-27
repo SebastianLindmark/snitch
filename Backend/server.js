@@ -1,13 +1,18 @@
 const express = require('express');
-var bodyParser = require('body-parser')
-var cors = require('cors')
+var bodyParser = require('body-parser');
+var cors = require('cors');
 const app = express();
+var expressJwt = require("express-jwt");
+var jwt = require("jsonwebtoken");
 
+
+app.use(express.json())
+app.use(express.urlencoded());
 app.use(cors());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+//app.use(bodyParser.urlencoded({
+//    extended: true}));
 app.use(bodyParser.json());
+app.use('/protected', expressJwt({secret: "secret"}));
 
 
 var database_helper = require("./database_helper");
@@ -17,6 +22,25 @@ var hostPort = 8000;
 
 app.route('/').get((req, res) => {
     res.send("Welcome")
+});
+
+app.get('/protected/hello',function(req,res){
+    console.log("This is nice");
+    res.send("This path is only accessible by authenticated users");
+});
+
+
+app.get('/generate_token', function(req, res) {
+    var profile = {
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'john@doe.com',
+        id: 123
+    };
+
+    var token = jwt.sign(profile, "secret", { expiresIn: 35 }); // 60*5 minutes
+    res.send(token);
+
 });
 
 
