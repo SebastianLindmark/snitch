@@ -17,13 +17,13 @@ p {
     color: rgb(87, 82, 96);
 }
 
-
 // Sticky footer
 //--------------------------
 app-root {
     display: block;
     min-height: calc(100% - #{$footer-height});
     padding-top: 50px;
+    background-color: whitesmoke;
 }
 
 app-footer {
