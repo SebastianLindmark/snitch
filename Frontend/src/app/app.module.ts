@@ -18,10 +18,11 @@ import { CurrentUserService } from './_services/current-user.service';
 import { UserObserverExampleComponent } from './user-observer-example/user-observer-example.component';
 import { RepeatValidatorDirective } from './repeat-validator.directive';
 import { SearchbarComponent } from './searchbar/searchbar.component';
+import { UserComponent } from './user/user.component'
 
 let browseState = { name: 'browse', url: '/browse',  component: BrowseComponent };
 let helpState = { name: 'help', url: '/help',  component: HelpComponent };
-
+let userState = { name: 'user', url: '/:user', component: UserComponent };
 
 @NgModule({
   declarations: [
@@ -34,14 +35,15 @@ let helpState = { name: 'help', url: '/help',  component: HelpComponent };
     FooterComponent,
     UserObserverExampleComponent,
     RepeatValidatorDirective,
-    SearchbarComponent
+    SearchbarComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
     FormsModule,
     HttpClientModule,
-    UIRouterModule.forRoot({states : [browseState, helpState], useHash: true})
+    UIRouterModule.forRoot({states : [browseState, helpState, userState], useHash: true})
   ],
   providers: [AuthenticationService,HttpClient, CurrentUserService],
   bootstrap: [AppComponent]
