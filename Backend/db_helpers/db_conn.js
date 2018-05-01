@@ -9,20 +9,26 @@ var exporter = sqliteJson('./db.sqlite3');
 
 module.exports = {
 
-    insert : function(query, callback = null){
-        db.run(query, function(err){
-            if(callback) {
-                callback(this.lastID);
+    insert : function(query){
+        var promise = new Promise(function(resolve, reject){
+            db.run(query, function(err){
+                if(err) return reject([401,err]);
+                else return resolve(this.lastID);
             }
-        });
+        );})
+        return promise;   
     },
+    
 
-    get : function(query,callback){
-        db.get(query, function(err,row){
-
-            callback(row);
+    get : function(query){
+        var promise = new Promise(function(resolve,reject){
+            db.get(query, function(err,row){
+                if(err) return reject([401,err]);
+                else return resolve(row);
+            }); 
         });
-        
+
+        return promise;
     },
 
 

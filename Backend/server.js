@@ -4,13 +4,11 @@ var cors = require('cors');
 const app = express();
 var expressJwt = require("express-jwt");
 var jwt = require("jsonwebtoken");
-
+var Promise = require("promise");
 
 app.use(express.json())
 app.use(express.urlencoded());
 app.use(cors());
-//app.use(bodyParser.urlencoded({
-//    extended: true}));
 app.use(bodyParser.json());
 app.use('/protected', expressJwt({secret: "secret"}));
 
@@ -44,107 +42,123 @@ app.get('/generate_token', function(req, res) {
 });
 
 
-app.route('/api/user/custom_signup').post((req, res) => {    
+
+app.route('/api/user/custom_signup').post((req,res) => {
     var email = req.body.email;
 	var username = req.body.username;
     var password = req.body.password;	
-    console.log("Custom user signup");
-    function existsUser(exists){
-        
-        if(!exists){
-            database_helper.user.insert_user(email,username,password);	
-            res.send("");
-        }else{
-            res.statusCode = 404;
-            res.send("User already exists");
-        }
-    }
-    database_helper.user.exists_user(username,existsUser);
+
+    //email = "sebbe.lindmark@gmail.com";
+    //username ="sebbe";
+    //password = "password";
+
+    database_helper.user.exists_user(username).then(function(exists){
+        if(!exists) return database_helper.user.insert_user(email,username,password);
+        else throw [401,"Unable to signup, user already exists"];
+    }).then(function(result){
+        res.send({result : "Successfully registered"});
+    }).catch(reason => {
+        console.log(reason);
+        res.statusCode = reason[0];
+        res.send(reason[1]);
+    });
+
 });
 
-app.route('/api/user/custom_login').post((req, res) => {    
-	var username = req.body.username;
+app.route('/api/user/custom_login').post((req,res) => {
+    var username = req.body.username;
     var password = req.body.password;	
-    console.log("Custom user login");
-    function existsUser(user){
-        if(user){
-            database_helper.user.get_user_password(user.id, function(response) {
-                if(response.password === password){
-                    res.send(user);
-                }else{
-                    res.send("Invalid password");
-                }
-            });
-        }else{
-            res.statusCode = 404;
-            res.send("User does not exist");
-        }
-    }
-    database_helper.user.exists_user(username,existsUser);
-});
 
-
-app.route('/api/user/google_login').post((req, res) => {    
-    var username = req.body.username;
-    var googleID = req.body.googleID;
-
-    function getUser(user){
-        if(user !== undefined){
-            console.log("Checking if google user exists in the database")
-            database_helper.user.exists_google_user(username,googleID, function(exists){
-                if(exists){
-                    console.log("User exists, logging in.")
-                    res.send(user);
-                }else{
-                    console.log("User does not exist, login failed.")
-                    res.statusCode = 404;
-                    res.send("The user is not a google user");
-                }
-            })
-        }else{
-            console.log("The user does not exist in the database")
-            res.statusCode = 404;
-            res.send("User does not exist");
-        }
-    }
-
-    console.log("The username in " + username);
-    database_helper.user.get_user(username,getUser);
-});
-
-
-
-app.route('/api/user/google_signup').post((req, res) => {    
-    var username = req.body.username;
-    var email = req.body.email;
-    var googleID = req.body.googleID;
-    console.log("Signing up user");
-    function existsUser(exists){
+    //username = "sebbe"
+    //password = "passwords"
     
-        if(!exists){
-            console.log("Signing up google user");
-            database_helper.user.insert_google_user(email,username,googleID);	
-            res.send("");
-        }else{
-            res.send("User is already registered. This is ok for this route.");
-        }
-    }
-    database_helper.user.exists_user(username,existsUser);
+    var step1 = database_helper.user.exists_user(username)
+    .then(function(exists){
+        if(exists) return database_helper.user.get_user(username);
+        else throw [401,"User does not exist"];
+    });
+    
+    var step2 = step1.then(function(user){
+        return database_helper.user.get_user_password(user.id)
+    });
+
+
+    Promise.all([step1,step2]).then(function([resA,resB]){
+        if(!resB) throw [401,"User is a google user"];
+        else if(resB.password === password) res.send(resA);
+        else throw [401,"Password is not correct"];
+    }).catch(reason =>{
+        console.log(reason);
+        res.statusCode = reason[0];
+        res.send(reason[1]);
+    });
+    
+
+
 });
 
-app.route('/api/user/get').post((req, res) => {
-        var username = req.body.username;
-        var exists_user = database_helper.user.exists_user(username);
+app.post('/api/user/google_login',function(req,res){
+    var username = req.body.username;
+    var googleID = req.body.googleID;
 
-        if(!exists_user){
-            res.statusCode = 404;
-            res.send("User does not exist");
-            return;
+    //var username = "sebbes";
+    //var googleID = "123234543234543";
+    database_helper.user.get_google_user(username,googleID)
+    .then(function(exists){
+        if (exists) return database_helper.user.get_user(username);
+        else throw [401, "User does not exist, not a google user?"];})
+    .then(database_helper.user.get_user(username)
+    .then(function(user){ res.send(user);}))
+    .catch(reason => {
+        console.log(reason);
+        res.statusCode = reason[0];
+        res.send(reason[1]);
+    })
+});
+
+
+app.route('/api/user/google_signup').post((req,res) => {
+    var username = req.body.username;
+    var email = req.body.email;
+    var googleID = req.body.googleID; 
+    //username = "sebbe"
+    //email = "sebbe.lindmark@gmail.com"
+    //googleID = "123234543234543"
+    
+    database_helper.user.get_user(username,googleID)
+    .then(function(exists){ 
+        console.log(exists);  
+        if (!exists){
+            return database_helper.user.insert_google_user(email,username,googleID);
         }
-        
-        database_helper.user.get_user(username, function(response) {
-            res.send(response);
-    });	
+        else{
+            throw [401, "User already exists"];
+        } 
+    })
+    .then(function(row) {
+        res.send({result : "Successfully registered"});
+    }).catch(reason => {
+        console.log("Caught error " + reason);
+        res.statusCode = reason[0];
+        res.send(reason[1]);
+    })
+});
+
+
+app.route('/get_user').get((req, res) => {
+    var username = req.body.username;
+    
+    //username ="sebbe";
+
+    database_helper.user.exists_user(username).then(function(user){
+        if(user) res.send(user);
+        else throw [401,"User does not exist"];
+    }).catch(reason => {
+        console.log(reason);
+        res.statusCode = reason[0];
+        res.send(reason[1]);
+    });
+    
 });
 
 app.route('/api/test/add').get((req,res) => {
