@@ -1,0 +1,12 @@
+<form (ngSubmit)="changeUserName()" #usernameForm="ngForm">
+
+  <p class="font-weight text-left">New Username</p>
+  <input [(ngModel)]="username" type="text" id="new-username" name="username" class="form-control custom-input" required
+    autofocus pattern="[a-zA-Z]+" #name="ngModel">
+
+  <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+    <div [hidden]="!name.hasError('required')">Name is required</div>
+    <div [hidden]="!name.hasError('pattern')">No special characters allowed</div>
+  </div>
+  <button type="submit" [disabled]="!usernameForm.form.valid" class="btn btn-primary btn-block custom-button">Confirm</button>
+</form>
