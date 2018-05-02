@@ -23,6 +23,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { Tabs } from './tabs/tabs.component';
 import { Tab } from './tab/tab.component';
 import { ProfilesettingsComponent } from './profilesettings/profilesettings.component'
+import { ChatComponent } from './chat/chat.component'
+
 
 let browseState = { name: 'browse', url: '/browse',  component: BrowseComponent };
 let helpState = { name: 'help', url: '/help',  component: HelpComponent };
@@ -44,7 +46,8 @@ let userState = { name: 'user', url: '/:user', component: UserComponent };
     SettingsComponent,
     Tabs,
     Tab,
-    ProfilesettingsComponent
+    ProfilesettingsComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

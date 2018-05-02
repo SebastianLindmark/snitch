@@ -1,4 +1,4 @@
-import { Component, OnInit,ElementRef} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { UrlService } from "@uirouter/angular";
 import flvjs from 'flv.js';
 
@@ -12,7 +12,7 @@ import flvjs from 'flv.js';
 export class UserComponent implements OnInit {
   public username: string = "";
   public streamKey = "streamkey"
-  constructor(private elementRef : ElementRef, private urlService: UrlService) { }
+  constructor(private urlService: UrlService) { }
 
   ngOnInit() {
     this.username = this.urlService.url().substr(1);
@@ -20,8 +20,6 @@ export class UserComponent implements OnInit {
   }
   
   ngAfterViewInit(){
-    console.log("ngAfterViewInit called");
-
     if (flvjs.isSupported()) {
       var videoElement = <HTMLMediaElement>document.getElementById('videoElement');
       var flvPlayer = flvjs.createPlayer({
@@ -31,10 +29,7 @@ export class UserComponent implements OnInit {
       flvPlayer.attachMediaElement(videoElement);
       flvPlayer.load();
       flvPlayer.play();
-  }
-
-
-
+    } 
   }
 
 }
