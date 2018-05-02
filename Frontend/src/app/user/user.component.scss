@@ -1,6 +1,24 @@
+$light-color: #9FDDE9;
+$main-color: #666666;
+$dark-color: #2A6D7A;
+
+
+.main{
+    margin-top: 15px;
+    margin-right: 0px;
+    margin-left: 25px;
+    margin-bottom: 15px;
+}
+
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
 .chat-window{   
     background-color: rgb(231, 231, 231);
     height:100%;
+    margin-right: 0px;
 }
 
 .chat-window > p{
@@ -8,7 +26,61 @@
 }
 
 
+.col-md-3{
+    padding-right: 0px;
+}
+
+.col-md-9{
+    padding-left: 0px;
+}
+
 
 .player-window{
     background-color: black;
+}
+
+.profile-icon{
+    height: 25px;
+    width: 25px;
+}
+
+.bold-text{
+    font-weight: bold;
+}
+
+//Navigation tabs
+
+.nav-tabs{
+    margin-bottom: 10px;
+    border-right-color: lightgray;
+    border-radius: 2px;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover  { 
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: #CD0505;
+    color: $main-color;
+}
+
+.nav-tabs>li>a {
+    color: $main-color;
+    border-radius: 0;    
+}
+
+.nav-tabs>li>a:hover {
+    background-color: transparent !important;
+    border-left-color: transparent !important;
+    border-top-color: transparent!important;
+    border-right-color: transparent !important;
+    border-bottom: 1px solid gray;
+}
+
+
+.custom-tab-button{
+    font-size : 20px;
+    padding: 2px 4px 2px 4px;
+    margin-right : 5px;
+    cursor: pointer;
 }

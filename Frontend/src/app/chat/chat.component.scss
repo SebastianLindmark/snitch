@@ -23,5 +23,23 @@ $chat-input-height: 100px;
     height: $chat-input-height;
 }
 
-input { margin-bottom: 10px; }
+
+.input-chat-field{
+    margin-bottom: 10px;
+
+}
+
+.submit-button,{
+    background-color: #D90202 !important;
+    border-color: #A80000 !important;
+    box-shadow: none;
+}
+
+.submit-button:hover,
+{
+  color: #ffffff;
+  background-color: #A80000 !important;
+  border-color: #A80000 !important;
+  box-shadow: none;
+}
 
