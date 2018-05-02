@@ -68,7 +68,7 @@ export class SignInComponent implements OnInit {
   }
 
   customLogIn(username,password){
-      var loginFunction = this.authentication.login(this.username,this.password);
+      var loginFunction = this.authentication.loginCustomUser(this.username,this.password);
       this.login(loginFunction);
   }
 

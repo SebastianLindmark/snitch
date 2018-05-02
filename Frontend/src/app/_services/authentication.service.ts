@@ -11,7 +11,7 @@ export class AuthenticationService {
 
   constructor(private http : HttpClient) { }
 
-  login(username : string, password : string){
+  loginCustomUser(username : string, password : string){
       var request = this.http.post<User>(this.BASE_URL + '/api/user/custom_login',{username: username, password : password});
       return request.map((res : User) => {  
         return res;
