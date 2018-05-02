@@ -18,7 +18,9 @@ import { CurrentUserService } from './_services/current-user.service';
 import { UserObserverExampleComponent } from './user-observer-example/user-observer-example.component';
 import { RepeatValidatorDirective } from './repeat-validator.directive';
 import { SearchbarComponent } from './searchbar/searchbar.component';
-import { UserComponent } from './user/user.component'
+import { UserComponent } from './user/user.component';
+import { ChatComponent } from './chat/chat.component'
+
 
 let browseState = { name: 'browse', url: '/browse',  component: BrowseComponent };
 let helpState = { name: 'help', url: '/help',  component: HelpComponent };
@@ -36,7 +38,8 @@ let userState = { name: 'user', url: '/:user', component: UserComponent };
     UserObserverExampleComponent,
     RepeatValidatorDirective,
     SearchbarComponent,
-    UserComponent
+    UserComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
