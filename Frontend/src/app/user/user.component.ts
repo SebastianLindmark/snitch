@@ -12,6 +12,7 @@ import flvjs from 'flv.js';
 export class UserComponent implements OnInit {
   public username: string = "";
   public streamKey = "streamkey"
+  public chatOpen = true;
   constructor(private urlService: UrlService) { }
 
   ngOnInit() {
@@ -30,6 +31,10 @@ export class UserComponent implements OnInit {
       flvPlayer.load();
       flvPlayer.play();
     } 
+  }
+
+  toggleChat(){
+    this.chatOpen = !this.chatOpen;
   }
 
 }

@@ -15,6 +15,10 @@ $dark-color: #2A6D7A;
     margin-left: 0px;
 }
 
+.margin-right{
+    margin-right: 15px;
+}
+
 .chat-window{   
     background-color: rgb(231, 231, 231);
     height:100%;
@@ -25,12 +29,15 @@ $dark-color: #2A6D7A;
     color: red;
 }
 
-
 .col-md-3{
     padding-right: 0px;
 }
 
 .col-md-9{
+    padding-left: 0px;
+}
+
+.col-md-12{
     padding-left: 0px;
 }
 
