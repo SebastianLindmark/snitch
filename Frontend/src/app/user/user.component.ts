@@ -1,5 +1,4 @@
 import { Component, OnInit} from '@angular/core';
-import { UrlService } from "@uirouter/angular";
 import flvjs from 'flv.js';
 
 
@@ -10,14 +9,15 @@ import flvjs from 'flv.js';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-  public username: string = "";
+  public username: string;
+  public url : string[];
   public streamKey = "streamkey"
   public chatOpen = true;
-  constructor(private urlService: UrlService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.username = this.urlService.url().substr(1);
-    console.log(this.username);
+    this.url = window.location.toString().split("/");
+    this.username = this.url[this.url.length - 1];
   }
   
   ngAfterViewInit(){

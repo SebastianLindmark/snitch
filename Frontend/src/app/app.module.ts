@@ -11,7 +11,6 @@ import { BrowseComponent } from './browse/browse.component';
 
 import { AuthenticationService } from './_services/authentication.service';
 import { HttpClient,HttpClientModule } from '@angular/common/http';
-import {UIRouterModule} from "@uirouter/angular";
 import { HelpComponent } from './help/help.component';
 import { FooterComponent } from './footer/footer.component';
 import { CurrentUserService } from './_services/current-user.service';
@@ -23,12 +22,12 @@ import { SettingsComponent } from './settings/settings.component';
 import { Tabs } from './tabs/tabs.component';
 import { Tab } from './tab/tab.component';
 import { ProfilesettingsComponent } from './profilesettings/profilesettings.component'
-import { ChatComponent } from './chat/chat.component'
+import { ChatComponent } from './chat/chat.component';
+import { RoutingModule } from './routing.module';
+import { AuthGuardService } from './authguard.service'
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { JwtHelper } from 'angular2-jwt';
 
-
-let browseState = { name: 'browse', url: '/browse',  component: BrowseComponent };
-let helpState = { name: 'help', url: '/help',  component: HelpComponent };
-let userState = { name: 'user', url: '/:user', component: UserComponent };
 
 @NgModule({
   declarations: [
@@ -47,16 +46,17 @@ let userState = { name: 'user', url: '/:user', component: UserComponent };
     Tabs,
     Tab,
     ProfilesettingsComponent,
-    ChatComponent
+    ChatComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
     FormsModule,
     HttpClientModule,
-    UIRouterModule.forRoot({states : [browseState, helpState, userState], useHash: true})
+    RoutingModule
   ],
-  providers: [AuthenticationService,HttpClient, CurrentUserService],
+  providers: [AuthenticationService,HttpClient, CurrentUserService, AuthGuardService, JwtHelper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

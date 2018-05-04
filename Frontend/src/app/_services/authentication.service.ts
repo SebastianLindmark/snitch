@@ -3,13 +3,14 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 import { User } from '../_models/user';
+import { JwtHelper } from 'angular2-jwt';
 
 @Injectable()
 export class AuthenticationService {
 
   private BASE_URL = "http://localhost:8000";
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, public jwtHelper: JwtHelper) {   }
 
   loginCustomUser(username : string, password : string){
       var request = this.http.post<User>(this.BASE_URL + '/api/user/custom_login',{username: username, password : password});
@@ -40,9 +41,16 @@ export class AuthenticationService {
       return res;
     }
   );
-
-
 }
 
+// ...
+public isAuthenticated(): boolean {
+  const token = localStorage.getItem('token');
+  if(token){
+    return !this.jwtHelper.isTokenExpired(token);
+  } else {
+    return false;
+  }
+}
 
 }
