@@ -27,6 +27,9 @@ import { RoutingModule } from './routing.module';
 import { AuthGuardService } from './authguard.service'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JwtHelper } from 'angular2-jwt';
+import {UserRequestService} from './_services/user-request.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptorService } from './_services/jwt-interceptor.service';
 
 
 @NgModule({
@@ -56,7 +59,12 @@ import { JwtHelper } from 'angular2-jwt';
     HttpClientModule,
     RoutingModule
   ],
-  providers: [AuthenticationService,HttpClient, CurrentUserService, AuthGuardService, JwtHelper],
+  providers: [AuthenticationService, HttpClient, CurrentUserService, AuthGuardService, JwtHelper, UserRequestService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }

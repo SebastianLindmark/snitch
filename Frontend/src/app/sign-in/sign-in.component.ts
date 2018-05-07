@@ -52,6 +52,7 @@ export class SignInComponent implements OnInit {
 
   login(loginFunction){
     loginFunction.subscribe(data => {
+      console.log("Logged in user");
       this.currentUser.setUser(data);
       this.closeThisComponent();
     },
@@ -85,6 +86,7 @@ export class SignInComponent implements OnInit {
 
   googleRegister(username,email,googleID){
     var registerFunction = this.authentication.registerGoogleUser(username,email,googleID).subscribe(data => {
+      console.log("Registered google user");
       this.googleLogin(username,googleID);
     },
     error => {

@@ -47,19 +47,16 @@ app.get('/protected/hello',function(req,res){
 });
 
 
-app.get('/generate_token', function(req, res) {
+
+function generate_token(username,email){
     var profile = {
-        first_name: 'John',
-        last_name: 'Doe',
-        email: 'john@doe.com',
-        id: 123
+        username: username,
+        email: email,
     };
 
     var token = jwt.sign(profile, "secret", { expiresIn: 35 }); // 60*5 minutes
-    res.send(token);
-
-});
-
+    return token;
+}
 
 
 app.route('/api/user/custom_signup').post((req,res) => {
@@ -104,7 +101,10 @@ app.route('/api/user/custom_login').post((req,res) => {
 
     Promise.all([step1,step2]).then(function([resA,resB]){
         if(!resB) throw [401,"User is a google user"];
-        else if(resB.password === password) res.send(resA);
+        else if(resB.password === password){
+            token = generate_token(resA.username,resB.email);
+            res.send(token);
+        } 
         else throw [401,"Password is not correct"];
     }).catch(reason =>{
         console.log(reason);
@@ -122,12 +122,18 @@ app.post('/api/user/google_login',function(req,res){
 
     //var username = "sebbes";
     //var googleID = "123234543234543";
+    console.log("Server received google login")
     database_helper.user.get_google_user(username,googleID)
     .then(function(exists){
         if (exists) return database_helper.user.get_user(username);
         else throw [401, "User does not exist, not a google user?"];})
     .then(database_helper.user.get_user(username)
-    .then(function(user){ res.send(user);}))
+    .then(function(user){ 
+        console.log("Everything went ok");
+        console.log(user);
+        token = generate_token(user.username,user.email);
+        res.send({'token': token });
+    }))
     .catch(reason => {
         console.log(reason);
         res.statusCode = reason[0];

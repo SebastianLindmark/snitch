@@ -21,9 +21,11 @@ export class AuthenticationService {
   }
 
   loginGoogleAccount(username : string, googleID : string){
+    console.log("Sending login request");
     var request = this.http.post<User>(this.BASE_URL + '/api/user/google_login',{username: username, googleID : googleID});
-      return request.map((res : User) => {  
-        return res;
+      return request.map((res : any) => {
+        console.log("received login response");
+        return res.token;
       }
     );
   }
@@ -45,7 +47,7 @@ export class AuthenticationService {
 
 // ...
 public isAuthenticated(): boolean {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('user-token');
   if(token){
     return !this.jwtHelper.isTokenExpired(token);
   } else {
