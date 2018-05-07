@@ -41,6 +41,8 @@ app.route('/').get((req, res) => {
     res.send("Welcome")
 });
 
+
+
 app.post('/protected/hello',function(req,res){
     console.log("This is nice");
     res.send("This path is only accessible by authenticated users");
@@ -54,7 +56,7 @@ function generate_token(username,email){
         email: email,
     };
 
-    var token = jwt.sign(profile, "secret", { expiresIn: 35 }); // 60*5 minutes
+    var token = jwt.sign(profile, "secret", { expiresIn: 60 * 60 * 24 }); // 60*5 minutes
     return token;
 }
 
@@ -103,7 +105,7 @@ app.route('/api/user/custom_login').post((req,res) => {
         if(!resB) throw [401,"User is a google user"];
         else if(resB.password === password){
             token = generate_token(resA.username,resB.email);
-            res.send(token);
+            res.send({'token' : token});
         } 
         else throw [401,"Password is not correct"];
     }).catch(reason =>{
@@ -132,6 +134,7 @@ app.post('/api/user/google_login',function(req,res){
         console.log("Everything went ok");
         console.log(user);
         token = generate_token(user.username,user.email);
+        console.log(token);
         res.send({'token': token });
     }))
     .catch(reason => {
@@ -171,8 +174,9 @@ app.route('/api/user/google_signup').post((req,res) => {
 
 
 app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
-    var username = req.username;
-
+    
+    var username = req.user.username;
+    console.log("Username " + req.user.username);
 
     database_helper.user.exists_user(username).then(function(user){
         if(user) res.send(user);

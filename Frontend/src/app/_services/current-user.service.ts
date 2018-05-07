@@ -18,7 +18,8 @@ export class CurrentUserService {
       console.log("Loading current user");
       userRequest.getCurrentUser(savedToken).subscribe(data => {
         console.log("Received current user response");
-        var jsonUser = JSON.parse(data);
+        console.log(data);
+        var jsonUser = data;
         var user = new User(jsonUser.id, jsonUser.email, jsonUser.username);
         this.setUser(user);
       });
@@ -26,7 +27,6 @@ export class CurrentUserService {
   }
 
   public setUser(u : User){
-    localStorage.setItem("user-token",JSON.stringify(u));  
     this.stateObserver$.next({logged_in : true, user : u});
   }
 

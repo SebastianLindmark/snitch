@@ -25,6 +25,8 @@ export class AuthenticationService {
     var request = this.http.post<User>(this.BASE_URL + '/api/user/google_login',{username: username, googleID : googleID});
       return request.map((res : any) => {
         console.log("received login response");
+        
+        localStorage.setItem("user-token",res.token);  
         return res.token;
       }
     );
