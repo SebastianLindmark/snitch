@@ -41,7 +41,7 @@ app.route('/').get((req, res) => {
     res.send("Welcome")
 });
 
-app.get('/protected/hello',function(req,res){
+app.post('/protected/hello',function(req,res){
     console.log("This is nice");
     res.send("This path is only accessible by authenticated users");
 });
@@ -170,8 +170,23 @@ app.route('/api/user/google_signup').post((req,res) => {
 });
 
 
+app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
+    var username = req.username;
+
+
+    database_helper.user.exists_user(username).then(function(user){
+        if(user) res.send(user);
+        else throw [401,"User does not exist"];
+    }).catch(reason => {
+        console.log(reason);
+        res.statusCode = reason[0];
+        res.send(reason[1]);
+    });
+
+});
+
 app.route('/get_user').get((req, res) => {
-    var username = req.body.username;
+    var username = req.body.token;
     
     //username ="sebbe";
 

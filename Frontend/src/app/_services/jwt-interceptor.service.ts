@@ -18,11 +18,13 @@ export class JwtInterceptorService implements HttpInterceptor{
     
     if(userToken != null){
       console.log("Interceptor service, applying token");
+      console.log(userToken);
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${userToken}`
+          Authorization: "Bearer " + userToken
         }
       });
+      console.log(request);
     }
     return next.handle(request);
   }

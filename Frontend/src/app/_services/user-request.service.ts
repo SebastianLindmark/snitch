@@ -13,7 +13,7 @@ export class UserRequestService {
 
 
   getCurrentUser(token : string){
-    var request = this.http.post<User>(this.BASE_URL + '/get_user',{token: token});
+    var request = this.http.post<User>(this.BASE_URL + '/protected/hello',{});
     return request.map((res : any) => {  
       return res;
     }
