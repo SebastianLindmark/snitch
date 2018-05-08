@@ -44,8 +44,8 @@ module.exports = {
         console.log("Creating tables");
         db.run('CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT UNIQUE, username TEXT UNIQUE);');
         db.run('CREATE TABLE password(id INTEGER PRIMARY KEY, password TEXT, FOREIGN KEY(id) REFERENCES user(id));');
-        db.run('CREATE TABLE googleuser(id INTEGER PRIMARY KEY, token TEXT UNIQUE, FOREIGN KEY(id) REFERENCES user(id));')
-        db.run('CREATE TABLE streamkey(id INTEGER PRIMARY KEY, key TEXT UNIQUE, FOREIGN KEY(id) REFERENCES user(id));')
+        db.run('CREATE TABLE googleuser(id INTEGER PRIMARY KEY, token TEXT UNIQUE, FOREIGN KEY(id) REFERENCES user(id));');
+        db.run('CREATE TABLE streamkey(id INTEGER PRIMARY KEY, key TEXT UNIQUE, FOREIGN KEY(id) REFERENCES user(id));');
     }
 }
 

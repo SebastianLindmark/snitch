@@ -30,6 +30,8 @@ import { JwtHelper } from 'angular2-jwt';
 import {UserRequestService} from './_services/user-request.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorService } from './_services/jwt-interceptor.service';
+import { SettingsService } from './_services/settings.service';
+import { StreamsettingsComponent } from './streamsettings/streamsettings.component';
 
 
 @NgModule({
@@ -50,7 +52,8 @@ import { JwtInterceptorService } from './_services/jwt-interceptor.service';
     Tab,
     ProfilesettingsComponent,
     ChatComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    StreamsettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,7 @@ import { JwtInterceptorService } from './_services/jwt-interceptor.service';
     HttpClientModule,
     RoutingModule
   ],
-  providers: [AuthenticationService, HttpClient, CurrentUserService, AuthGuardService, JwtHelper, UserRequestService, {
+  providers: [AuthenticationService, SettingsService, HttpClient, CurrentUserService, AuthGuardService, JwtHelper, UserRequestService, {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,
     multi: true
