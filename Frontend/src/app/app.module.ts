@@ -30,6 +30,8 @@ import { JwtHelper } from 'angular2-jwt';
 import {UserRequestService} from './_services/user-request.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorService } from './_services/jwt-interceptor.service';
+import { ChannelGuardService } from './channel-guard.service';
+import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 
 
 @NgModule({
@@ -59,7 +61,7 @@ import { JwtInterceptorService } from './_services/jwt-interceptor.service';
     HttpClientModule,
     RoutingModule
   ],
-  providers: [AuthenticationService, HttpClient, CurrentUserService, AuthGuardService, JwtHelper, UserRequestService, {
+  providers: [AuthenticationService, HttpClient, CurrentUserService, AuthGuardService, ChannelGuardService, JwtHelper, UserRequestService, {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,
     multi: true

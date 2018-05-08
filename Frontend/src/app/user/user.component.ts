@@ -1,4 +1,6 @@
 import { Component, OnInit} from '@angular/core';
+import {UserRequestService} from '../_services/user-request.service'
+import {Router, ActivatedRouteSnapshot, ActivatedRoute} from '@angular/router'
 import flvjs from 'flv.js';
 
 
@@ -13,11 +15,13 @@ export class UserComponent implements OnInit {
   public url : string[];
   public streamKey = "streamkey"
   public chatOpen = true;
-  constructor() { }
+  constructor(private route: ActivatedRoute, private userRequest : UserRequestService) { 
+    this.username = this.route.snapshot.url[1].toString();
+    console.log(this.username);
+  }
 
   ngOnInit() {
-    this.url = window.location.toString().split("/");
-    this.username = this.url[this.url.length - 1];
+
   }
   
   ngAfterViewInit(){

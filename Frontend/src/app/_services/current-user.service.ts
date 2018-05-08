@@ -10,7 +10,7 @@ export class CurrentUserService {
 
   private stateObserver$ = new BehaviorSubject<any>({loggedIn: false, user : null});
 
-  constructor(private userRequest : UserRequestService, private authentication : AuthenticationService) { 
+  constructor(private userRequest : UserRequestService) { 
     var savedToken = localStorage.getItem("user-token")
     
     if(savedToken != null ){
@@ -31,8 +31,7 @@ export class CurrentUserService {
   }
 
 
-  public removeUser(){
-    localStorage.removeItem("user-token");
+  public logoutUser(){
     this.stateObserver$.next({loggedIn : false, user : null});
   }
 

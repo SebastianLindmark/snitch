@@ -9,6 +9,7 @@ import {
 } from './authguard.service';
 import { HelpComponent } from './help/help.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ChannelGuardService } from './channel-guard.service';
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: '/browse', pathMatch: 'full' },
@@ -16,7 +17,8 @@ export const ROUTES: Routes = [
   { path: 'help', component: HelpComponent },
   { 
     path: 'channel/:username',
-    component: UserComponent
+    component: UserComponent,
+    canActivate: [ChannelGuardService]
   },
   { 
     path: 'settings',
