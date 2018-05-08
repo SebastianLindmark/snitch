@@ -122,19 +122,13 @@ app.post('/api/user/google_login',function(req,res){
     var username = req.body.username;
     var googleID = req.body.googleID;
 
-    //var username = "sebbes";
-    //var googleID = "123234543234543";
-    console.log("Server received google login")
     database_helper.user.get_google_user(username,googleID)
     .then(function(exists){
         if (exists) return database_helper.user.get_user(username);
         else throw [401, "User does not exist, not a google user?"];})
     .then(database_helper.user.get_user(username)
     .then(function(user){ 
-        console.log("Everything went ok");
-        console.log(user);
         token = generate_token(user.username,user.email);
-        console.log(token);
         res.send({'token': token });
     }))
     .catch(reason => {
@@ -160,7 +154,9 @@ app.route('/api/user/google_signup').post((req,res) => {
             return database_helper.user.insert_google_user(email,username,googleID);
         }
         else{
-            throw [401, "User already exists"];
+            //The user is already registered. This is ok.
+            //The returned value is currently not used but could be in future. 
+            return database_helper.user.get_google_user(email,googleID);
         } 
     })
     .then(function(row) {
