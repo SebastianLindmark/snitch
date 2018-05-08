@@ -5,6 +5,7 @@ const app = express();
 var expressJwt = require("express-jwt");
 var jwt = require("jsonwebtoken");
 var Promise = require("promise");
+var rand = require("random-key");
 
 app.use(express.json())
 app.use(express.urlencoded());
@@ -41,13 +42,35 @@ app.route('/').get((req, res) => {
     res.send("Welcome")
 });
 
-
-
-app.post('/protected/hello',function(req,res){
+app.get('/protected/hello',function(req,res){
     console.log("This is nice");
     res.send("This path is only accessible by authenticated users");
 });
 
+app.get('/protected/get_stream_key', function(req,res){
+    var username = req.body.username;
+
+    database_helper.user.get_streamkey(username).then(function(exists){
+        if(!exists){
+            var new_key = generate_streamkey;
+            return database_helper.user.insert_streamkey(username, new_key);
+        } else {
+            return exists;
+        }
+    }).then(function(result){
+        res.send(result);
+    }).catch(reason => {
+        res.statusCode = reason[0];
+        res.send(reason[1]);
+    });
+
+});
+
+function generate_streamkey(){
+    var stream_key = "snitch_live_"
+    stream_key += rand.generate(20);
+    return stream_key;
+}
 
 
 function generate_token(username,email){
@@ -56,7 +79,7 @@ function generate_token(username,email){
         email: email,
     };
 
-    var token = jwt.sign(profile, "secret", { expiresIn: 60 * 60 * 24 }); // 60*5 minutes
+    var token = jwt.sign(profile, "secret", { expiresIn: 35 });
     return token;
 }
 
@@ -64,11 +87,7 @@ function generate_token(username,email){
 app.route('/api/user/custom_signup').post((req,res) => {
     var email = req.body.email;
 	var username = req.body.username;
-    var password = req.body.password;	
-
-    //email = "sebbe.lindmark@gmail.com";
-    //username ="sebbe";
-    //password = "password";
+    var password = req.body.password;
 
     database_helper.user.exists_user(username).then(function(exists){
         if(!exists) return database_helper.user.insert_user(email,username,password);
@@ -86,9 +105,6 @@ app.route('/api/user/custom_signup').post((req,res) => {
 app.route('/api/user/custom_login').post((req,res) => {
     var username = req.body.username;
     var password = req.body.password;	
-
-    //username = "sebbe"
-    //password = "passwords"
     
     var step1 = database_helper.user.exists_user(username)
     .then(function(exists){
@@ -105,7 +121,7 @@ app.route('/api/user/custom_login').post((req,res) => {
         if(!resB) throw [401,"User is a google user"];
         else if(resB.password === password){
             token = generate_token(resA.username,resB.email);
-            res.send({'token' : token});
+            res.send(token);
         } 
         else throw [401,"Password is not correct"];
     }).catch(reason =>{
@@ -122,12 +138,15 @@ app.post('/api/user/google_login',function(req,res){
     var username = req.body.username;
     var googleID = req.body.googleID;
 
+    console.log("Server received google login")
     database_helper.user.get_google_user(username,googleID)
     .then(function(exists){
         if (exists) return database_helper.user.get_user(username);
         else throw [401, "User does not exist, not a google user?"];})
     .then(database_helper.user.get_user(username)
     .then(function(user){ 
+        console.log("Everything went ok");
+        console.log(user);
         token = generate_token(user.username,user.email);
         res.send({'token': token });
     }))
@@ -143,9 +162,6 @@ app.route('/api/user/google_signup').post((req,res) => {
     var username = req.body.username;
     var email = req.body.email;
     var googleID = req.body.googleID; 
-    //username = "sebbe"
-    //email = "sebbe.lindmark@gmail.com"
-    //googleID = "123234543234543"
     
     database_helper.user.get_user(username,googleID)
     .then(function(exists){ 
@@ -154,9 +170,7 @@ app.route('/api/user/google_signup').post((req,res) => {
             return database_helper.user.insert_google_user(email,username,googleID);
         }
         else{
-            //The user is already registered. This is ok.
-            //The returned value is currently not used but could be in future. 
-            return database_helper.user.get_google_user(email,googleID);
+            throw [401, "User already exists"];
         } 
     })
     .then(function(row) {
@@ -169,26 +183,8 @@ app.route('/api/user/google_signup').post((req,res) => {
 });
 
 
-app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
-    
-    var username = req.user.username;
-    console.log("Username " + req.user.username);
-
-    database_helper.user.exists_user(username).then(function(user){
-        if(user) res.send(user);
-        else throw [401,"User does not exist"];
-    }).catch(reason => {
-        console.log(reason);
-        res.statusCode = reason[0];
-        res.send(reason[1]);
-    });
-
-});
-
 app.route('/get_user').get((req, res) => {
-    var username = req.body.token;
-    
-    //username ="sebbe";
+    var username = req.body.username;
 
     database_helper.user.exists_user(username).then(function(user){
         if(user) res.send(user);
