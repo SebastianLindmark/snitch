@@ -12,7 +12,12 @@
       <app-searchbar></app-searchbar>
     </ul>
     
-    <button type="button" class="btn btn-outline-success my-2 my-sm-0 mr-2 custom-button" (click)="clickedLogIn()">Log In</button>
-    <button type="button" class="btn btn-outline-success my-2 my-sm-0 custom-button" (click)="clickedSignUp()">Sign Up</button>
+    <button [hidden]="loggedIn" type="button" class="btn btn-outline-success my-2 my-sm-0 mr-2 custom-button" (click)="clickedLogIn()">Log In</button>
+    <button [hidden]="loggedIn" type="button" class="btn btn-outline-success my-2 my-sm-0 custom-button" (click)="clickedSignUp()">Sign Up</button>
+    <div [hidden]="!loggedIn" class="user-container" routerLinkActive="active" routerLink="{{'/channel/' + user.username}}">
+      <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
+      <a class="custom-tab-button">{{user.username}}</a>
+    </div>
+    
   </div>
 </nav>

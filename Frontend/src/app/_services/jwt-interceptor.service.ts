@@ -17,14 +17,11 @@ export class JwtInterceptorService implements HttpInterceptor{
     var userToken = localStorage.getItem("user-token");
     
     if(userToken != null){
-      console.log("Interceptor service, applying token");
-      console.log(userToken);
       request = request.clone({
         setHeaders: {
           Authorization: "Bearer ".concat(userToken)
         }
       });
-      console.log(request);
     }
     return next.handle(request);
   }

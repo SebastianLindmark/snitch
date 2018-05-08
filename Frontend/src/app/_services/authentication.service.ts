@@ -14,7 +14,8 @@ export class AuthenticationService {
 
   loginCustomUser(username : string, password : string){
       var request = this.http.post<User>(this.BASE_URL + '/api/user/custom_login',{username: username, password : password});
-      return request.map((res : User) => {  
+      return request.map((res : any) => {  
+        localStorage.setItem("user-token",res.token);  
         return res;
       }
     );

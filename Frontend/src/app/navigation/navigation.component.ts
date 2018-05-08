@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrentUserService } from '../_services/current-user.service';
+import { User } from '../_models/user';
 
 @Component({
   selector: 'app-navigation',
@@ -13,11 +14,19 @@ export class NavigationComponent implements OnInit {
 
   public closeWindow = false;
 
+  public loggedIn = false;
+  public user = new User(undefined,undefined,undefined);
+
   constructor(private currentUser :CurrentUserService) { }
 
 
   ngOnInit() {
-    this.currentUser.registerState().subscribe(user => {});
+    this.currentUser.registerState().subscribe(result => {
+      this.loggedIn = result.loggedIn;
+      if(result.loggedIn){
+        this.user = result.user;
+      }
+    });
   }
 
   clickedLogIn(){

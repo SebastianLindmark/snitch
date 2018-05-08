@@ -51,9 +51,10 @@ export class SignInComponent implements OnInit {
 
 
   login(loginFunction){
-    loginFunction.subscribe(data => {
-      console.log("Logged in user");
-      this.currentUser.setUser(data);
+    loginFunction.subscribe(response => {
+      console.log("Received user token");
+      console.log(response.token);
+      this.currentUser.loadUser(response.token);
       this.closeThisComponent();
     },
     error => {
@@ -69,12 +70,14 @@ export class SignInComponent implements OnInit {
   }
 
   customLogIn(username,password){
+    console.log("Custom login");
       var loginFunction = this.authentication.loginCustomUser(this.username,this.password);
       this.login(loginFunction);
   }
 
 
   customRegister(username, email,password){
+    console.log("Custom register");
     var registerFunction = this.authentication.registerCustomUser(username,email,password).subscribe(data => {
       this.customLogIn(username,password);
     },

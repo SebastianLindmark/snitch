@@ -21,7 +21,7 @@
 
   <div *ngIf="displaySignIn; else signUpBlock" class="form-signin">
 
-    <form (ngSubmit)="customLogIn()" #loginForm="ngForm">
+    <form (ngSubmit)="customLogIn()" #loginForm="ngForm">                                                                     
 
       <p class="font-weight text-left">Username</p>
       <input [(ngModel)]="username" type="text" id="login-username" name="username" class="form-control custom-input" required

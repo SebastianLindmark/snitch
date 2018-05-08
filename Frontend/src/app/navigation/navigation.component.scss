@@ -64,6 +64,11 @@ a {
     border-color: #A80000 !important;
 }
 
+.user-container{
+    margin-right: 7px;
+    cursor: pointer;
+}
+
 .navbar-collapse {
     height: 50px;
 }
@@ -72,4 +77,14 @@ app-searchbar {
     display: block;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.custom-tab-button{
+    font-size: 16px;
+}
+
+.profile-icon{
+    height: 25px;
+    width: 25px;
+    margin: auto 0;
 }

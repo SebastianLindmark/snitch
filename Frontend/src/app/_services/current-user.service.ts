@@ -8,35 +8,35 @@ import { UserRequestService } from './user-request.service';
 @Injectable()
 export class CurrentUserService {
 
-  private stateObserver$ = new BehaviorSubject<any>({logged_in: false, user : null});
+  private stateObserver$ = new BehaviorSubject<any>({loggedIn: false, user : null});
 
   constructor(private userRequest : UserRequestService, private authentication : AuthenticationService) { 
     var savedToken = localStorage.getItem("user-token")
     
-    
     if(savedToken != null ){
-      console.log("Loading current user");
-      userRequest.getCurrentUser(savedToken).subscribe(data => {
-        console.log("Received current user response");
-        console.log(data);
-        var jsonUser = data;
-        var user = new User(jsonUser.id, jsonUser.email, jsonUser.username);
-        this.setUser(user);
-      });
+      this.loadUser(savedToken);
     }
   }
 
   public setUser(u : User){
-    this.stateObserver$.next({logged_in : true, user : u});
+    this.stateObserver$.next({loggedIn : true, user : u});
+  }
+
+  public loadUser(token){
+    this.userRequest.getCurrentUser(token).subscribe(data => {
+      var jsonUser = data;
+      var user = new User(jsonUser.id, jsonUser.email, jsonUser.username);
+      this.setUser(user);
+    });
   }
 
 
   public removeUser(){
     localStorage.removeItem("user-token");
-    this.stateObserver$.next({logged_in : false, user : null});
+    this.stateObserver$.next({loggedIn : false, user : null});
   }
 
-  public registerState() : Observable<User>{
+  public registerState() : Observable<any>{
     return this.stateObserver$;
   }
 
