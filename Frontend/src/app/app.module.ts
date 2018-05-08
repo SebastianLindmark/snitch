@@ -32,6 +32,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorService } from './_services/jwt-interceptor.service';
 import { SettingsService } from './_services/settings.service';
 import { StreamsettingsComponent } from './streamsettings/streamsettings.component';
+import { ChannelGuardService } from './channel-guard.service';
+import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 
 
 @NgModule({
@@ -62,7 +64,7 @@ import { StreamsettingsComponent } from './streamsettings/streamsettings.compone
     HttpClientModule,
     RoutingModule
   ],
-  providers: [AuthenticationService, SettingsService, HttpClient, CurrentUserService, AuthGuardService, JwtHelper, UserRequestService, {
+  providers: [AuthenticationService, SettingsService, HttpClient, CurrentUserService, AuthGuardService, ChannelGuardService, JwtHelper, UserRequestService, {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,
     multi: true

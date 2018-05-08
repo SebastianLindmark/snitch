@@ -52,8 +52,6 @@ export class SignInComponent implements OnInit {
 
   login(loginFunction){
     loginFunction.subscribe(response => {
-      console.log("Received user token");
-      console.log(response.token);
       this.currentUser.loadUser(response.token);
       this.closeThisComponent();
     },

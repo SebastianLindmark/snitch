@@ -4,13 +4,14 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 import { User } from '../_models/user';
 import { JwtHelper } from 'angular2-jwt';
+import {CurrentUserService} from '../_services/current-user.service'
 
 @Injectable()
 export class AuthenticationService {
 
   private BASE_URL = "http://localhost:8000";
 
-  constructor(private http : HttpClient, public jwtHelper: JwtHelper) {   }
+  constructor(private currentUserService : CurrentUserService, private http : HttpClient, public jwtHelper: JwtHelper) {   }
 
   loginCustomUser(username : string, password : string){
       var request = this.http.post<User>(this.BASE_URL + '/api/user/custom_login',{username: username, password : password});
@@ -25,8 +26,6 @@ export class AuthenticationService {
     console.log("Sending login request");
     var request = this.http.post<User>(this.BASE_URL + '/api/user/google_login',{username: username, googleID : googleID});
       return request.map((res : any) => {
-        console.log("received login response");
-        
         localStorage.setItem("user-token",res.token);  
         return res.token;
       }
@@ -46,6 +45,11 @@ export class AuthenticationService {
       return res;
     }
   );
+}
+
+logoutUser(){
+  localStorage.removeItem("user-token");
+  this.currentUserService.logoutUser();
 }
 
 // ...

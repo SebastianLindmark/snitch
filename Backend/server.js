@@ -88,7 +88,11 @@ function generate_token(username,email){
 app.route('/api/user/custom_signup').post((req,res) => {
     var email = req.body.email;
 	var username = req.body.username;
+<<<<<<< HEAD
+    var password = req.body.password;	
+=======
     var password = req.body.password;
+>>>>>>> a72d9c5bceb07f7364b907f993ba4716089294ec
 
     database_helper.user.exists_user(username).then(function(exists){
         if(!exists) return database_helper.user.insert_user(email,username,password);
@@ -197,8 +201,11 @@ app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
 
 });
 
-app.route('/get_user').get((req, res) => {
-    var username = req.body.username;
+<<<<<<< HEAD
+app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
+    
+    var username = req.user.username;
+    console.log("Username " + req.user.username);
 
     database_helper.user.exists_user(username).then(function(user){
         if(user) res.send(user);
@@ -208,8 +215,28 @@ app.route('/get_user').get((req, res) => {
         res.statusCode = reason[0];
         res.send(reason[1]);
     });
-    
+
 });
+
+=======
+app.route('/get_user').get((req, res) => {
+    var username = req.body.username;
+>>>>>>> a72d9c5bceb07f7364b907f993ba4716089294ec
+
+app.post('/get_user',function(req,res){
+    var username = req.body.username;
+    console.log("Retreiving user " + username);
+    database_helper.user.exists_user(username).then(function(user){
+        if(user) res.send(user);
+        else throw [404,"User does not exist"];
+    }).catch(reason => {
+        console.log(reason);
+        res.statusCode = reason[0];
+        res.send(reason[1]);
+    });
+
+});
+
 
 app.route('/api/test/add').get((req,res) => {
     database_helper.user.insert_user("sebbe@gmail.com","sebbe","passw");
