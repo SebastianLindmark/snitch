@@ -66,10 +66,6 @@ app.route('/api/user/custom_signup').post((req,res) => {
 	var username = req.body.username;
     var password = req.body.password;	
 
-    //email = "sebbe.lindmark@gmail.com";
-    //username ="sebbe";
-    //password = "password";
-
     database_helper.user.exists_user(username).then(function(exists){
         if(!exists) return database_helper.user.insert_user(email,username,password);
         else throw [401,"Unable to signup, user already exists"];
@@ -185,21 +181,21 @@ app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
 
 });
 
-app.route('/get_user').get((req, res) => {
-    var username = req.body.token;
-    
-    //username ="sebbe";
 
+app.post('/get_user',function(req,res){
+    var username = req.body.username;
+    console.log("Retreiving user " + username);
     database_helper.user.exists_user(username).then(function(user){
         if(user) res.send(user);
-        else throw [401,"User does not exist"];
+        else throw [404,"User does not exist"];
     }).catch(reason => {
         console.log(reason);
         res.statusCode = reason[0];
         res.send(reason[1]);
     });
-    
+
 });
+
 
 app.route('/api/test/add').get((req,res) => {
     database_helper.user.insert_user("sebbe@gmail.com","sebbe","passw");
