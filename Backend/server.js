@@ -80,11 +80,7 @@ function generate_token(username,email){
         email: email,
     };
 
-<<<<<<< HEAD
-    var token = jwt.sign(profile, "secret", { expiresIn: 60*60*24 });
-=======
     var token = jwt.sign(profile, "secret", { expiresIn: 60 * 60 * 24 }); // 60*5 minutes
->>>>>>> 079ae2f66a63e2176187fb7df4f54718dda9d380
     return token;
 }
 
@@ -171,14 +167,9 @@ app.route('/api/user/google_signup').post((req,res) => {
             return database_helper.user.insert_google_user(email,username,googleID);
         }
         else{
-<<<<<<< HEAD
-            //A google user already exists, this is ok. Just return the user
-            return database_helper.user.get_google_user(username,googleID)
-=======
             //The user is already registered. This is ok.
             //The returned value is currently not used but could be in future. 
             return database_helper.user.get_google_user(email,googleID);
->>>>>>> 079ae2f66a63e2176187fb7df4f54718dda9d380
         } 
     })
     .then(function(row) {
