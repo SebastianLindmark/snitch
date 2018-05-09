@@ -1,0 +1,29 @@
+p {
+    color: black !important;
+}
+
+ul {
+
+}
+
+
+ul > li {
+    color: black;
+    border-radius: 0px;
+    border-color: rgb(216, 216, 216);
+
+}
+
+ul > li:hover {
+    background-color: rgb(250, 250, 250);
+    color: black;
+    border-color: rgb(216, 216, 216);
+    cursor: pointer;
+}
+
+.active {
+    cursor: initial;
+    background-color: rgb(250, 250, 250);
+    border-radius: 0px;
+    border-color: rgb(216, 216, 216);
+}
