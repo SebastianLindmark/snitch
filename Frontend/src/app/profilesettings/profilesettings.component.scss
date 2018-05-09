@@ -1,0 +1,45 @@
+.settings-container {
+    width: 100%;
+    height: 100px;
+    padding: 20px;
+    
+}
+
+.settings-title {
+    margin-bottom: 10px;
+    border-bottom: 1px solid gray;
+    font-size: 18px;
+    margin-right: auto;
+    width: 450px;
+}
+
+.settings-button {
+    border-radius: 0px;
+    background-color: white;
+    border: 1px solid gray;
+    height: 35px;
+    width: 80px;
+    padding: 0;
+    color: black;
+}
+
+#new-username {
+    width: 300px;
+    height: 35px;
+    border-radius: 0px;
+    background-color: white;
+    margin-right: 5px;
+}
+
+.alert-box {
+    width: 300px;
+    border-radius: 0px;
+    height: 35px;
+    padding: 0;
+    line-height: 35px;
+}
+
+#new-username:focus {
+    box-shadow: none;
+    border-color: firebrick;
+}
