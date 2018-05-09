@@ -79,7 +79,7 @@ function generate_token(username,email){
         email: email,
     };
 
-    var token = jwt.sign(profile, "secret", { expiresIn: 35 });
+    var token = jwt.sign(profile, "secret", { expiresIn: 60*60*24 });
     return token;
 }
 
@@ -87,11 +87,7 @@ function generate_token(username,email){
 app.route('/api/user/custom_signup').post((req,res) => {
     var email = req.body.email;
 	var username = req.body.username;
-<<<<<<< HEAD
     var password = req.body.password;	
-=======
-    var password = req.body.password;
->>>>>>> a72d9c5bceb07f7364b907f993ba4716089294ec
 
     database_helper.user.exists_user(username).then(function(exists){
         if(!exists) return database_helper.user.insert_user(email,username,password);
@@ -174,7 +170,8 @@ app.route('/api/user/google_signup').post((req,res) => {
             return database_helper.user.insert_google_user(email,username,googleID);
         }
         else{
-            throw [401, "User already exists"];
+            //A google user already exists, this is ok. Just return the user
+            return database_helper.user.get_google_user(username,googleID)
         } 
     })
     .then(function(row) {
@@ -187,9 +184,7 @@ app.route('/api/user/google_signup').post((req,res) => {
 });
 
 
-<<<<<<< HEAD
 app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
-    
     var username = req.user.username;
     console.log("Username " + req.user.username);
 
@@ -204,10 +199,6 @@ app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
 
 });
 
-=======
-app.route('/get_user').get((req, res) => {
-    var username = req.body.username;
->>>>>>> a72d9c5bceb07f7364b907f993ba4716089294ec
 
 app.post('/get_user',function(req,res){
     var username = req.body.username;
