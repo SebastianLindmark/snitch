@@ -10,18 +10,13 @@ import flvjs from 'flv.js';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit {
+export class UserComponent  {
   public username: string;
   public url : string[];
   public streamKey = "streamkey"
   public chatOpen = true;
   constructor(private route: ActivatedRoute, private userRequest : UserRequestService) { 
     this.username = this.route.snapshot.url[1].toString();
-    console.log(this.username);
-  }
-
-  ngOnInit() {
-
   }
   
   ngAfterViewInit(){
@@ -29,7 +24,7 @@ export class UserComponent implements OnInit {
       var videoElement = <HTMLMediaElement>document.getElementById('videoElement');
       var flvPlayer = flvjs.createPlayer({
           type: 'flv',
-          url: 'http://localhost:8080/live/' + this.streamKey + '.flv' 
+          url: 'http://localhost:8080/live/' + this.streamKey + '.flv'           
       });
       flvPlayer.attachMediaElement(videoElement);
       flvPlayer.load();
