@@ -13,27 +13,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/protected', expressJwt({secret: "secret"}));
 
-const NodeMediaServer = require('node-media-server');
-
-const config = {
-    rtmp: {
-      port: 1935,
-      chunk_size: 60000,
-      gop_cache: true,
-      ping: 60,
-      ping_timeout: 30
-    },
-    http: {
-      port: 8080,
-      mediaroot: './media',
-      allow_origin: '*'
-    }
-  };
-   
-  var nms = new NodeMediaServer(config)
-  nms.run();
 
 var database_helper = require("./database_helper");
+var nms = require("./nms");
+nms.start();
+
 database_helper.reset_database();
 
 var hostPort = 8000;
