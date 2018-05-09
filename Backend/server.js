@@ -46,14 +46,15 @@ app.get('/protected/hello',function(req,res){
     console.log("This is nice");
     res.send("This path is only accessible by authenticated users");
 });
-
-app.get('/protected/get_stream_key', function(req,res){
-    var username = req.body.username;
-
+ 
+// TODO: Make more beautiful!
+app.post('/get_stream_key',expressJwt({secret: 'secret'}),function(req,res){
+    var username = req.user.username;
     database_helper.user.get_streamkey(username).then(function(exists){
         if(!exists){
-            var new_key = generate_streamkey;
-            return database_helper.user.insert_streamkey(username, new_key);
+            var new_key = generate_streamkey();
+            database_helper.user.insert_streamkey(username, new_key);
+            return {key: new_key};
         } else {
             return exists;
         }
@@ -68,7 +69,7 @@ app.get('/protected/get_stream_key', function(req,res){
 
 function generate_streamkey(){
     var stream_key = "snitch_live_"
-    stream_key += rand.generate(20);
+    stream_key += rand.generate(50);
     return stream_key;
 }
 
@@ -79,7 +80,11 @@ function generate_token(username,email){
         email: email,
     };
 
+<<<<<<< HEAD
     var token = jwt.sign(profile, "secret", { expiresIn: 60*60*24 });
+=======
+    var token = jwt.sign(profile, "secret", { expiresIn: 60 * 60 * 24 }); // 60*5 minutes
+>>>>>>> 079ae2f66a63e2176187fb7df4f54718dda9d380
     return token;
 }
 
@@ -121,7 +126,7 @@ app.route('/api/user/custom_login').post((req,res) => {
         if(!resB) throw [401,"User is a google user"];
         else if(resB.password === password){
             token = generate_token(resA.username,resB.email);
-            res.send(token);
+            res.send({'token' : token});
         } 
         else throw [401,"Password is not correct"];
     }).catch(reason =>{
@@ -138,20 +143,16 @@ app.post('/api/user/google_login',function(req,res){
     var username = req.body.username;
     var googleID = req.body.googleID;
 
-    console.log("Server received google login")
     database_helper.user.get_google_user(username,googleID)
     .then(function(exists){
         if (exists) return database_helper.user.get_user(username);
         else throw [401, "User does not exist, not a google user?"];})
     .then(database_helper.user.get_user(username)
     .then(function(user){ 
-        console.log("Everything went ok");
-        console.log(user);
         token = generate_token(user.username,user.email);
         res.send({'token': token });
     }))
     .catch(reason => {
-        console.log(reason);
         res.statusCode = reason[0];
         res.send(reason[1]);
     })
@@ -170,8 +171,14 @@ app.route('/api/user/google_signup').post((req,res) => {
             return database_helper.user.insert_google_user(email,username,googleID);
         }
         else{
+<<<<<<< HEAD
             //A google user already exists, this is ok. Just return the user
             return database_helper.user.get_google_user(username,googleID)
+=======
+            //The user is already registered. This is ok.
+            //The returned value is currently not used but could be in future. 
+            return database_helper.user.get_google_user(email,googleID);
+>>>>>>> 079ae2f66a63e2176187fb7df4f54718dda9d380
         } 
     })
     .then(function(row) {
@@ -183,6 +190,21 @@ app.route('/api/user/google_signup').post((req,res) => {
     })
 });
 
+app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
+    
+    var username = req.user.username;
+    console.log("Username " + req.user.username);
+
+    database_helper.user.exists_user(username).then(function(user){
+        if(user) res.send(user);
+        else throw [401,"User does not exist"];
+    }).catch(reason => {
+        console.log(reason);
+        res.statusCode = reason[0];
+        res.send(reason[1]);
+    });
+
+});
 
 app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
     var username = req.user.username;

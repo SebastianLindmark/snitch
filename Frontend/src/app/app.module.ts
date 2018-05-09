@@ -30,6 +30,8 @@ import { JwtHelper } from 'angular2-jwt';
 import {UserRequestService} from './_services/user-request.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorService } from './_services/jwt-interceptor.service';
+import { SettingsService } from './_services/settings.service';
+import { StreamsettingsComponent } from './streamsettings/streamsettings.component';
 import { ChannelGuardService } from './channel-guard.service';
 import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 
@@ -52,7 +54,8 @@ import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
     Tab,
     ProfilesettingsComponent,
     ChatComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    StreamsettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,7 @@ import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
     HttpClientModule,
     RoutingModule
   ],
-  providers: [AuthenticationService, HttpClient, CurrentUserService, AuthGuardService, ChannelGuardService, JwtHelper, UserRequestService, {
+  providers: [AuthenticationService, SettingsService, HttpClient, CurrentUserService, AuthGuardService, ChannelGuardService, JwtHelper, UserRequestService, {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,
     multi: true
