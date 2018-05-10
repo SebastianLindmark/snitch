@@ -40,8 +40,9 @@ module.exports = {
         db.run('DROP TABLE IF EXISTS game;');
         db.run('DROP TABLE IF EXISTS country;');
         db.run('DROP TABLE IF EXISTS channel;');
-        db.run('DROP TABLE IF EXISTS live;');
+        db.run('DROP TABLE IF EXISTS stream;');
         db.run('DROP TABLE IF EXISTS follower;');
+        db.run('DROP TABLE IF EXISTS stream_config;');
         db.run('DROP TABLE IF EXISTS user;',this.create_tables);
     },
 
@@ -55,15 +56,16 @@ module.exports = {
         db.run('CREATE TABLE game(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, url TEXT);');
         db.run('CREATE TABLE country(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE);');
 
-        db.run('CREATE TABLE channel(id INTEGER PRIMARY KEY, game INTEGER, title TEXT, biography TEXT, country INTEGER, FOREIGN KEY(country) REFERENCES country(id),FOREIGN KEY(id) REFERENCES user(id), FOREIGN KEY(game) REFERENCES game(id));');
-        db.run('CREATE TABLE live(id INTEGER PRIMARY KEY, viewers INTEGER, FOREIGN KEY(id) REFERENCES user(id));');
+        db.run('CREATE TABLE channel(id INTEGER PRIMARY KEY, biography TEXT,FOREIGN KEY(id) REFERENCES user(id));');
+        db.run('CREATE TABLE stream(id INTEGER PRIMARY KEY, viewers INTEGER, FOREIGN KEY(id) REFERENCES user(id));');
+        db.run('CREATE TABLE stream_config(id INTEGER PRIMARY KEY, game INTEGER,title TEXT, FOREIGN KEY(id) REFERENCES stream(id),FOREIGN KEY(game) REFERENCES channel(id));');
         db.run('CREATE TABLE follower(user INTEGER, following INTEGER, PRIMARY KEY(user, following), FOREIGN KEY(user) REFERENCES user(id),FOREIGN KEY(following) REFERENCES user(id));', insert_test_data);
     }
 }
 
 function insert_test_data(){
     console.log("Inserting test data");
-    var games = ["Fortnite, League of Ledgends", "Overwatch", "PLAYERSUNKNOWN'S BATTLEGROUNDS","Dota 2", "Hearthstone","GTA V"]
+    var games = ["Fortnite, League of Legends", "Overwatch", "PLAYERSUNKNOWN'S BATTLEGROUNDS","Dota 2", "Hearthstone","GTA V"]
     var image_urls = ["https://static-cdn.jtvnw.net/ttv-boxart/Fortnite-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/League%20of%20Legends-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/Overwatch-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/PLAYERUNKNOWN%27S%20BATTLEGROUNDS-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Dota%202-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Hearthstone-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Grand%20Theft%20Auto%20V-285x380.jpg"]
     var countries = ["USA","Sweden","Ireland","Italy","France","Finland","Norway"]
 

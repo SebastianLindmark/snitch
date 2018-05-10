@@ -20,8 +20,13 @@ module.exports = {
         });
    },
 
-    get_user : function(username){
+    get_user : function(username){ 
         var query = `SELECT * FROM user WHERE username = "${username}"`;
+        return db_conn.get(query);
+    },
+
+    get_user_id : function(id){
+        var query = `SELECT * FROM user WHERE id = "${id}"`;
         return db_conn.get(query);
     },
 

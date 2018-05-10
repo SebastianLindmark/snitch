@@ -15,6 +15,7 @@ app.use('/protected', expressJwt({secret: "secret"}));
 
 
 var database_helper = require("./database_helper");
+
 var nms = require("./nms");
 nms.start();
 
