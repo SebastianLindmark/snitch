@@ -17,7 +17,7 @@ export class SettingsService {
   getStreamKey(){
     var request = this.http.post<User>(this.BASE_URL + '/get_stream_key',{});
     return request.map((res : any) => {  
-      return res.key;
+      return res.result.key;
     }
   );
 }
