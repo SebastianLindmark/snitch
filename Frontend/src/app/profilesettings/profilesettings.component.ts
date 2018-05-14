@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../_services/settings.service';
+import { UserRequestService } from '../_services/user-request.service';
 
 @Component({
   selector: 'profilesettings',
@@ -10,20 +11,20 @@ export class ProfilesettingsComponent implements OnInit {
 
   public username = "";
 
-  constructor(private settings : SettingsService) { }
+  constructor(private settings : SettingsService, private userService : UserRequestService) { }
 
   ngOnInit() {
   }
 
   changeUserName(){
-      var streamKeyFunction = this.settings.getStreamKey();
-      streamKeyFunction.subscribe(response => {
-        console.log(response);
-      },
-      error => {
-        console.log(error);
-        console.log("not retreive key");
-      }
+    var request = this.userService.getUser(this.username);
+    var updateUsername = this.settings.updateUser(this.username);
+    request.subscribe(response => {
+      console.log(response);
+    },
+    error => {
+      
+    }
     );
   }
 }
