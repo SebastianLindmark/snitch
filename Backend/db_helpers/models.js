@@ -13,7 +13,11 @@ const User = sequelize.define('user', {
     },
     username: {
         type: Sequelize.STRING,
-        unique : true
+        unique : true,
+        set(val){
+            this.setDataValue('username', val);
+            //this.save();
+        }
     }
   });
 
