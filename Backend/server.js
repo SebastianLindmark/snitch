@@ -14,15 +14,12 @@ app.use('/protected', expressJwt({secret: "secret"}));
 
 var models = require('./db_helpers/models')
 var user_sequelize = require('./db_helpers/user_sequelize');
-//models.create();
-
 var database_helper = require("./database_helper");
 
 var nms = require("./nms");
 nms.start();
 
 database_helper.reset_database();
-
 var hostPort = 8000;
 
 app.route('/').get((req, res) => {
@@ -34,20 +31,7 @@ app.get('/protected/hello',function(req,res){
     res.send("This path is only accessible by authenticated users");
 });
  
-<<<<<<< HEAD
-// TODO: Make more beautiful!
-
-app.post('/protected/update_username', function(req, res){
-    var username = req.user.username;
-    var newusername = req.body.username;
-
-    database_helper.user.
-});
-
 app.post('/protected/get_stream_key', function(req,res){
-=======
-app.post('/get_stream_key',expressJwt({secret: 'secret'}),function(req,res){
->>>>>>> 646f02d038a1224662b68a54d1e553bcaad6954e
     var username = req.user.username;
 
     models.User.findOne({where : {username:username}})
