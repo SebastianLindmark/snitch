@@ -14,15 +14,12 @@ app.use('/protected', expressJwt({secret: "secret"}));
 
 var models = require('./db_helpers/models')
 var user_sequelize = require('./db_helpers/user_sequelize');
-//models.create();
-
 var database_helper = require("./database_helper");
 
 var nms = require("./nms");
 nms.start();
 
 database_helper.reset_database();
-
 var hostPort = 8000;
 
 app.route('/').get((req, res) => {
@@ -61,7 +58,7 @@ app.post('/get_user_stream_key', function(req, res){
         else throw ["User does not exist"]
     }).then(function(streamkey){
         if(streamkey !== null) res.send({'success' : true, 'result' : streamkey})
-        else console.log("User has no streamkey")
+        else res.send({'success' : false, 'result' : 'User has no streamkey'})
     }).catch(function(err){
         console.log(err)
         res.statusCode = 404
