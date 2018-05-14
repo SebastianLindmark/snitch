@@ -15,11 +15,17 @@ export class SettingsService {
   }
 
   getStreamKey(){
-    var request = this.http.post<User>(this.BASE_URL + '/get_stream_key',{});
+    var request = this.http.post<User>(this.BASE_URL + '/protected/get_stream_key',{});
     return request.map((res : any) => {  
-      return res.key;
-    }
-  );
-}
+        return res.key;
+      }
+    );
+  }
+  changeUsername(username : string){
+      var request = this.http.post<User>(this.BASE_URL + '/change_username', {username : username});
+      return request.map((res : any) => {
+        return res;
+      });
+  }
 
 }

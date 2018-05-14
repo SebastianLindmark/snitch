@@ -32,7 +32,15 @@ app.get('/protected/hello',function(req,res){
 });
  
 // TODO: Make more beautiful!
-app.post('/get_stream_key',expressJwt({secret: 'secret'}),function(req,res){
+
+app.post('/protected/update_username', function(req, res){
+    var username = req.user.username;
+    var newusername = req.body.username;
+
+    database_helper.user.
+});
+
+app.post('/protected/get_stream_key', function(req,res){
     var username = req.user.username;
     database_helper.user.get_streamkey(username).then(function(exists){
         if(!exists){

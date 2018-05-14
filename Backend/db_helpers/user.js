@@ -5,17 +5,15 @@ var db_conn = require("./db_conn");
 module.exports = {
 
    get_streamkey : function(username){
-       var query = `SELECT id FROM user WHERE username = "${username}"`;
-       return db_conn.get(query).then(function(row){
-           query = `SELECT key FROM streamkey WHERE id="${row.id}"`;
+       return this.get_user(username).then(function(row){
+           var query = `SELECT key FROM streamkey WHERE id="${row.id}"`;
            return db_conn.get(query);
        });
    },
 
    insert_streamkey : function(username, key){
-        var query = `SELECT id FROM user WHERE username = "${username}"`;
-        return db_conn.get(query).then(function(row){
-            query = `INSERT INTO streamkey(id,key) VALUES ("${row.id}","${key}")`;
+        return this.get_user(username).then(function(row){
+            var query = `INSERT INTO streamkey(id,key) VALUES ("${row.id}","${key}")`;
             return db_conn.insert(query);
         });
    },
