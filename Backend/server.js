@@ -59,7 +59,7 @@ app.post('/get_user_stream_key', function(req, res){
         else throw ["User does not exist"]
     }).then(function(streamkey){
         if(streamkey !== null) res.send({'success' : true, 'result' : streamkey})
-        else console.log("User has no streamkey")
+        else res.send({'success' : false, 'result' : 'User has no streamkey'})
     }).catch(function(err){
         console.log(err)
         res.statusCode = 404
