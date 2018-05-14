@@ -19,6 +19,8 @@ var nms = new NodeMediaServer(config)
 
 
 function onStreamBegin(id,streamPath, args){
+  
+
     console.log("HELLO " + streamPath);
 };
 
