@@ -26,6 +26,9 @@ export class SettingsService {
 
 updateUser(username : string){
   var request = this.http.post<User>(this.BASE_URL + '/protected/update_username',{username : username});
+  return request.map((res : any) => {
+    return res;
+  });
 }
 
 }

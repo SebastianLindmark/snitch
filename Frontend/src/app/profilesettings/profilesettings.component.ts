@@ -23,7 +23,12 @@ export class ProfilesettingsComponent implements OnInit {
       console.log(response);
     },
     error => {
-      
+      updateUsername.subscribe( response => {
+        console.log(response);
+      },
+      error => {
+
+      });
     }
     );
   }

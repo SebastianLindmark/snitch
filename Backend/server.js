@@ -36,17 +36,16 @@ app.get('/protected/hello',function(req,res){
  
 
 app.post('/protected/update_username', function(req, res){
-    var oldUsername = req.user.username;
+    var username = req.user.username;
     var newusername = req.body.username;
-    models.User.findOne({where : {username : oldUsername}})
+    models.User.findOne({where : {username : username}})
     .then(function(user){
-        if(user !== null) return user.setUsername(newusername)
+        if(user !== null) return user.set('username', newusername)
         else throw ["User does not exist"]
     }).then(function(result){
-        if(user !== null){
-            res.statusCode = 200
-            res.send({'success' : true})
-        }
+        console.log(result);
+        res.statusCode = 200
+        res.send({'success' : true})
     }).catch(function(err){
         console.log(err)
         res.statusCode = 404
