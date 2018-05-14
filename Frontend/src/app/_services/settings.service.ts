@@ -19,7 +19,13 @@ export class SettingsService {
     return request.map((res : any) => {  
       return res.result.key;
     }
-  );
+    );
+
+  }
+
+
+updateUser(username : string){
+  var request = this.http.post<User>(this.BASE_URL + '/protected/update_username',{username : username});
 }
 
 }

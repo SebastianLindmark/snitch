@@ -39,20 +39,43 @@ app.get('/protected/hello',function(req,res){
     res.send("This path is only accessible by authenticated users");
 });
  
-<<<<<<< HEAD
-// TODO: Make more beautiful!
 
 app.post('/protected/update_username', function(req, res){
-    var username = req.user.username;
+    var oldUsername = req.user.username;
     var newusername = req.body.username;
-
-    database_helper.user.
+    models.User.findOne({where : {username : oldUsername}})
+    .then(function(user){
+        if(user !== null) return user.setUsername(newusername)
+        else throw ["User does not exist"]
+    }).then(function(result){
+        if(user !== null){
+            res.statusCode = 200
+            res.send({'success' : true})
+        }
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 404
+        res.send({'success' : false, 'reason' : err})
+    })
 });
 
-app.post('/protected/get_stream_key', function(req,res){
-=======
-app.post('/get_stream_key',expressJwt({secret: 'secret'}),function(req,res){
->>>>>>> 646f02d038a1224662b68a54d1e553bcaad6954e
+app.post('/get_user_stream_key', function(req, res){
+    var username = req.body.username;
+    models.User.findOne({where : {username:username}})
+    .then(function(user){
+        if(user !== null) return user.getStreamKey()
+        else throw ["User does not exist"]
+    }).then(function(streamkey){
+        if(streamkey !== null) res.send({'success' : true, 'result' : streamkey})
+        else console.log("User has no streamkey")
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 404
+        res.send({'success' : false, 'reason' : err})
+    })
+});
+
+app.post('/protected/get_stream_key',function(req,res){
     var username = req.user.username;
 
     models.User.findOne({where : {username:username}})

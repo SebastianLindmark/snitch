@@ -11,6 +11,12 @@ export class UserRequestService {
 
   constructor(private http : HttpClient) { }
 
+  getUserStreamKey(username : string){
+    var request = this.http.post<User>(this.BASE_URL + '/get_user_stream_key', {username : username});
+    return request.map((res : any) => {
+      return res.result.key;
+    });
+  }
 
   getUser(username : string){
     var request = this.http.post<User>(this.BASE_URL + '/get_user',{username : username});

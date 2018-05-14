@@ -13,23 +13,32 @@ import flvjs from 'flv.js';
 export class UserComponent  {
   public username: string;
   public url : string[];
-  public streamKey = "streamkey"
+  public streamKey = "";
   public chatOpen = true;
+
   constructor(private route: ActivatedRoute, private userRequest : UserRequestService) { 
     this.username = this.route.snapshot.url[1].toString();
   }
   
   ngAfterViewInit(){
-    if (flvjs.isSupported()) {
-      var videoElement = <HTMLMediaElement>document.getElementById('videoElement');
-      var flvPlayer = flvjs.createPlayer({
-          type: 'flv',
-          url: 'http://localhost:8080/live/' + this.streamKey + '.flv'           
-      });
-      flvPlayer.attachMediaElement(videoElement);
-      flvPlayer.load();
-      flvPlayer.play();
-    } 
+    var request = this.userRequest.getUserStreamKey(this.username);
+    request.subscribe(response => {
+      this.streamKey = response;
+      if (flvjs.isSupported()) {
+        var videoElement = <HTMLMediaElement>document.getElementById('videoElement');
+        var flvPlayer = flvjs.createPlayer({
+            type: 'flv',
+            url: 'http://localhost:8080/live/' + this.streamKey + '.flv'           
+        });
+        flvPlayer.attachMediaElement(videoElement);
+        flvPlayer.load();
+        flvPlayer.play();
+      } 
+    },
+    error => {
+      console.log(error);
+      console.log("not retreive key");
+    });
   }
 
   toggleChat(){
