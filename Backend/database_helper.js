@@ -7,6 +7,6 @@ module.exports = {
     channel : require("./db_helpers/channel"),
 
     reset_database : function(){
-        this.database.drop_tables();
+        //this.database.drop_tables();
     }
 };
