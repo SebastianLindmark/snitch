@@ -15,7 +15,7 @@ export class SettingsService {
   }
 
   getStreamKey(){
-    var request = this.http.post<User>(this.BASE_URL + '/get_stream_key',{});
+    var request = this.http.post<User>(this.BASE_URL + '/protected/get_stream_key',{});
     return request.map((res : any) => {  
       return res.result.key;
     }

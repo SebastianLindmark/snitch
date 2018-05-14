@@ -34,7 +34,20 @@ app.get('/protected/hello',function(req,res){
     res.send("This path is only accessible by authenticated users");
 });
  
+<<<<<<< HEAD
+// TODO: Make more beautiful!
+
+app.post('/protected/update_username', function(req, res){
+    var username = req.user.username;
+    var newusername = req.body.username;
+
+    database_helper.user.
+});
+
+app.post('/protected/get_stream_key', function(req,res){
+=======
 app.post('/get_stream_key',expressJwt({secret: 'secret'}),function(req,res){
+>>>>>>> 646f02d038a1224662b68a54d1e553bcaad6954e
     var username = req.user.username;
 
     models.User.findOne({where : {username:username}})
