@@ -158,7 +158,7 @@ function insert_static_data(){
 
 
 
-models = {'sequelize' : sequelize, 'User' : User, 'Password' : Password, "GoogleUser" : GoogleUser, "StreamKey" : StreamKey, "insertStaticData" : insert_static_data}
+models = {'sequelize' : sequelize, 'User' : User, 'Password' : Password, "GoogleUser" : GoogleUser, "StreamKey" : StreamKey, "Stream" : Stream, "StreamConfig": StreamConfig, "insertStaticData" : insert_static_data}
 module.exports = models
 
 

@@ -13,13 +13,8 @@ app.use(bodyParser.json());
 app.use('/protected', expressJwt({secret: "secret"}));
 
 var models = require('./db_helpers/models')
-
-
-
-
 var user_sequelize = require('./db_helpers/user_sequelize');
 //models.create();
-
 
 var database_helper = require("./database_helper");
 
@@ -112,7 +107,6 @@ app.post('/api/user/google_login',function(req,res){
     var username = req.body.username;
     var googleID = req.body.googleID;
 
-    
     var userPromise = models.User.findOne({where : {username:username}})
 
     userPromise.then(function(user){
