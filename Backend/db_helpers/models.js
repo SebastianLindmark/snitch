@@ -111,11 +111,17 @@ const User = sequelize.define('user', {
 User.hasOne(Password, {as : "Password",foreignKey: 'userId'}) //userId will be added in Password model
 
 User.hasOne(GoogleUser, {as : "GoogleUser", foreignKey: 'userId'})
-User.hasOne(StreamKey, {as : "StreamKey", foreignKey: 'userId'})
+User.hasOne(StreamKey, {as : "StreamKey", foreignKey: 'userId',through: 'UserKeyStream'})
+StreamKey.belongsTo(User, {through: 'UserKeyStream'});
 
 User.hasOne(Channel, {as : "Channel", foreignKey: 'userId'})
 User.hasOne(Stream, {as : "Stream", foreignKey:'userId'})
-Stream.hasOne(StreamConfig, {as : "StreamConfig", foreignKey: 'userId'})
+
+//Stream.hasOne(StreamConfig, {as : "StreamConfig", foreignKey: 'userId'})
+
+Stream.hasOne(StreamKey, {through: 'KeyStream'});
+//StreamKey.belongsTo(Stream, {through: 'KeyStream'});
+
 
 Game.hasMany(StreamConfig) //Is this correct?
 
@@ -158,7 +164,7 @@ function insert_static_data(){
 
 
 
-models = {'sequelize' : sequelize, 'User' : User, 'Password' : Password, "GoogleUser" : GoogleUser, "StreamKey" : StreamKey, "Stream" : Stream, "StreamConfig": StreamConfig, "insertStaticData" : insert_static_data}
+models = {'sequelize' : sequelize, 'User' : User, 'Password' : Password, "GoogleUser" : GoogleUser, "StreamKey" : StreamKey, "Stream" : Stream, "StreamConfig": StreamConfig, "StreamKey" : StreamKey,"insertStaticData" : insert_static_data}
 module.exports = models
 
 
