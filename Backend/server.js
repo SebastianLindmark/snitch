@@ -117,6 +117,7 @@ app.route('/api/user/custom_signup').post((req,res) => {
     user_sequelize.create_user(email,username,password).then(function(){
         res.send({'success' : true, 'result' : "Successfully created user"})
     }).catch(function(err){
+        console.log(err);
         res.statusCode = 404
         res.send({'success' : false, 'reason' : err})
     })
