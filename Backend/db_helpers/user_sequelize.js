@@ -20,6 +20,11 @@ module.exports = {
             var user = userPromise.value();
             user.setPassword(password)
             return password;
+        }).then(function(password){
+            return models.StreamConfig.create({biography : "", live: false, viewers : 0})
+        }).then(function(streamConfig){
+            var user = userPromise.value()[0]
+            return user.setStreamConfig(streamConfig)
         })
     },
 
@@ -32,6 +37,11 @@ module.exports = {
             var user = userPromise.value()[0];
             googleUser = googleUser[0]
             return user.setGoogleUser(googleUser)
+        }).then(function(password){
+            return models.StreamConfig.create({biography : "", live: false, viewers : 0})
+        }).then(function(streamConfig){
+            var user = userPromise.value()[0]
+            return user.setStreamConfig(streamConfig)
         })
     },
 

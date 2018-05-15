@@ -105,7 +105,17 @@ const User = sequelize.define('user', {
     //db.run('CREATE TABLE stream_config(id INTEGER PRIMARY KEY, game INTEGER,title TEXT, FOREIGN KEY(id) REFERENCES stream(id),FOREIGN KEY(game) REFERENCES channel(id));');
 
     const StreamConfig = sequelize.define('streamconfig', {
+       biography : {
+            type: Sequelize.STRING
+       },
+
+       live : {
+           type:Sequelize.BOOLEAN
+       },
        
+        viewers : {
+           type: Sequelize.INTEGER
+       }
     });
 
 
@@ -115,16 +125,16 @@ const User = sequelize.define('user', {
 User.hasOne(Password, {as : "Password",foreignKey: 'userId'}) //userId will be added in Password model
 
 User.hasOne(GoogleUser, {as : "GoogleUser", foreignKey: 'userId'})
-User.hasOne(StreamKey, {as : "StreamKey", foreignKey: 'userId',through: 'UserKeyStream'})
-StreamKey.belongsTo(User, {through: 'UserKeyStream'});
+User.hasOne(StreamKey, {as : "StreamKey", foreignKey: 'userId'})
 
 User.hasOne(Channel, {as : "Channel", foreignKey: 'userId'})
-User.hasOne(Stream, {as : "Stream", foreignKey:'userId'})
+
+User.hasOne(StreamConfig, {as : "StreamConfig", foreignKey:'userId'})
 
 //Stream.hasOne(StreamConfig, {as : "StreamConfig", foreignKey: 'userId'})
 
-Stream.hasOne(StreamKey, {through: 'KeyStream'});
-//StreamKey.belongsTo(Stream, {through: 'KeyStream'});
+//Stream.hasOne(StreamKey, {through: 'ConfigStream'});
+//StreamConfig.belongsTo(Stream, {through: 'ConfigStream'});
 
 
 Game.hasMany(StreamConfig) //Is this correct?
@@ -168,7 +178,7 @@ function insert_static_data(){
 
 
 
-models = {'sequelize' : sequelize, 'User' : User, 'Password' : Password, "GoogleUser" : GoogleUser, "StreamKey" : StreamKey, "Stream" : Stream, "StreamConfig": StreamConfig, "StreamKey" : StreamKey,"insertStaticData" : insert_static_data}
+models = {'sequelize' : sequelize, 'User' : User, 'Password' : Password, "GoogleUser" : GoogleUser, "StreamKey" : StreamKey, "Stream" : Stream, "StreamConfig": StreamConfig, "insertStaticData" : insert_static_data}
 module.exports = models
 
 

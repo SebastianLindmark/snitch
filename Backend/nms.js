@@ -21,11 +21,10 @@ var nms = new NodeMediaServer(config)
 
 function onStreamBegin(id,streamPath, args){
   streamPath = streamPath.split('/')[2]
-  
+
   models.StreamKey.find({where : {key : streamPath}}).then(function(streamkey){
     return streamkey.getUser()
   }).then(function(user){
-    
   })
 
 };
