@@ -16,7 +16,7 @@ const User = sequelize.define('user', {
         unique : true,
         set(val){
             this.setDataValue('username', val);
-            //this.save();
+            this.save();
         }
     }
   });

@@ -17,19 +17,12 @@ export class ProfilesettingsComponent implements OnInit {
   }
 
   changeUserName(){
-    var request = this.userService.getUser(this.username);
     var updateUsername = this.settings.updateUser(this.username);
-    request.subscribe(response => {
-      console.log(response);
-    },
-    error => {
       updateUsername.subscribe( response => {
-        console.log(response);
+        localStorage.setItem('user-token', response.token);
       },
       error => {
 
       });
-    }
-    );
   }
 }

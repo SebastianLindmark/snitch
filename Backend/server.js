@@ -35,14 +35,25 @@ app.get('/protected/hello',function(req,res){
 app.post('/protected/update_username', function(req, res){
     var username = req.user.username;
     var newusername = req.body.username;
-    models.User.findOne({where : {username : username}})
+    
+    var userPromise = models.User.findOne({where : {username : username}})
+    return userPromise
     .then(function(user){
-        if(user !== null) return user.set('username', newusername)
-        else throw ["User does not exist"]
-    }).then(function(result){
-        console.log(result);
-        res.statusCode = 200
-        res.send({'success' : true})
+        if(user !== null){
+            return models.User.findOne({where : {username : newusername}});
+        } 
+        else throw ['User does not exist']
+    }).then(function(newuser){
+        if(newuser !== null){
+            res.statusCode = 200
+            res.send({'success' : false})
+        } else {
+            var user = userPromise.value();
+            var email = user.get('email');
+            token = generate_token(newusername, email);
+            res.statusCode = 200    
+            res.send({'success' : true, 'token' : token})
+        }
     }).catch(function(err){
         console.log(err)
         res.statusCode = 404
@@ -102,7 +113,6 @@ app.route('/api/user/custom_signup').post((req,res) => {
     var email = req.body.email;
 	var username = req.body.username;
     var password = req.body.password;	
-
 
     user_sequelize.create_user(email,username,password).then(function(){
         res.send({'success' : true, 'result' : "Successfully created user"})
