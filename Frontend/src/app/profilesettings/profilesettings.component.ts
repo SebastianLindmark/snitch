@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../_services/settings.service';
 import { UserRequestService } from '../_services/user-request.service';
+import { CurrentUserService } from '../_services/current-user.service';
 
 @Component({
   selector: 'profilesettings',
@@ -11,7 +12,7 @@ export class ProfilesettingsComponent implements OnInit {
 
   public username = "";
 
-  constructor(private settings : SettingsService, private userService : UserRequestService) { }
+  constructor(private settings : SettingsService, private userService : UserRequestService, private currentUser : CurrentUserService) { }
 
   ngOnInit() {
   }
@@ -19,7 +20,10 @@ export class ProfilesettingsComponent implements OnInit {
   changeUserName(){
     var updateUsername = this.settings.updateUser(this.username);
       updateUsername.subscribe( response => {
-        localStorage.setItem('user-token', response.token);
+        if(response.success){
+          localStorage.setItem('user-token', response.token);
+          this.currentUser.loadUser(response.token);
+        }
       },
       error => {
 

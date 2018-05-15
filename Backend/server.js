@@ -49,6 +49,9 @@ app.post('/protected/update_username', function(req, res){
             res.send({'success' : false})
         } else {
             var user = userPromise.value();
+            user.updateAttributes({
+                username: newusername
+            })
             var email = user.get('email');
             token = generate_token(newusername, email);
             res.statusCode = 200    
