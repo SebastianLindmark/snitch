@@ -32,7 +32,9 @@ export class CurrentUserService {
 
 
   public logoutUser(){
-    this.stateObserver$.next({loggedIn : false, user : null});
+    //this.stateObserver$.next({loggedIn : false, user : null});
+    localStorage.removeItem("user-token");
+    window.location.reload();
   }
 
   public registerState() : Observable<any>{

@@ -17,6 +17,7 @@ export class ProfilesettingsComponent implements OnInit {
   ngOnInit() {
   }
 
+
   changeUserName(){
     var updateUsername = this.settings.updateUser(this.username);
       updateUsername.subscribe( response => {

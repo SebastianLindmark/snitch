@@ -50,6 +50,7 @@ a {
     height: 100%;
     margin-right: 0 !important;
     font-size: 14px;
+    overflow-x: hidden;
 }
 
 .custom-button:hover, .custom-button:active {
@@ -63,6 +64,52 @@ a {
     box-shadow: none !important;
     border-color: #A80000 !important;
 }
+.custom-button.active {
+    background-color: #F63232;
+}
+
+.custom-button.active.active.focus, .custom-button.active.active:focus, .custom-button.active.focus, .custom-button.active:active.focus, .custom-button.active:active:focus, .custom-button.active:focus {
+    outline: 0 !important;
+    background-color: #F63232 !important;
+}
+
+.custom-dropdown {
+    border-radius: 0px;
+    background-color: #A80000;
+    margin-top: 0;
+    width: 200px;
+    padding-left: 0;
+}
+
+
+.custom-dropdown-item {
+    color: white;
+    font-size: 16px;
+    padding: 0;
+    padding: 5px 0px 5px 15px; 
+}
+
+.custom-dropdown-item > div {
+    display: inline-block;
+    height: 100%;
+}
+
+
+.custom-dropdown-item:active, .custom-dropdown-item:hover, .custom-dropdown-item:focus {
+    background-color: #CD0505;
+    border: none;
+    outline: none;
+}
+
+.custom-dropdown-item.active {
+    background-color: #A80000;
+}
+
+.f-awesome {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
 
 .user-container{
     margin-right: 7px;
