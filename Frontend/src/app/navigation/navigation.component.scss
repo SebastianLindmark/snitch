@@ -37,7 +37,7 @@ a {
     font-size: 32px;
     color: white;
     padding: 0;
-    margin: 0 20px 0 0;
+    margin: 0 20px 0 20px;
 }
 
 .custom-button {
@@ -135,4 +135,79 @@ app-searchbar {
     height: 25px;
     width: 25px;
     margin: auto 0;
+}
+
+.navbar-toggler {
+    border-radius: 0px;
+    color: white;
+    background-color: #D90202;
+    height: 50px;
+    border-left: 1px solid #A80000;
+}
+
+.navbar-toggler:active, .navbar-toggler:focus, .navbar-toggler:hover { 
+    background-color: #F63232 !important;
+    outline: none; 
+    border-left: 1px solid #A80000;
+}
+
+.nav-toggler-icon {
+    font-size: 28px;
+}
+
+@media (max-width: 992px) {
+    .navbar {
+        border-bottom: 1px solid #A80000;
+        padding-left: 0;
+    }
+
+    #desktop-login-button {
+        display: none;
+    }
+
+    #desktop-signup-button {
+        display: none;
+    }
+
+    #desktop-account-button {
+        display: none !important;
+    }
+
+    .navbar-collapse {
+        height: auto;
+        background-color: #A80000;
+        width: 100%;
+        display: block;
+    }
+
+    app-searchbar {
+        display: none;
+    }
+
+    .nav-link {
+        padding-left: 20px;
+        border-bottom: 1px solid #D90202;
+        margin-right: 0;
+    }
+
+    .nav-link:active, .nav-link:focus, .nav-link:hover { 
+        background-color: rgb(180, 0, 0) !important;
+        outline: none; 
+    }
+
+    .nav-link-last {
+        margin-bottom: 10px;
+    }
+
+    .mobile-login-container {
+        margin-left: auto;
+        margin-right: 0;
+        height: 50px;
+    }
+
+    .mobile-login-container button {
+        float: left;
+        border-bottom: 1px solid #D90202;
+    }
+
 }
