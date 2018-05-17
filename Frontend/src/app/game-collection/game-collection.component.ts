@@ -29,7 +29,6 @@ export class GameCollectionComponent implements OnInit {
     },
     error => {
       console.log(error);
-      console.log("not retreive key");
     });
 
     
