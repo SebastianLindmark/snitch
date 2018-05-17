@@ -1,21 +1,48 @@
 <div class="main">
     <div class="col-md-12 background">
-        <img class="profile-icon  embed-responsive" src="https://static-cdn.jtvnw.net/community-images/6a723096-3135-4972-a296-ecd3b08be1ad/fa79e187-6dad-414a-b410-07b11093fc76-1200x180.jpeg">        
+        <img class="profile-icon  embed-responsive" src="{{wide_image_url}}">        
         
-        <div class="col-md-12 overlay embed-responsive">
+        <div class="col-md-12 overlay embed-responsive overflow">
           <div class="row">
             <div class="col-md-8">
-              <div class="game-title-container text-left"> This is my text </div>
+              <div class="game-title-container text-left"> {{name}} </div>
             </div>
             <div class="col-md-4">
-                <img class="game_picture text-right" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
-              
+                <div class ="text-right extra-margin ">
+                  <img class="game_picture" src="{{image_url}}">
+                </div>
             </div>
         </div>
-
         </div>
       </div>
     
-      <div> RÖÖÖV</div>
+      <div class="p-3">
+      <div class="d-flex flex-wrap">
+          <div class="p-2 directory-item" *ngFor="let game of popularGames">
+            <img src="{{game.url}}" routerLinkActive="active" class="img-thumbnail" routerLink="/game/{{game.name}}">
+            <div class="text-left title">{{game.name}}</div>
+            <div class="text-left viewer-count">124,344 viewers</div>
+          </div>
+      
+          
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+          <div class="p-2 directory-item"></div>
+      </div>
 
 </div>

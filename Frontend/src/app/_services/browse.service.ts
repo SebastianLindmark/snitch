@@ -14,8 +14,16 @@ export class BrowseService {
       return res.result;
     }
     );
-
   }
+
+  loadGame(gameName){
+    var request = this.http.post<any>(this.BASE_URL + '/get_game',{game_name:gameName});
+    return request.map((res : any) => {  
+      return res.result;
+    }
+    );
+  }
+
 
 
 }
