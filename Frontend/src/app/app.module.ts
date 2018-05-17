@@ -35,6 +35,7 @@ import { StreamsettingsComponent } from './streamsettings/streamsettings.compone
 import { ChannelGuardService } from './channel-guard.service';
 import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 import { BrowseService } from './_services/browse.service';
+import { GameCollectionComponent } from './game-collection/game-collection.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { BrowseService } from './_services/browse.service';
     ProfilesettingsComponent,
     ChatComponent,
     PageNotFoundComponent,
-    StreamsettingsComponent
+    StreamsettingsComponent,
+    GameCollectionComponent
   ],
   imports: [
     BrowserModule,

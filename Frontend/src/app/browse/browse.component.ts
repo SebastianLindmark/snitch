@@ -28,8 +28,6 @@ export class BrowseComponent implements OnInit {
 
     this.browseService.loadPopularGames().subscribe(response => {
       this.popularGames = response;
-      console.log("THE LENGTH ISS")
-      console.log(this.popularGames)
     },
     error => {
       console.log(error);

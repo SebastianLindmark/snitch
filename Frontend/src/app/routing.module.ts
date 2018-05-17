@@ -10,6 +10,7 @@ import {
 import { HelpComponent } from './help/help.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ChannelGuardService } from './channel-guard.service';
+import { GameCollectionComponent } from './game-collection/game-collection.component';
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: '/browse', pathMatch: 'full' },
@@ -19,6 +20,10 @@ export const ROUTES: Routes = [
     path: 'channel/:username',
     component: UserComponent,
     canActivate: [ChannelGuardService]
+  },
+  { 
+    path: 'game/:name',
+    component: GameCollectionComponent,
   },
   { 
     path: 'settings',
