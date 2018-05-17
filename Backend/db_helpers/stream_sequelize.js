@@ -48,18 +48,10 @@ module.exports = {
     })
     },
 
-    get_online_by_game: function(game){
-        //return models.StreamConfig.findAll()
-        
+    get_online_by_game: function(game){        
         return models.StreamConfig.findAll({where : {live:true},include : 
             [{model: models.Game, as: "Game", where : {'name' : game} }]})
-        
-         //sequelize.query('SELECT * FROM projects ', { model: Projects }).then(projects => {
-            // Each record will now be a instance of Project
-         // })
-
-
-         //return models.Game.findAll({where : {name : game},include : [{model: models.StreamConfig, as: "StreamConfig", where : {live : true}}]})
+    
     }   
 
 }

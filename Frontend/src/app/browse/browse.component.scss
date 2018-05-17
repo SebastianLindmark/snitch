@@ -16,6 +16,9 @@
 .title {
     font-size: 18px;
     margin-left: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden; 
 }
 
 .viewer-count {
