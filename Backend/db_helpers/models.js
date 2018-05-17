@@ -24,7 +24,7 @@ const User = sequelize.define('user', {
         autoIncrement: true 
     },
     pwd: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
     }
   });
 
@@ -34,7 +34,8 @@ const User = sequelize.define('user', {
    
     token: {
         type: Sequelize.STRING,
-        unique : true}
+        unique : true
+    }
   });
 
 
@@ -44,7 +45,8 @@ const User = sequelize.define('user', {
   
     key: {
         type: Sequelize.STRING,
-        unique : true}
+        unique : true
+    }
   });
 
   //db.run('CREATE TABLE channel(id INTEGER PRIMARY KEY, biography TEXT,FOREIGN KEY(id) REFERENCES user(id));');
@@ -53,40 +55,34 @@ const User = sequelize.define('user', {
   const Channel = sequelize.define('channel', {
     
     biography: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
     }
-  });
+  }); 
 
     //db.run('CREATE TABLE stream(id INTEGER PRIMARY KEY, viewers INTEGER, FOREIGN KEY(id) REFERENCES user(id));');
 
-    const Stream = sequelize.define('stream', {
-        
-        viewers: {
-            type: Sequelize.INTEGER,
-        }
-      });
-
-
 
     //db.run('CREATE TABLE game(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, url TEXT);');
+
     const Game = sequelize.define('game', {
         id: { 
-            type: Sequelize.INTEGER, 
-            autoIncrement: true,
-            primaryKey: true
-        },
-        game: {
-            type: Sequelize.STRING,
-            unique: true,
-        },
-        url: {
-            type: Sequelize.STRING,
-        }
-      });
+        type: Sequelize.INTEGER,
+        primaryKey:true,
+        autoIncrement: true 
+    },
+    name: {
+        type: Sequelize.STRING,
+        unique : true
+    },
+    url: {
+        type: Sequelize.STRING
+    }
+    });
+
     
     
     //db.run('CREATE TABLE country(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE);');
-    const Country = sequelize.define('country', {
+   const Country = sequelize.define('country', {
         id: { 
             type: Sequelize.INTEGER, 
             autoIncrement: true,
@@ -94,9 +90,10 @@ const User = sequelize.define('user', {
         },
         name: {
             type: Sequelize.STRING,
-            unique: true,
+            unique: true
         }
-      });
+      }); 
+      
     
     //db.run('CREATE TABLE stream_config(id INTEGER PRIMARY KEY, game INTEGER,title TEXT, FOREIGN KEY(id) REFERENCES stream(id),FOREIGN KEY(game) REFERENCES channel(id));');
 
@@ -116,7 +113,7 @@ const User = sequelize.define('user', {
 
 
     //db.run('CREATE TABLE follower(user INTEGER, following INTEGER, PRIMARY KEY(user, following), FOREIGN KEY(user) REFERENCES user(id),FOREIGN KEY(following) REFERENCES user(id));', insert_test_data);
-
+//UNCOMMENT HERE
 
 User.hasOne(Password, {as : "Password",foreignKey: 'userId'}) //userId will be added in Password model
 
@@ -133,9 +130,12 @@ User.hasOne(StreamConfig, {as : "StreamConfig", foreignKey:'userId'})
 //StreamConfig.belongsTo(Stream, {through: 'ConfigStream'});
 
 
-Game.hasMany(StreamConfig) //Is this correct?
+Game.hasMany(StreamConfig, {as : "StreamConfig", foreignKey: 'game' }) //Is this correct?
+StreamConfig.belongsTo(Game, {as: "Game", foreignKey: 'game'})
 
-Country.hasMany(StreamConfig)
+
+
+Country.hasMany(StreamConfig, {as : "StreamConfig"})
 
 //Set up followers (Many to Many relation)
 //User.belongsToMany(User, {as: 'Following', through: 'followers'});
@@ -143,6 +143,7 @@ Country.hasMany(StreamConfig)
 
 User.hasMany(User, {as : 'Follower'})
 User.hasMany(User, {as : 'Following'})
+//UNCOMMENT HERE
 
 
 //module.exports = User,Password,GoogleUser, StreamKey,Channel,Stream,StreamConfig,Country
@@ -158,12 +159,12 @@ this.test_create_user_with_password(User,Password).then(function(){
 })*/
 
 function insert_static_data(){
-    var games = ["Fortnite, League of Legends", "Overwatch", "PLAYERSUNKNOWN'S BATTLEGROUNDS","Dota 2", "Hearthstone","GTA V"]
+    var games = ["Fortnite", "League of Legends", "Overwatch", "PLAYERSUNKNOWN'S BATTLEGROUNDS","Dota 2", "Hearthstone","GTA V"]
     var image_urls = ["https://static-cdn.jtvnw.net/ttv-boxart/Fortnite-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/League%20of%20Legends-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/Overwatch-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/PLAYERUNKNOWN%27S%20BATTLEGROUNDS-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Dota%202-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Hearthstone-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Grand%20Theft%20Auto%20V-285x380.jpg"]
     var countries = ["USA","Sweden","Ireland","Italy","France","Finland","Norway"]
 
     for(var i = 0; i < games.length; i++){
-        Game.create({game:games[i], url:image_urls[i]})
+        Game.create({name:games[i], url:image_urls[i]})
     }
     
     for(var i = 0; i < games.length; i++){
@@ -174,7 +175,8 @@ function insert_static_data(){
 
 
 
-models = {'sequelize' : sequelize, 'User' : User, 'Password' : Password, "GoogleUser" : GoogleUser, "StreamKey" : StreamKey, "Stream" : Stream, "StreamConfig": StreamConfig, "insertStaticData" : insert_static_data}
+
+models = {'sequelize' : sequelize, 'User' : User, 'Password' : Password, "GoogleUser" : GoogleUser, "StreamKey" : StreamKey,"StreamConfig": StreamConfig, "Game":Game,"Country":Country, "insertStaticData" : insert_static_data}
 module.exports = models
 
 
