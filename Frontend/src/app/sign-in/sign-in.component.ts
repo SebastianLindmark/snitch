@@ -62,8 +62,8 @@ export class SignInComponent implements OnInit {
   );
   }
 
-  googleLogin(username, googleID){
-      var loginFunction = this.authentication.loginGoogleAccount(username,googleID)
+  googleLogin(username, email, googleID){
+      var loginFunction = this.authentication.loginGoogleAccount(username,email, googleID)
       this.login(loginFunction);
   }
 
@@ -88,7 +88,7 @@ export class SignInComponent implements OnInit {
   googleRegister(username,email,googleID){
     var registerFunction = this.authentication.registerGoogleUser(username,email,googleID).subscribe(data => {
       console.log("Registered google user");
-      this.googleLogin(username,googleID);
+      this.googleLogin(username, email, googleID);
     },
     error => {
       console.log("Could not register user");

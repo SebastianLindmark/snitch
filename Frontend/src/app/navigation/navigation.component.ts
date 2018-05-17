@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrentUserService } from '../_services/current-user.service';
 import { User } from '../_models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -17,7 +18,7 @@ export class NavigationComponent implements OnInit {
   public loggedIn = false;
   public user = new User(undefined,undefined,undefined);
 
-  constructor(private currentUser :CurrentUserService) { }
+  constructor(private currentUser :CurrentUserService, private route : Router) { }
 
 
   ngOnInit() {
@@ -41,4 +42,7 @@ export class NavigationComponent implements OnInit {
     this.activateSignInComponent = true;
   }
 
+  clickedLogout(){
+    this.currentUser.logoutUser();
+  }
 }

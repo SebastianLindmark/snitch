@@ -22,9 +22,9 @@ export class AuthenticationService {
     );
   }
 
-  loginGoogleAccount(username : string, googleID : string){
+  loginGoogleAccount(username : string, email : string, googleID : string){
     console.log("Sending login request");
-    var request = this.http.post<User>(this.BASE_URL + '/api/user/google_login',{username: username, googleID : googleID});
+    var request = this.http.post<User>(this.BASE_URL + '/api/user/google_login',{username: username, email : email, googleID : googleID});
       return request.map((res : any) => {
         localStorage.setItem("user-token",res.token);  
         return res.token;
@@ -45,11 +45,6 @@ export class AuthenticationService {
       return res;
     }
   );
-}
-
-logoutUser(){
-  localStorage.removeItem("user-token");
-  this.currentUserService.logoutUser();
 }
 
 // ...

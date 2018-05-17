@@ -155,8 +155,9 @@ app.route('/api/user/custom_login').post((req,res) => {
 app.post('/api/user/google_login',function(req,res){
     var username = req.body.username;
     var googleID = req.body.googleID;
+    var email = req.body.email;
 
-    var userPromise = models.User.findOne({where : {username:username}})
+    var userPromise = models.User.findOne({where : {email:email}})
 
     userPromise.then(function(user){
         if(user !== null){
@@ -165,7 +166,7 @@ app.post('/api/user/google_login',function(req,res){
     }).then(function(googleUser){
         if(googleUser !== null){
             var user = userPromise.value()
-            token = generate_token(user.username,user.email);
+            token = generate_token(user.username, user.email);
             console.log("Everything went fine")
             res.send({'token': token });
         } else throw ["Google user does not exist"]
@@ -182,14 +183,22 @@ app.route('/api/user/google_signup').post((req,res) => {
     var email = req.body.email;
     var googleID = req.body.googleID;
 
-    user_sequelize.create_google_user(email,username,googleID)
-    .then(function(googleuser){
-        res.send({result : "Successfully registered"});
-    }).catch(function(err){
-        console.log(err)
-        res.statusCode = 404
-        res.send({success : false, result : err})
+    models.User.findOne({where : {email : email}})
+    .then(function(user){
+        if(user !== null){
+            res.send({success : false, result : "User already exists"})
+        } else {
+            return user_sequelize.create_google_user(email,username,googleID)
+            .then(function(googleuser){
+                res.send({result : "Successfully registered"});
+            }).catch(function(err){
+                console.log(err)
+                res.statusCode = 404
+                res.send({success : false, result : err})
+            })
+        }
     })
+  
 });
 
 
