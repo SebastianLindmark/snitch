@@ -159,8 +159,8 @@ this.test_create_user_with_password(User,Password).then(function(){
 })*/
 
 function insert_static_data(){
-    var games = ["Fortnite", "League of Legends", "Overwatch", "PLAYERSUNKNOWN'S BATTLEGROUNDS","Dota 2", "Hearthstone","GTA V"]
-    var image_urls = ["https://static-cdn.jtvnw.net/ttv-boxart/Fortnite-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/League%20of%20Legends-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/Overwatch-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/PLAYERUNKNOWN%27S%20BATTLEGROUNDS-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Dota%202-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Hearthstone-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Grand%20Theft%20Auto%20V-285x380.jpg"]
+    var games = ["Fortnite", "League of Legends", "Overwatch", "PLAYERSUNKNOWN'S BATTLEGROUNDS","Dota 2", "Hearthstone","GTA V", "Destiny 2", "Tom Clancy's Rainbox Six"]
+    var image_urls = ["https://static-cdn.jtvnw.net/ttv-boxart/Fortnite-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/League%20of%20Legends-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/Overwatch-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/PLAYERUNKNOWN%27S%20BATTLEGROUNDS-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Dota%202-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Hearthstone-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Grand%20Theft%20Auto%20V-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/Destiny%202-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/Tom%20Clancy%27s%20Rainbow%20Six:%20Siege-285x380.jpg"]
     var countries = ["USA","Sweden","Ireland","Italy","France","Finland","Norway"]
 
     for(var i = 0; i < games.length; i++){

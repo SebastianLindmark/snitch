@@ -231,6 +231,19 @@ app.post('/get_user',function(req,res){
 });
 
 
+
+app.route('/get_games').post((req,res) => {
+    models.Game.findAll().then(function(games){
+        res.send({success : true, result : games})
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 404
+        res.send({success : false, result : err})
+    })
+
+})
+
+
 app.route('/api/test/add').get((req,res) => {
     database_helper.user.insert_user("sebbe@gmail.com","sebbe","passw");
     res.send("Done");
@@ -257,7 +270,6 @@ app.route('/api/test/get1').get((req,res) => {
 });
 
 app.route('/api/test/get2').get((req,res) => {
-    
     
     return stream_sequelize.get_online_by_game("Fortnite")
     .then(function(onlineGames){

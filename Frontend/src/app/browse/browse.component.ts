@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrentUserService } from '../_services/current-user.service';
+import { BrowseService } from '../_services/browse.service';
 
 @Component({
   selector: 'app-browse',
@@ -9,14 +10,33 @@ import { CurrentUserService } from '../_services/current-user.service';
 export class BrowseComponent implements OnInit {
 
   public text = "Please sign in";
+  private popularGames = []
 
-  constructor(private currentUser : CurrentUserService) {
+  constructor(private currentUser : CurrentUserService, private browseService : BrowseService) {
+     
     this.currentUser.registerState().subscribe((response : any) => {
       if(response.logged_in){
+        //customized user content can be loaded here
         this.text = "Welcome " + response.user.username;
       }        
     });
 
+    this.loadPopularGames()
+   }
+
+   loadPopularGames(){
+
+    this.browseService.loadPopularGames().subscribe(response => {
+      this.popularGames = response;
+      console.log("THE LENGTH ISS")
+      console.log(this.popularGames)
+    },
+    error => {
+      console.log(error);
+      console.log("not retreive key");
+    });
+
+    
    }
 
   ngOnInit() {
