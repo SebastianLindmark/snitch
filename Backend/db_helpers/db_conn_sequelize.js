@@ -3,7 +3,7 @@ const sequelize = new Sequelize('database','username','password',{
     host: 'localhost',
     dialect: 'sqlite',
     operatorsAliases: false,
-    logging: false,
+    logging: true,
     pool: {
       max: 5,
       min: 0,

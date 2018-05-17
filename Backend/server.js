@@ -12,8 +12,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/protected', expressJwt({secret: "secret"}));
 
+var rand = require("random-key");
+
 var models = require('./db_helpers/models')
 var user_sequelize = require('./db_helpers/user_sequelize');
+var stream_sequelize = require('./db_helpers/stream_sequelize');
 var database_helper = require("./database_helper");
 
 var nms = require("./nms");
@@ -238,12 +241,33 @@ app.route('/api/test/addg').get((req,res) => {
     res.send("Done");
 });
 
-app.route('/api/test/get').get((req,res) => {
-    database_helper.user.get_user("sebbe",function(response){
-        res.send(response);
-    });
+app.route('/api/test/get1').get((req,res) => {
+    
+    var name = rand.generate(5);
+
+    user_sequelize.create_user("sebbe@gmail.com" + name,"uncleseb" + name,"secret")
+    .then(function(user){
+        return stream_sequelize.create_stream_config(user,"Fortnite","Sweden")
+    }).then(function(result){
+        res.send(result)
+    }).catch(function(err){
+        console.log(err)
+        res.send(err)
+    })
+});
+
+app.route('/api/test/get2').get((req,res) => {
+    
+    
+    return stream_sequelize.get_online_by_game("Fortnite")
+    .then(function(onlineGames){
+        console.log(onlineGames)
+        res.send(onlineGames)
+    })
     
 });
+
+
 
 app.route('/api/test/exists').get((req,res) => {
     database_helper.user.exists_user("sebbe",function(exists){
@@ -258,6 +282,7 @@ app.route('/api/test/exists').get((req,res) => {
     
 });
 
+console.log("About to sync")
 models.sequelize.sync({force:true}).then(function(){
     console.log("Database successfully synced")
     app.listen(hostPort, () => {
