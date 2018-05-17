@@ -243,6 +243,17 @@ app.route('/get_games').post((req,res) => {
 
 })
 
+app.route('/get_game').post((req,res) => {
+    var game = req.body.game_name;
+    models.Game.find({where : {name : game}}).then(function(game){
+        res.send({success:true,result : game})
+    }).catch(function(err){
+        res.statusCode = 404;
+        res.send({success:false,result:err})
+    })
+
+})
+
 
 app.route('/api/test/add').get((req,res) => {
     database_helper.user.insert_user("sebbe@gmail.com","sebbe","passw");
@@ -291,8 +302,9 @@ app.route('/api/test/exists').get((req,res) => {
             res.send("Success");
         }
     });
-    
 });
+
+
 
 console.log("About to sync")
 models.sequelize.sync({force:true}).then(function(){
