@@ -10,7 +10,7 @@
     border-bottom: 1px solid gray;
     font-size: 18px;
     margin-right: auto;
-    width: 450px;
+    max-width: 450px;
 }
 
 .settings-button {
@@ -24,7 +24,7 @@
 }
 
 #new-username {
-    width: 300px;
+    max-width: 300px;
     height: 35px;
     border-radius: 0px;
     background-color: white;
@@ -32,7 +32,7 @@
 }
 
 .alert-box {
-    width: 300px;
+    max-width: 300px;
     border-radius: 0px;
     height: 35px;
     padding: 0;

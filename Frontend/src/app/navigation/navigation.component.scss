@@ -205,9 +205,21 @@ app-searchbar {
         height: 50px;
     }
 
-    .mobile-login-container button {
+    .mobile-login-container .nav-link {
+        border-bottom: 1px solid #D90202;
+    }
+    .mobile-login-container .custom-button {
         float: left;
         border-bottom: 1px solid #D90202;
     }
 
+    .mobile-login-container .custom-dropdown {
+        background-color: rgb(136, 0, 0);
+    } 
+}
+
+@media (min-width: 992px) {
+    .mobile-login-container {
+        display: none;
+    }
 }

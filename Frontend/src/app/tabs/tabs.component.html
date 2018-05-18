@@ -1,5 +1,5 @@
- <div class="row">
- <div style="border-right: 1px solid whitesmoke; padding-right: 2px;" class="col-md-3">
+<div class="row" style="margin: 0;">
+    <div style="border-right: 1px solid whitesmoke; padding-right: 2px;" class="col-md-3">
         <ul id="settings-col" class="list-group p-2" >
             <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active" class="list-group-item">
                 <p>{{tab.title}}</p>

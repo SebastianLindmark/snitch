@@ -18,10 +18,12 @@ export class NavigationComponent implements OnInit {
   public loggedIn = false;
   public user = new User(undefined,undefined,undefined);
 
-  constructor(private currentUser :CurrentUserService, private route : Router) { }
+  public collapse = true;
+
+  constructor(private currentUser :CurrentUserService, private route : Router){}
 
 
-  ngOnInit() {
+  ngOnInit(){
     this.currentUser.registerState().subscribe(result => {
       this.loggedIn = result.loggedIn;
       if(result.loggedIn){
@@ -45,4 +47,13 @@ export class NavigationComponent implements OnInit {
   clickedLogout(){
     this.currentUser.logoutUser();
   }
+
+  toggleCollapse() {
+    this.collapse = !this.collapse;
+  }
+
+  collapseMenu() {
+    this.collapse = true;
+  }
+
 }

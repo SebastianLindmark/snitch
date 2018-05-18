@@ -23,15 +23,16 @@
       </div>      
   </div>
   
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="fa fa-bars nav-toggler-icon"></span>
+  <button (click)="toggleCollapse()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span  class="fa fa-bars nav-toggler-icon">
+    </span>
   </button>
   
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div [hidden]="collapse" class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/browse" >Browse</a></li>
-      <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/help">Help</a></li>
+      <li (click)="collapseMenu()" class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/browse" >Browse</a></li>
+      <li (click)="collapseMenu()" class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/help">Help</a></li>
       <app-searchbar></app-searchbar>
     </ul>
     <button id="desktop-login-button" [hidden]="loggedIn" type="button" class="btn btn-outline-success my-2 my-sm-0 mr-2 custom-button" (click)="clickedLogIn()">Log In</button>
