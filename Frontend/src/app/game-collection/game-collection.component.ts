@@ -19,9 +19,9 @@ export class GameCollectionComponent implements OnInit {
     var urlGame = this.route.snapshot.url[1].toString();
     let game = decodeURI(urlGame);
     this.gameService.loadGame(game).subscribe(response => {
-      this.name = response.name;
-      this.image_url = response.url;
-      this.wide_image_url = response.wide_image_url;
+      this.name = response.result.name;
+      this.image_url = response.result.url;
+      this.wide_image_url = response.result.wide_image_url;
     })
 
     this.gameService.loadPopularGames().subscribe(response => {
