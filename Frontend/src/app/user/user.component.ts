@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import {UserRequestService} from '../_services/user-request.service'
 import {Router, ActivatedRouteSnapshot, ActivatedRoute} from '@angular/router'
 import flvjs from 'flv.js';
+import { BrowseService } from '../_services/browse.service';
 
 
 
@@ -15,8 +16,10 @@ export class UserComponent  {
   public url : string[];
   public streamKey = "";
   public chatOpen = true;
+  public streamTitle = ""
+  private gameInfo;
 
-  constructor(private route: ActivatedRoute, private userRequest : UserRequestService) { 
+  constructor(private route: ActivatedRoute, private userRequest : UserRequestService, private gameRequestService : BrowseService) { 
     this.username = this.route.snapshot.url[1].toString();
   }
   
@@ -39,6 +42,25 @@ export class UserComponent  {
       console.log(error);
       console.log("not retreive key");
     });
+
+
+    this.userRequest.getUserProfile(this.username).subscribe(response => {
+      if(response.success){
+        this.streamTitle = response.result.title;
+        this.loadGameIcon(response.result.game)
+        
+      }
+    })
+  }
+
+  loadGameIcon(game){
+    this.gameRequestService.loadGame(game).subscribe(response => {
+      console.log(response)
+      if(response.success){
+        this.gameInfo = response.result;
+      }
+      
+    })
   }
 
   toggleChat(){

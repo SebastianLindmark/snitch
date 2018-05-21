@@ -7,7 +7,7 @@ import { UserRequestService } from './user-request.service';
 
 @Injectable()
 export class CurrentUserService {
-
+  private user = null;
   private stateObserver$ = new BehaviorSubject<any>({loggedIn: false, user : null});
 
   constructor(private userRequest : UserRequestService) { 
@@ -20,6 +20,11 @@ export class CurrentUserService {
 
   public setUser(u : User){
     this.stateObserver$.next({loggedIn : true, user : u});
+    this.user = u;
+  }
+
+  public getUser(){
+    return this.user;
   }
 
   public loadUser(token){

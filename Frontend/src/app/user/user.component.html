@@ -1,39 +1,51 @@
-
 <div class="main">
-  <div class="row">  
+  <div class="row">
     <div class="col-md-9">
       <ul class="nav nav-tabs">
-          <li role="presentation" class="nav-item" [class.active]=true>
-            <a class="nav-link custom-tab-button">
-              <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
-              <a class="bold-text">{{username}}</a>
-            </a>
-          </li>
-          
-          <li role="presentation" class="nav-item">
-            <a class="nav-link custom-tab-button" >Videos</a>
-          </li>
-          <li role="presentation" class="nav-item">
-              <a class="nav-link custom-tab-button" >Subscribers</a>
-            </li>
-        </ul>
-      </div>
-    
-      <div class="col-md-3">
-          <i id="search-bar-icon" [ngClass]="(chatOpen)?'fa fa-angle-double-right pull-left':'fa fa-angle-double-left pull-right margin-right'" (click)=toggleChat()></i>
-      </div>
+        <li role="presentation" class="nav-item" [class.active]=true>
+          <a class="nav-link custom-tab-button">
+            <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
+            <a class="bold-text">{{username}}</a>
+          </a>
+        </li>
+
+        <li role="presentation" class="nav-item">
+          <a class="nav-link custom-tab-button">Videos</a>
+        </li>
+        <li role="presentation" class="nav-item">
+          <a class="nav-link custom-tab-button">Subscribers</a>
+        </li>
+      </ul>
     </div>
 
+    <div class="col-md-3">
+      <i id="search-bar-icon" [ngClass]="(chatOpen)?'fa fa-angle-double-right pull-left':'fa fa-angle-double-left pull-right margin-right'"
+        (click)=toggleChat()></i>
+    </div>
+  </div>
+
   <div class="row">
-      <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'">
-        <div [ngClass]="(chatOpen)?'player-window embed-responsive embed-responsive-16by9':'player-window embed-responsive embed-responsive-21by9'">
-          <video id="videoElement" class="embed-responsive-item" controls></video>
-        </div>  
+    <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'">
+      <div [ngClass]="(chatOpen)?'player-window embed-responsive embed-responsive-16by9':'player-window embed-responsive embed-responsive-21by9'">
+        <video id="videoElement" class="embed-responsive-item" controls></video>
       </div>
-      <div class="col-md-3" [hidden]="!chatOpen">
-          <div class="chat-window">
-              <app-chat></app-chat>
-          </div>
+    </div>
+    <div class="col-md-3" [hidden]="!chatOpen">
+      <div class="chat-window">
+        <app-chat></app-chat>
       </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="gameInfo">
+    <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'">
+      <div class="game-info-container flex-container">
+        <img src="{{gameInfo.url}}" routerLinkActive="active" class="game-icon img-thumbnail" routerLink="/game/{{gameInfo.name}}">
+        <div class="flex-item">
+          <div class="stream-title"> {{streamTitle}} </div>
+          <div class="game-title"> {{gameInfo.name}} </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

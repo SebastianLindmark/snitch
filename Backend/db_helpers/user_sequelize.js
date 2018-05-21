@@ -20,7 +20,12 @@ module.exports = {
             var user = userPromise.value();
             user.setPassword(password)
             return password;
+        }).then(function(password){
+            return models.StreamConfig.create({title : "", live: false, viewers : 0})
         }).then(function(streamConfig){
+            var user = userPromise.value()[0]
+            return user.setStreamConfig(streamConfig)
+        }).then(function(password){
             return userPromise.value()
         })
     },
@@ -35,7 +40,7 @@ module.exports = {
             googleUser = googleUser[0]
             return user.setGoogleUser(googleUser)
         }).then(function(password){
-            return models.StreamConfig.create({biography : "", live: false, viewers : 0})
+            return models.StreamConfig.create({title : "", live: false, viewers : 0})
         }).then(function(streamConfig){
             var user = userPromise.value()[0]
             return user.setStreamConfig(streamConfig)

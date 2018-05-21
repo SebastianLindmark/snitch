@@ -34,5 +34,20 @@ export class UserRequestService {
   );
 }
 
+updateUserProfile(title, game){
+  var request = this.http.post<User>(this.BASE_URL + '/update_user_profile',{title:title, game_name:game});
+  return request.map((res : any) => {  
+    return res;
+  })
+  
+}
+
+getUserProfile(username){
+  var request = this.http.post<User>(this.BASE_URL + '/get_user_profile',{username:username});
+  return request.map((res : any) => {  
+    return res;
+  })
+}
+
 
 }

@@ -36,6 +36,7 @@ import { ChannelGuardService } from './channel-guard.service';
 import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 import { BrowseService } from './_services/browse.service';
 import { GameCollectionComponent } from './game-collection/game-collection.component';
+import { LivesettingsComponent } from './livesettings/livesettings.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { GameCollectionComponent } from './game-collection/game-collection.compo
     ChatComponent,
     PageNotFoundComponent,
     StreamsettingsComponent,
-    GameCollectionComponent
+    GameCollectionComponent,
+    LivesettingsComponent
   ],
   imports: [
     BrowserModule,

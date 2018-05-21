@@ -91,3 +91,32 @@ $dark-color: #2A6D7A;
     margin-right : 5px;
     cursor: pointer;
 }
+
+.game-icon{
+    height: 100px;
+}
+
+.flex-item{
+    flex-grow: 1;
+}
+
+.flex-container{
+    display: flex;
+}
+
+.stream-title{
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.game-title{
+    font-size: 17px;
+    margin-top: 5px;
+    margin-left: 10px;
+    
+}
+
+.game-info-container{
+    margin-top: 10px;
+    width : 100%;    
+}

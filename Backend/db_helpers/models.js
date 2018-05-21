@@ -101,7 +101,7 @@ const User = sequelize.define('user', {
     //db.run('CREATE TABLE stream_config(id INTEGER PRIMARY KEY, game INTEGER,title TEXT, FOREIGN KEY(id) REFERENCES stream(id),FOREIGN KEY(game) REFERENCES channel(id));');
 
     const StreamConfig = sequelize.define('streamconfig', {
-       biography : {
+       title : {
             type: Sequelize.STRING
        },
 

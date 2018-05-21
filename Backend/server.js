@@ -255,6 +255,79 @@ app.route('/get_game').post((req,res) => {
 })
 
 
+app.post('/update_user_profile',expressJwt({secret: 'secret'}),function(req,res){
+    var username = req.user.username;
+    var gameName = req.body.game_name;
+    var streamTitle = req.body.title;
+    
+    var streamConfigPromise = models.User.find({where : {username : username}}).then(function(user){
+        if(user === null){
+            throw ["User does not exist"]
+        }else{
+            return user.getStreamConfig()
+        }
+    })
+
+    streamConfigPromise.then(function(streamConfig){
+        return models.Game.find({where : {name : gameName}})
+    }).then(function(game){
+        if(game === null){
+            throw ["Game does not exist"]
+        }else{
+            var streamConfig = streamConfigPromise.value()
+            return game.addStreamConfig(streamConfig)
+        }
+    }).then(function(val){
+        var streamConfig = streamConfigPromise.value()
+        streamConfig.updateAttributes({
+            title: streamTitle
+        }) 
+    }).then(function(streamConfig){
+        res.send({success:true,result:"Successfully update profile"})
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 404
+        res.send({success : false, result : err})
+    })
+})
+
+
+app.post('/get_user_profile',function(req,res){
+    var username = req.body.username
+    var streamConfig = models.User.find({where : {username : username}})
+    .then(function(user){
+        if(user !== null){
+            return user.getStreamConfig()
+        }else{
+            throw ["User does not exist"]
+        }
+        
+    });
+    
+    streamConfig.then(function(streamConfig){
+        return streamConfig.getGame()
+    }).then(function(game){
+        var userStreamConfig = streamConfig.value()
+        var data = {'game' :'', 'title' : ''}
+
+        if(game !== null){
+            data['game'] = game.name;     
+        }
+        if(userStreamConfig !== null){
+            data['title'] = userStreamConfig.title;     
+        }
+
+        res.send({success:true,result:data})
+        
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 404;
+        res.send({success:false,result:err})
+    })
+
+});
+
+
 app.route('/api/test/add').get((req,res) => {
     database_helper.user.insert_user("sebbe@gmail.com","sebbe","passw");
     res.send("Done");

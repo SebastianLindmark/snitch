@@ -16,9 +16,15 @@
     text-align: center;
     font-weight: bold;
     color: white;
-    margin-left: 15px;
+    margin-left: 8px;
 }
 
+@media (max-width: 992px) {
+    #game-title-img {
+        display: none;
+    }
+    
+}
 
 .row {
     margin-right: 0px;

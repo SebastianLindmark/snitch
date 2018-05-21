@@ -31,11 +31,10 @@ export class BrowseComponent implements OnInit {
     },
     error => {
       console.log(error);
-      console.log("not retreive key");
     });
-
-    
    }
+
+  
 
   ngOnInit() {
   }
