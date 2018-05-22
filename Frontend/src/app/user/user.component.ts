@@ -59,7 +59,6 @@ export class UserComponent  {
       if(response.success){
         this.gameInfo = response.result;
       }
-      
     })
   }
 

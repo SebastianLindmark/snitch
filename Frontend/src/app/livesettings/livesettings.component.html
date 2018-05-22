@@ -10,7 +10,7 @@
 
 
     <p class="spacing-top component-desc">Game</p>
-    <input [(ngModel)]="gameInput" type="text" id="id-game" name="inp" #gameName="ngModel" #game="ngModel" class="input-width flex-wrap"> 
+    <input [(ngModel)]="gameInput" type="text" (ngModelChange)="gameTextChange()" id="id-game" name="inp" #gameName="ngModel" #game="ngModel" class="input-width flex-wrap"> 
     
     <div [hidden]="!game.hasError('incorrect')" class="input-width alert alert-danger">
         Game is not in our database

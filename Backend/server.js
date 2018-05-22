@@ -2,6 +2,9 @@ const express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 const app = express();
+
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 var expressJwt = require("express-jwt");
 var jwt = require("jsonwebtoken");
 var Promise = require("promise");
@@ -253,6 +256,24 @@ app.route('/get_game').post((req,res) => {
     })
 
 })
+
+app.route('/search_game').post((req,res) => {
+    var game = req.body.game_name;
+    models.Game.find({where : {name : {[Op.like] : game + '%'}}}).then(function(game){
+        if(game !== null){
+            res.send({success:true,result : game})
+        }else{
+            res.send({success:false,result : ""})
+        }
+        
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 404;
+        res.send({success:false,result:err})
+    })
+
+})
+
 
 
 app.post('/update_user_profile',expressJwt({secret: 'secret'}),function(req,res){

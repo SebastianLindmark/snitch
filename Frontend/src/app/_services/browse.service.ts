@@ -24,6 +24,14 @@ export class BrowseService {
     );
   }
 
+  searchGame(gameSubstr){
+    var request = this.http.post<any>(this.BASE_URL + '/search_game',{game_name:gameSubstr});
+    return request.map((res : any) => {  
+      return res;
+    }
+    );
+  }
+
 
   loadUserConfiguredGame(){
     var request = this.http.post<any>(this.BASE_URL + '/get_user_game',{});

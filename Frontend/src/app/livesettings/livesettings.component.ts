@@ -32,6 +32,23 @@ export class LivesettingsComponent implements OnInit {
     })
   }
 
+  gameTextChange(){
+    if(this.gameInput.length > 3){
+      
+      this.gameService.searchGame(this.gameInput).subscribe(response => {
+        if(response.success){
+          var gameName = response.result.name;
+          if(gameName.includes(this.gameInput)){
+            console.log(gameName)
+          }
+
+        }
+      })
+
+    }
+    //{ where: { columnName: { $like: '%awe%' } } }
+  }
+
   loadProfile(username) {
     this.userProfileService.getUserProfile(username).subscribe(response => {
       this.gameInput = response.result.game;
@@ -44,7 +61,7 @@ export class LivesettingsComponent implements OnInit {
 
       this.gameNameElement.control.setErrors(null);
 
-      if (response === null) {
+      if (response === null || !response.result) {
         this.gameNameElement.control.setErrors({ 'incorrect': true })
       } else {
         this.updateProfile()
