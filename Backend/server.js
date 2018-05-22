@@ -361,7 +361,7 @@ app.route('/api/test/addg').get((req,res) => {
 
 app.route('/api/test/get1').get((req,res) => {
     
-    var name = rand.generate(5);
+    var name = rand.generate(1);
 
     user_sequelize.create_user("sebbe@gmail.com" + name,"uncleseb" + name,"secret")
     .then(function(user){
@@ -374,12 +374,15 @@ app.route('/api/test/get1').get((req,res) => {
     })
 });
 
-app.route('/api/test/get2').get((req,res) => {
-    
-    return stream_sequelize.get_online_by_game("Fortnite")
+app.route('/get_online_by_game').post((req,res) => {
+    var game = req.body.game;
+    return stream_sequelize.get_online_by_game(game)
     .then(function(onlineGames){
-        console.log(onlineGames)
-        res.send(onlineGames)
+        res.send({success: true, result : onlineGames})
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 404;
+        res.send({success : false});
     })
     
 });

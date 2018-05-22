@@ -12,7 +12,9 @@ export class GameCollectionComponent implements OnInit {
   name = ""
   image_url = "";
   wide_image_url = "";
-  popularGames = []
+  liveStreams = []
+  noStreamsAvailable = false;
+  
   constructor(private gameService :BrowseService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -24,8 +26,15 @@ export class GameCollectionComponent implements OnInit {
       this.wide_image_url = response.result.wide_image_url;
     })
 
-    this.gameService.loadPopularGames().subscribe(response => {
-      this.popularGames = response;
+
+    this.gameService.loadLiveStreamsByGame(game).subscribe(response => {
+      console.log(response.result);
+      if(response.success && response.result.length > 0){
+        this.liveStreams = response.result;
+      }else if(response.success && response.result.length == 0){
+        this.noStreamsAvailable = true;
+      }
+      
     },
     error => {
       console.log(error);

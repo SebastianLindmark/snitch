@@ -23,7 +23,7 @@ module.exports = {
         }).then(function(password){
             return models.StreamConfig.create({title : "", live: false, viewers : 0})
         }).then(function(streamConfig){
-            var user = userPromise.value()[0]
+            var user = userPromise.value()
             return user.setStreamConfig(streamConfig)
         }).then(function(password){
             return userPromise.value()

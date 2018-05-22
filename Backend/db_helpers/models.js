@@ -126,6 +126,8 @@ User.hasOne(StreamKey, {as : "StreamKey", foreignKey: 'userId'})
 User.hasOne(Channel, {as : "Channel", foreignKey: 'userId'})
 
 User.hasOne(StreamConfig, {as : "StreamConfig", foreignKey:'userId'})
+StreamConfig.belongsTo(User, {as : "User", foreignKey:'userId'})
+
 
 //Stream.hasOne(StreamConfig, {as : "StreamConfig", foreignKey: 'userId'})
 

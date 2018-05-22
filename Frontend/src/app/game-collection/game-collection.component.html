@@ -17,11 +17,11 @@
       </div>
     
       <div class="p-3">
-      <div class="d-flex flex-wrap">
-          <div class="p-2 directory-item" *ngFor="let game of popularGames">
-            <img src="{{game.url}}" routerLinkActive="active" class="img-thumbnail" routerLink="/game/{{game.name}}">
-            <div class="text-left title">{{game.name}}</div>
-            <div class="text-left viewer-count">124,344 viewers</div>
+      <div class="d-flex flex-wrap" *ngIf="!noStreamsAvailable">
+          <div class="p-2 directory-item" *ngFor="let stream of liveStreams">
+            <img src="{{stream.Game.url}}" routerLinkActive="active" class="img-thumbnail" routerLink="/channel/{{stream.User.username}}">
+            <div class="text-left title-text">{{stream.title}}</div>
+            <div class="text-left viewer-count subtitle-text">{{stream.viewers}} viewers on {{stream.User.username}}</div>
           </div>
       
           
@@ -44,5 +44,7 @@
           <div class="p-2 directory-item"></div>
           <div class="p-2 directory-item"></div>
       </div>
+
+      <div class="no-stream-text" *ngIf="noStreamsAvailable">No available streams for {{name}}</div>
 
 </div>

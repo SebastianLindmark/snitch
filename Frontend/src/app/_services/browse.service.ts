@@ -32,6 +32,14 @@ export class BrowseService {
     );
   }
 
+  loadLiveStreamsByGame(game){
+    var request = this.http.post<any>(this.BASE_URL + '/get_online_by_game',{game : game});
+    return request.map((res : any) => {  
+      return res;
+      }
+    );
+  }
+
 
   loadUserConfiguredGame(){
     var request = this.http.post<any>(this.BASE_URL + '/get_user_game',{});

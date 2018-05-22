@@ -3,7 +3,7 @@ var models = require("./models");
 module.exports = {
     create_stream_config : function(user,game,country) {
                 
-        var streamConfigPromise =  models.StreamConfig.create({biography : "Hello", live: false, viewers : 0})
+        var streamConfigPromise =  models.StreamConfig.create({title : "PS4 Rampage with MirroW", live: true, viewers : 0})
         var gamePromise = models.Game.findOne({where : {name : game}})        
 
 
@@ -50,8 +50,7 @@ module.exports = {
 
     get_online_by_game: function(game){        
         return models.StreamConfig.findAll({where : {live:true},include : 
-            [{model: models.Game, as: "Game", where : {'name' : game} }]})
-    
+            [{model: models.Game, as: "Game", where : {'name' : game}}, {model:models.User, as :"User"}]})    
     }   
 
 }
