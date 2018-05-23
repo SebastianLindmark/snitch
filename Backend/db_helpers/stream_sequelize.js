@@ -38,6 +38,16 @@ module.exports = {
     },
 
 
+    add_viewer_to_stream : function(user){
+        return user.getStreamConfig().then(function(streamConfig){
+            return streamConfig.increment('viewers')
+     })},
+
+     remove_viewer_from_stream : function(user){
+        return user.getStreamConfig().then(function(streamConfig){
+            return streamConfig.increment(['viewers'], {by : -1})
+     })},
+
     set_stream_offline : function(user){
         return user.getStreamConfig().then(function(streamConfig){
             return streamConfig.updateAttributes({

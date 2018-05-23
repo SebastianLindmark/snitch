@@ -122,6 +122,8 @@ User.hasOne(Password, {as : "Password",foreignKey: 'userId'}) //userId will be a
 
 User.hasOne(GoogleUser, {as : "GoogleUser", foreignKey: 'userId'})
 User.hasOne(StreamKey, {as : "StreamKey", foreignKey: 'userId'})
+StreamKey.belongsTo(User, {as : "User", foreignKey:'userId'})
+
 
 User.hasOne(Channel, {as : "Channel", foreignKey: 'userId'})
 

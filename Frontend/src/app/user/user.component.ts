@@ -18,6 +18,7 @@ export class UserComponent  {
   public chatOpen = true;
   public streamTitle = ""
   private gameInfo;
+  flvPlayer = null;
 
   constructor(private route: ActivatedRoute, private userRequest : UserRequestService, private gameRequestService : BrowseService) { 
     this.username = this.route.snapshot.url[1].toString();
@@ -29,13 +30,13 @@ export class UserComponent  {
       this.streamKey = response;
       if (flvjs.isSupported()) {
         var videoElement = <HTMLMediaElement>document.getElementById('videoElement');
-        var flvPlayer = flvjs.createPlayer({
+        this.flvPlayer = flvjs.createPlayer({
             type: 'flv',
             url: 'http://localhost:8080/live/' + this.streamKey + '.flv'           
         });
-        flvPlayer.attachMediaElement(videoElement);
-        flvPlayer.load();
-        flvPlayer.play();
+        this.flvPlayer.attachMediaElement(videoElement);
+        this.flvPlayer.load();
+        this.flvPlayer.play();
       } 
     },
     error => {
@@ -64,6 +65,17 @@ export class UserComponent  {
 
   toggleChat(){
     this.chatOpen = !this.chatOpen;
+  }
+
+  ngOnDestroy(){
+    console.log("OnDestroy")
+    if(this.flvPlayer !== null){
+      this.flvPlayer.pause();
+      this.flvPlayer.unload();
+      this.flvPlayer.detachMediaElement();
+      this.flvPlayer.destroy();
+      this.flvPlayer = null;
+    }
   }
 
 }
