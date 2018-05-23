@@ -102,9 +102,8 @@ module.exports = {
         nms.run();    
         nms.on('postPublish',onStreamBegin);
         //nms.on('donePublish',onStreamEnd);
-        nms.on('donePublish', (id, StreamPath, args) => {
-          console.log('[ASDADSADAS  on donePublish]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
-        });
+        nms.on('donePublish', onStreamEnd); //There is a bug in nms where the StreamPath is set to empty before the callback is invoked.
+        //Fix this by navigating to node_rtmp_session.js, within the function onDeleteStream() create a temp variable to store the streamId.
 
 
         nms.on('postPlay', onViewerEnter);

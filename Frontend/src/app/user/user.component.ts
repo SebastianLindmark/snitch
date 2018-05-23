@@ -18,7 +18,7 @@ export class UserComponent  {
   public chatOpen = true;
   public streamTitle = ""
   private gameInfo;
-  flvPlayer = null;
+  private flvPlayer = null;
 
   constructor(private route: ActivatedRoute, private userRequest : UserRequestService, private gameRequestService : BrowseService) { 
     this.username = this.route.snapshot.url[1].toString();
