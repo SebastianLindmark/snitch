@@ -3,9 +3,9 @@
 
     <p class="text-left settings-title">New Username</p>
     <div class="d-flex flex-wrap">
-      <div class="fa fa-check-circle" style="font-size: 35px; color: green; margin-right: 5px;"></div>
+      <!--<div class="fa fa-check-circle" style="font-size: 35px; color: green; margin-right: 5px;"></div>
       <div class="fa fa-times-circle"  style="font-size: 35px; color: red; margin-right: 5px;"></div>
-      <div class="fa fa-question-circle"  style="font-size: 35px; color: gray; margin-right: 5px;"></div>
+      <div class="fa fa-question-circle"  style="font-size: 35px; color: gray; margin-right: 5px;"></div>-->
     <input [(ngModel)]="username" type="text" id="new-username" name="username" class="form-control custom-input" required
       autofocus pattern="[a-zA-Z]+" #name="ngModel">
     <button type="submit" [disabled]="!usernameForm.form.valid" class="btn btn-primary btn-block settings-button">Save</button>
