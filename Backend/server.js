@@ -25,6 +25,9 @@ var database_helper = require("./database_helper");
 var nms = require("./nms");
 nms.start();
 
+var bcrypt = require('bcrypt');
+const saltRounds = 5;
+
 database_helper.reset_database();
 var hostPort = 8000;
 
@@ -122,11 +125,12 @@ app.route('/api/user/custom_signup').post((req,res) => {
     var email = req.body.email;
 	var username = req.body.username;
     var password = req.body.password;	
-
-    user_sequelize.create_user(email,username,password).then(function(){
+    bcrypt.hash(password, saltRounds)
+    .then(function(hash) {
+        return user_sequelize.create_user(email,username,hash)
+    }).then(function(user){
         res.send({'success' : true, 'result' : "Successfully created user"})
     }).catch(function(err){
-        console.log(err);
         res.statusCode = 404
         res.send({'success' : false, 'reason' : err})
     })
@@ -134,21 +138,22 @@ app.route('/api/user/custom_signup').post((req,res) => {
 
 app.route('/api/user/custom_login').post((req,res) => {
     var username = req.body.username;
-    var pwd = req.body.password;	
-    
+    var plaintextPwd = req.body.password;	
     var userPromise = models.User.findOne({where : {username:username}})
     userPromise.then(function(user){
         if(user !== null) return user.getPassword()
         else throw ["User does not exist"]
     }).then(function(password){
         if(password === null) throw ["User is a google user"]
-        else if(password.pwd === pwd) return pwd
-        else throw ["Incorrect password"]
-    }).then(function(password){
+        else return bcrypt.compare(plaintextPwd, password.pwd)
+    }).then(function(result){
+        if(!result) throw["Incorrect password"]
+    }).then(function(){
         var user = userPromise.value()
         token = generate_token(user.username,user.email);
         res.send({'success' : true ,'token' : token});
     }).catch(function(err){
+        console.log(err)
         res.statusCode = 404
         res.send({'success' : false, 'reason' : err})
     })   

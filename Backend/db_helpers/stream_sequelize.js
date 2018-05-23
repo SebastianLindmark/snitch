@@ -61,6 +61,6 @@ module.exports = {
     get_online_by_game: function(game){        
         return models.StreamConfig.findAll({where : {live:true},include : 
             [{model: models.Game, as: "Game", where : {'name' : game}}, {model:models.User, as :"User"}]})    
-    }   
-
+    }
+    
 }
