@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { User } from '../_models/user';
 
+import * as Globals from 'globals';
+
 @Injectable()
 export class SettingsService {
 
-  private BASE_URL = "http://localhost:8000";
+  private BASE_URL = Globals.DB_BASE_URL;
   
   private stream_key;
 

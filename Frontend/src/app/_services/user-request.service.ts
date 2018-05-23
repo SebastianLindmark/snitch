@@ -3,11 +3,12 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 import { Injectable } from '@angular/core';
 import { User } from '../_models/user';
+import * as Globals from 'globals';
 
 @Injectable()
 export class UserRequestService {
 
-  private BASE_URL = "http://localhost:8000";
+  private BASE_URL = Globals.DB_BASE_URL;
 
   constructor(private http : HttpClient) { }
 

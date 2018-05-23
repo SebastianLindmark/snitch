@@ -5,11 +5,12 @@ import 'rxjs/add/operator/map'
 import { User } from '../_models/user';
 import { JwtHelper } from 'angular2-jwt';
 import {CurrentUserService} from '../_services/current-user.service'
-
+import * as Globals from 'globals';
 @Injectable()
 export class AuthenticationService {
 
-  private BASE_URL = "http://localhost:8000";
+  
+  private BASE_URL = Globals.DB_BASE_URL;
 
   constructor(private currentUserService : CurrentUserService, private http : HttpClient, public jwtHelper: JwtHelper) {   }
 

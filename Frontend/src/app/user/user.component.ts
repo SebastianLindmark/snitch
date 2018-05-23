@@ -3,7 +3,7 @@ import {UserRequestService} from '../_services/user-request.service'
 import {Router, ActivatedRouteSnapshot, ActivatedRoute} from '@angular/router'
 import flvjs from 'flv.js';
 import { BrowseService } from '../_services/browse.service';
-
+import * as Globals from 'globals';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class UserComponent  {
         var videoElement = <HTMLMediaElement>document.getElementById('videoElement');
         this.flvPlayer = flvjs.createPlayer({
             type: 'flv',
-            url: 'http://localhost:8080/live/' + this.streamKey + '.flv'           
+            url: Globals.STREAM_BASE_URL + '/live/' + this.streamKey + '.flv'           
         });
         this.flvPlayer.attachMediaElement(videoElement);
         this.flvPlayer.load();

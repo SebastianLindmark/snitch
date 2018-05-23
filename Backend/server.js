@@ -157,7 +157,6 @@ app.route('/api/user/custom_login').post((req,res) => {
         res.statusCode = 404
         res.send({'success' : false, 'reason' : err})
     })   
-
 });
 
 app.post('/api/user/google_login',function(req,res){
@@ -411,7 +410,7 @@ app.route('/api/test/exists').get((req,res) => {
 console.log("About to sync")
 models.sequelize.sync({force:true}).then(function(){
     console.log("Database successfully synced")
-    app.listen(hostPort, () => {
+    app.listen(hostPort, '0.0.0.0', () => {
         models.insertStaticData()
         console.log('Server started!');
     });    

@@ -38,8 +38,6 @@ const config = {
   };
 
 var nms = new NodeMediaServer(config)
-
-
 function onStreamBegin(id,streamPath, args){
   var key = streamPath.split('/')[2]
   models.StreamKey.find({where : {key : key}}).then(function(streamkey){
@@ -47,8 +45,7 @@ function onStreamBegin(id,streamPath, args){
       return streamkey.getUser()  
     }else{
       throw ["StreamKey does not exist!"]
-    }
-    
+    }    
   }).then(function(user){
     return stream.set_stream_online(user)
   }).then(function(res){
@@ -104,7 +101,6 @@ module.exports = {
         //nms.on('donePublish',onStreamEnd);
         nms.on('donePublish', onStreamEnd); //There is a bug in nms where the StreamPath is set to empty before the callback is invoked.
         //Fix this by navigating to node_rtmp_session.js, within the function onDeleteStream() create a temp variable to store the streamId.
-
 
         nms.on('postPlay', onViewerEnter);
         nms.on('donePlay', onViewerLeave);
