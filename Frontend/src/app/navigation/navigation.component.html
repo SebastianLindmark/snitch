@@ -7,7 +7,8 @@
       <div [hidden]="!loggedIn" ngbDropdown class="d-inline-block" style="height: 100%;" placement="bottom-right">
           <button [hidden]="!loggedIn" class="btn btn-outline-danger custom-button text-left" id="dropdownBasic1" ngbDropdownToggle>
             <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
-            {{user.username}}
+            <p class="username-text">{{user.username}}</p>
+            <div class="fa fa-caret-down dropdown-icon"></div>
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="custom-dropdown">
             <button class="dropdown-item custom-dropdown-item" routerLink="{{'/channel/' + user.username}}">
@@ -16,6 +17,7 @@
             <button class="dropdown-item custom-dropdown-item" routerLink="{{'/settings'}}">
               <div class="fa fa-cog f-awesome"></div>Settings
             </button>
+            <div class="divider"></div>
             <button class="dropdown-item custom-dropdown-item" (click)="clickedLogout()">
                 <div class="fa fa-sign-out f-awesome"></div>Logout
               </button>
@@ -41,7 +43,8 @@
     <div id="desktop-account-button" [hidden]="!loggedIn" ngbDropdown class="d-inline-block" style="height: 100%;" placement="bottom-right">
         <button [hidden]="!loggedIn" class="btn btn-outline-danger custom-button text-left" id="dropdownBasic1" ngbDropdownToggle>
           <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
-          {{user.username}}
+          <p class="username-text">{{user.username}}</p>
+          <div class="fa fa-caret-down dropdown-icon"></div>
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="custom-dropdown">
           <button class="dropdown-item custom-dropdown-item" routerLink="{{'/channel/' + user.username}}">
@@ -50,6 +53,7 @@
           <button class="dropdown-item custom-dropdown-item" routerLink="{{'/settings'}}">
             <div class="fa fa-cog f-awesome"></div>Settings
           </button>
+          <div class="divider"></div>
           <button class="dropdown-item custom-dropdown-item" (click)="clickedLogout()">
               <div class="fa fa-sign-out f-awesome"></div>Logout
             </button>
