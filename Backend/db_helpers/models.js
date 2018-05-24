@@ -148,22 +148,21 @@ Country.hasMany(StreamConfig, {as : "StreamConfig"})
 //User.belongsToMany(User, {as: 'Following', through: 'followers'});
 //User.belongsToMany(User, {as: 'Followers', through: 'followers'});
 
-User.hasMany(User, {as : 'Follower'})
-User.hasMany(User, {as : 'Following'})
-//UNCOMMENT HERE
+//User.belongsToMany(User, {as : 'Follower', through : 'FollowingTable'})
+//User.belongsToMany(User, {as : 'Following', through : 'FollowingTable'})
 
+User.belongsToMany(User, { as: {singular : 'Follower', plural : 'Followers'}, through : 'FollowTable', foreignKey: 'followerId'})
+User.belongsToMany(User, { as: {singular : 'Following', plural : 'Followings'}, through : 'FollowTable', foreignKey: 'followingId' })
+
+//User.getFollower(s) , User.setFollower
+//User.getFollowing(s), User.setFollowing
 
 //module.exports = User,Password,GoogleUser, StreamKey,Channel,Stream,StreamConfig,Country
 //module.exports = sequelize        
 //Create the models
 
-/*var func1 = this.test_create_user_with_google_account;
-var func2 = this.test_create_user_with_stream_key;
-this.test_create_user_with_password(User,Password).then(function(){
-    return func1(User,GoogleUser)
-}).then(function(){
-    return func2(User,StreamKey)
-})*/
+
+
 
 function insert_static_data(){
     var games = ["Fortnite", "League of Legends", "Overwatch", "PLAYERSUNKNOWN'S BATTLEGROUNDS","Dota 2", "Hearthstone","GTA V", "Destiny 2", "Tom Clancy's Rainbox Six"]
@@ -178,108 +177,12 @@ function insert_static_data(){
     for(var i = 0; i < games.length; i++){
         Country.create({name:countries[i]})
     }
+
     console.log("Static data inserted")
 }
-
-
 
 
 models = {'sequelize' : sequelize, 'User' : User, 'Password' : Password, "GoogleUser" : GoogleUser, "StreamKey" : StreamKey,"StreamConfig": StreamConfig, "Game":Game,"Country":Country, "insertStaticData" : insert_static_data}
 module.exports = models
 
-
-
-    //db.run('CREATE TABLE user(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT UNIQUE, username TEXT UNIQUE);');
-    //db.run('CREATE TABLE password(id INTEGER PRIMARY KEY, password TEXT, FOREIGN KEY(id) REFERENCES user(id));');
-
-    
-
-
-/*
-return User.findById(1).then(user => {
-                //user.setPassword(pwd)
-                console.log("Created password field");
-            }, err => {
-                console.log("Received err")
-                console.log(err)
-            })
-
-*/
-
-/*
- test_create_user_with_password : function(User, Password){
-        return sequelize.sync({force: true})
-        .then(function(){
-            return User.create({id : 1337,email : 'sebbe.lindmark@gmail.com', username : 'UncleSeb'})})
-        .then(function(user){
-            return Password.create({pwd:'Secret'})
-            .then(pwd => {            
-                user.setPassword(pwd);
-                })
-            })
-            .then(password => {
-                return User.findById(1337)
-            })
-            .then(user => {
-                return user.getPassword()
-            }).then(password => {
-                if(password !== undefined){
-                    console.log("User password: Success. Password is " + password.pwd)
-                }
-            })
-            .catch(reason => {
-                console.log(reason);
-            })
-    },
-
-    test_create_user_with_google_account : function(User, GoogleUser){
-        return sequelize.sync({force: true})
-        .then(function(){return User.create({id : 1337,email : 'sebbe.lindmark@gmail.com', username : 'UncleSeb'})})
-        .then(function(user){
-            return GoogleUser.create({token:'my-secret-token'})
-            .then(googleUser => {            
-                user.setGoogle(googleUser);
-                })
-            })
-            .then(password => {
-                return User.findById(1337)
-            })
-            .then(user => {
-                return user.getGoogle()
-            }).then(googleUser => {
-                if(googleUser !== undefined){
-                    console.log("User GoogleUser: Sucess. Token is " + googleUser.token)
-                }
-            })
-            .catch(reason => {
-                console.log(reason);
-            })
-    },
-
-    test_create_user_with_stream_key : function(User, StreamKey){
-        return sequelize.sync({force: true})
-        .then(function(){return User.create({id : 1337,email : 'sebbe.lindmark@gmail.com', username : 'UncleSeb'})})
-        .then(function(user){
-            return StreamKey.create({key:'my-secret-key'})
-            .then(streamkey => {            
-                user.setStreamKey(streamkey);
-                })
-            })
-            .then(streamkey => {
-                return User.findById(1337)
-            })
-            .then(user => {
-                return user.getStreamKey()
-            }).then(streamKey => {
-                if(streamKey !== undefined){
-                    console.log("User Streamkey: Sucess. Key is " + streamKey.key)
-                }
-            })
-            .catch(reason => {
-                console.log(reason);
-            })
-    }
-
-
-*/
 
