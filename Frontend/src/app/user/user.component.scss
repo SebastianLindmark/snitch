@@ -4,10 +4,15 @@ $dark-color: #2A6D7A;
 
 
 .main{
-    margin-top: 15px;
-    margin-right: 0px;
-    margin-left: 25px;
-    margin-bottom: 15px;
+
+}
+
+.nav-tabs {
+    padding: 10px;
+}
+
+.no-padding {
+    padding: 0;
 }
 
 .row {
@@ -47,8 +52,8 @@ $dark-color: #2A6D7A;
 }
 
 .profile-icon{
-    height: 25px;
-    width: 25px;
+    height: 20px;
+    width: 20px;
 }
 
 .bold-text{
@@ -61,14 +66,17 @@ $dark-color: #2A6D7A;
     margin-bottom: 10px;
     border-right-color: lightgray;
     border-radius: 2px;
+    padding: 5px 0px 5px 0px;
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover  { 
     border-left-color: transparent;
     border-top-color: transparent;
     border-right-color: transparent;
-    border-bottom-color: #CD0505;
+    border-bottom: 5px solid rgba(128, 128, 128, 0.2);
+    border-right: 1px solid gray;
     color: $main-color;
+    padding: 10px 15px 10px 15px;
 }
 
 .nav-tabs>li>a {
@@ -80,16 +88,16 @@ $dark-color: #2A6D7A;
     background-color: transparent !important;
     border-left-color: transparent !important;
     border-top-color: transparent!important;
-    border-right-color: transparent !important;
-    border-bottom: 1px solid gray;
+    border-bottom: 5px solid rgba(128, 128, 128, 0.2);
+    border-right: 1px solid gray;
 }
-
 
 .custom-tab-button{
     font-size : 20px;
-    padding: 2px 4px 2px 4px;
-    margin-right : 5px;
+    padding: 10px 20px 10px 20px;
     cursor: pointer;
+    font-size: 18px;
+    border-right: 1px solid gray;
 }
 
 .game-icon{
@@ -119,4 +127,43 @@ $dark-color: #2A6D7A;
 .game-info-container{
     margin-top: 10px;
     width : 100%;    
+}
+
+.follow-button {
+    margin-left: auto;
+    margin-right: 20px;
+    height: 100%;
+}
+
+
+.follow-link {
+    background-color: firebrick;
+    border: none !important;
+    color: white !important;
+}
+
+.follow-button:hover, .follow-button.active {
+    border: none !important;
+    background-color: lightcoral !important;
+    color: white !important;
+}
+
+.follow-link:hover, .follow-link.active {
+    border: none !important;
+    background-color: lightcoral !important;
+    color: white !important;
+}
+
+.icon-container {
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+}
+
+.f-awesome {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 20px;
+    font-size: 24px;
+    color: lightgray;
 }

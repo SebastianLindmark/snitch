@@ -3,7 +3,6 @@ $light-color: #9FDDE9;
 $main-color: #6CA6B1;
 $dark-color: #2A6D7A;
 
-$footer-height: 100px;
 
 html, body {
     margin: 0;
@@ -20,16 +19,9 @@ p {
 //--------------------------
 app-root {
     display: block;
-    min-height: calc(100% - #{$footer-height});
+    min-height: 100%;
     padding-top: 50px;
     background-color: whitesmoke;
 }
-
-app-footer {
-    display: block;
-    height: $footer-height;
-    background-color: #1D1E1E;
-}
-//--------------------------
 
 

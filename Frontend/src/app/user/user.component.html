@@ -1,6 +1,6 @@
 <div class="main">
   <div class="row">
-    <div class="col-md-9">
+    <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'" class="no-padding">
       <ul class="nav nav-tabs">
         <li role="presentation" class="nav-item" [class.active]=true>
           <a class="nav-link custom-tab-button">
@@ -15,22 +15,28 @@
         <li role="presentation" class="nav-item">
           <a class="nav-link custom-tab-button">Subscribers</a>
         </li>
+        <li role="presentation" class="nav-item follow-button">
+          <a class="nav-link custom-tab-button follow-link">Follow</a>
+        </li>
+        <div class="nav-item icon-container"  (click)=toggleChat()>
+          <div  [ngClass]="(chatOpen)?'fa fa-caret-right':'fa fa-caret-left'" class="f-awesome"></div>
+        </div>
       </ul>
+
     </div>
 
-    <div class="col-md-3">
-      <i id="search-bar-icon" [ngClass]="(chatOpen)?'fa fa-angle-double-right pull-left':'fa fa-angle-double-left pull-right margin-right'"
-        (click)=toggleChat()></i>
+  <div [hidden]="!chatOpen" class="col-md-3 no-padding" style="background-color: lightgray; display: flex;">
+      <p style="margin-left: 20px; margin-top: auto; margin-bottom: auto; font-size: 18px; color: black;">Stream Chat</p>
     </div>
   </div>
 
   <div class="row">
-    <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'">
+    <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'" class="no-padding">
       <div [ngClass]="(chatOpen)?'player-window embed-responsive embed-responsive-16by9':'player-window embed-responsive embed-responsive-21by9'">
         <video id="videoElement" class="embed-responsive-item" controls></video>
       </div>
     </div>
-    <div class="col-md-3" [hidden]="!chatOpen">
+    <div class="col-md-3 no-padding" [hidden]="!chatOpen">
       <div class="chat-window">
         <app-chat></app-chat>
       </div>
@@ -38,7 +44,7 @@
   </div>
 
   <div class="row" *ngIf="gameInfo">
-    <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'">
+    <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'" class="no-padding">
       <div class="game-info-container flex-container">
         <img src="{{gameInfo.url}}" routerLinkActive="active" class="game-icon img-thumbnail" routerLink="/game/{{gameInfo.name}}">
         <div class="flex-item">
