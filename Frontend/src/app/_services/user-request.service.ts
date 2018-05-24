@@ -22,7 +22,7 @@ export class UserRequestService {
   getUser(username : string){
     var request = this.http.post<User>(this.BASE_URL + '/get_user',{username : username});
     return request.map((res : any) => {  
-      return res;
+      return res.result;
     }
   );
 }
@@ -30,7 +30,7 @@ export class UserRequestService {
   getCurrentUser(token : string){
     var request = this.http.post<User>(this.BASE_URL + '/get_logged_in_user',{});
     return request.map((res : any) => {  
-      return res;
+      return res.result;
     }
   );
 }

@@ -148,10 +148,14 @@ Country.hasMany(StreamConfig, {as : "StreamConfig"})
 //User.belongsToMany(User, {as: 'Following', through: 'followers'});
 //User.belongsToMany(User, {as: 'Followers', through: 'followers'});
 
-User.hasMany(User, {as : 'Follower'})
-User.hasMany(User, {as : 'Following'})
-//UNCOMMENT HERE
+//User.belongsToMany(User, {as : 'Follower', through : 'FollowingTable'})
+//User.belongsToMany(User, {as : 'Following', through : 'FollowingTable'})
 
+User.belongsToMany(User, { as: {singular : 'Follower', plural : 'Followers'}, through : 'FollowTable', foreignKey: 'followerId'})
+User.belongsToMany(User, { as: {singular : 'Following', plural : 'Followings'}, through : 'FollowTable', foreignKey: 'followingId' })
+
+//User.getFollower(s) , User.setFollower
+//User.getFollowing(s), User.setFollowing
 
 //module.exports = User,Password,GoogleUser, StreamKey,Channel,Stream,StreamConfig,Country
 //module.exports = sequelize        

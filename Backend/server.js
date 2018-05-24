@@ -21,12 +21,12 @@ var models = require('./db_helpers/models')
 var user_sequelize = require('./db_helpers/user_sequelize');
 var stream_sequelize = require('./db_helpers/stream_sequelize');
 var database_helper = require("./database_helper");
+var follower = require('./db_helpers/follower_sequelize');
 
 var nms = require("./nms");
 nms.start();
 
-var bcrypt = require('bcrypt');
-const saltRounds = 5;
+
 
 database_helper.reset_database();
 var hostPort = 8000;
@@ -39,17 +39,17 @@ app.get('/protected/hello',function(req,res){
     console.log("This is nice");
     res.send("This path is only accessible by authenticated users");
 });
- 
+
 
 app.post('/protected/update_username', function(req, res){
     var username = req.user.username;
     var newusername = req.body.username;
     
-    var userPromise = models.User.findOne({where : {username : username}})
+    var userPromise = user_sequelize.username_to_user(username)
     return userPromise
     .then(function(user){
         if(user !== null){
-            return models.User.findOne({where : {username : newusername}});
+            return user_sequelize.username_to_user(newusername);
         } 
         else throw ['User does not exist']
     }).then(function(newuser){
@@ -89,10 +89,12 @@ app.post('/get_user_stream_key', function(req, res){
     })
 });
 
-app.post('/protected/get_stream_key',function(req,res){
+
+
+app.post('/protected/get_stream_key',expressJwt({secret: 'secret'}),function(req,res){
     var username = req.user.username;
 
-    models.User.findOne({where : {username:username}})
+    user_sequelize.username_to_user(username)
     .then(function(user){
         if(user !== null) return user.getStreamKey()
         else throw ["User does not exist"]
@@ -101,7 +103,7 @@ app.post('/protected/get_stream_key',function(req,res){
         else return user_sequelize.create_stream_key(username)
     }).then(function(streamkey){
         if(streamkey !== null) res.send({'success' : true, 'result' : streamkey})
-        else console.log("This should not happen")
+        else throw["This should not happen"]
     }).catch(function(err){
         console.log(err)
         res.statusCode = 404
@@ -125,31 +127,19 @@ app.route('/api/user/custom_signup').post((req,res) => {
     var email = req.body.email;
 	var username = req.body.username;
     var password = req.body.password;	
-    bcrypt.hash(password, saltRounds)
-    .then(function(hash) {
-        return user_sequelize.create_user(email,username,hash)
-    }).then(function(user){
+    user_sequelize.custom_signup(email,username,password).then(function(user){
         res.send({'success' : true, 'result' : "Successfully created user"})
     }).catch(function(err){
+        console.log(err)
         res.statusCode = 404
-        res.send({'success' : false, 'reason' : err})
+        res.send({'success' : false, 'result' : err})
     })
 });
 
 app.route('/api/user/custom_login').post((req,res) => {
     var username = req.body.username;
     var plaintextPwd = req.body.password;	
-    var userPromise = models.User.findOne({where : {username:username}})
-    userPromise.then(function(user){
-        if(user !== null) return user.getPassword()
-        else throw ["User does not exist"]
-    }).then(function(password){
-        if(password === null) throw ["User is a google user"]
-        else return bcrypt.compare(plaintextPwd, password.pwd)
-    }).then(function(result){
-        if(!result) throw["Incorrect password"]
-    }).then(function(){
-        var user = userPromise.value()
+    user_sequelize.custom_login(username,plaintextPwd).then(function(user){
         token = generate_token(user.username,user.email);
         res.send({'success' : true ,'token' : token});
     }).catch(function(err){
@@ -164,22 +154,22 @@ app.post('/api/user/google_login',function(req,res){
     var googleID = req.body.googleID;
     var email = req.body.email;
 
-    var userPromise = models.User.findOne({where : {email:email}})
+    var userPromise = user_sequelize.email_to_user(email)
 
     userPromise.then(function(user){
-        if(user !== null){
-            return user.getGoogleUser()}
+        if(user !== null) return user.getGoogleUser()
         else throw ["User does not exist"]
     }).then(function(googleUser){
         if(googleUser !== null){
             var user = userPromise.value()
             token = generate_token(user.username, user.email);
             console.log("Everything went fine")
-            res.send({'token': token });
+            res.send({success : true, 'token': token });
         } else throw ["Google user does not exist"]
     }).catch(function(err){
         console.log(err)
-        res.send({'success' : false, 'reason' : err})
+        res.statusCode = 404;
+        res.send({'success' : false, 'result' : err})
     })
 
 });
@@ -190,14 +180,14 @@ app.route('/api/user/google_signup').post((req,res) => {
     var email = req.body.email;
     var googleID = req.body.googleID;
 
-    models.User.findOne({where : {email : email}})
+    user_sequelize.email_to_user(email)
     .then(function(user){
         if(user !== null){
             res.send({success : false, result : "User already exists"})
         } else {
             return user_sequelize.create_google_user(email,username,googleID)
             .then(function(googleuser){
-                res.send({result : "Successfully registered"});
+                res.send({success: true, result : "Successfully registered"});
             }).catch(function(err){
                 console.log(err)
                 res.statusCode = 404
@@ -211,28 +201,26 @@ app.route('/api/user/google_signup').post((req,res) => {
 
 app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
     var username = req.user.username;
-    models.User.findOne({where : {username:username}}).then(function(user){
-        if(user !== null) res.send(user)
-        else{
-            res.statusCode = 404
-            res.send("User does not exist")
-        }
+    user_sequelize.username_to_user(username).then(function(user){
+        if(user !== null) res.send({success:true, result:user})
+        else throw ["User does not exist"]
+    }).catch(function(err){
+        console.log(err);
+        res.statusCode = 404;
+        res.send({success:false,result:err})
     })
-
 });
 
 
 app.post('/get_user',function(req,res){
     var username = req.body.username;
-    console.log("Retreiving user " + username);
-
-    models.User.findOne({where : {username:username}}).then(function(user){
-        if(user !== null){
-            res.send(user)
-        }else{
-            res.statusCode = 404
-            res.send("User does not exist")
-        }
+    user_sequelize.username_to_user(username).then(function(user){
+        if(user !== null) res.send({success:true,result:user})
+        else throw ["User does not exist"]
+    }).catch(function(err){
+        console.log(err);
+        res.statusCode = 404;
+        res.send({success:false,result:err})
 
     })
 });
@@ -284,30 +272,8 @@ app.post('/update_user_profile',expressJwt({secret: 'secret'}),function(req,res)
     var username = req.user.username;
     var gameName = req.body.game_name;
     var streamTitle = req.body.title;
-    
-    var streamConfigPromise = models.User.find({where : {username : username}}).then(function(user){
-        if(user === null){
-            throw ["User does not exist"]
-        }else{
-            return user.getStreamConfig()
-        }
-    })
 
-    streamConfigPromise.then(function(streamConfig){
-        return models.Game.find({where : {name : gameName}})
-    }).then(function(game){
-        if(game === null){
-            throw ["Game does not exist"]
-        }else{
-            var streamConfig = streamConfigPromise.value()
-            return game.addStreamConfig(streamConfig)
-        }
-    }).then(function(val){
-        var streamConfig = streamConfigPromise.value()
-        streamConfig.updateAttributes({
-            title: streamTitle
-        }) 
-    }).then(function(streamConfig){
+    user_sequelize.update_user_profile(username,gameName,streamTitle).then(function(streamConfig){
         res.send({success:true,result:"Successfully update profile"})
     }).catch(function(err){
         console.log(err)
@@ -319,49 +285,84 @@ app.post('/update_user_profile',expressJwt({secret: 'secret'}),function(req,res)
 
 app.post('/get_user_profile',function(req,res){
     var username = req.body.username
-    var streamConfig = models.User.find({where : {username : username}})
-    .then(function(user){
-        if(user !== null){
-            return user.getStreamConfig()
-        }else{
-            throw ["User does not exist"]
-        }
-        
-    });
-    
-    streamConfig.then(function(streamConfig){
-        return streamConfig.getGame()
-    }).then(function(game){
-        var userStreamConfig = streamConfig.value()
-        var data = {'game' :'', 'title' : ''}
-
-        if(game !== null){
-            data['game'] = game.name;     
-        }
-        if(userStreamConfig !== null){
-            data['title'] = userStreamConfig.title;     
-        }
-
+    user_sequelize.get_user_profile(username).then(function(data){
         res.send({success:true,result:data})
-        
     }).catch(function(err){
         console.log(err)
         res.statusCode = 404;
         res.send({success:false,result:err})
     })
+});
+
+
+app.route('/get_online_by_game').post((req,res) => {
+    var game = req.body.game;
+    return stream_sequelize.get_online_by_game(game)
+    .then(function(onlineGames){
+        res.send({success: true, result : onlineGames})
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 404;
+        res.send({success : false});
+    })    
+});
+
+
+app.post('/follow_user',expressJwt({secret: 'secret'}),function(req,res){
+    var currentUser = req.user.username;
+    var userToFollow = req.body.username;
+    
+    return follower.add_follower(userToFollow,currentUser).then(function(result){
+        res.send({success:true,result:"Successfully followed user"})
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 500;
+        res.send({success:false,result:err})
+    });
+});
+
+
+app.post('/is_following',expressJwt({secret: 'secret'}),function(req,res){
+    var currentUser = req.user.username;
+    var userToFollow = req.body.username;
+    
+   follower.is_following(userToFollow,currentUser).then(function(result){
+        res.send({success:true,result:result})
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 500;
+        res.send({success:false,result:err})
+    });
+
+});
+
+app.post('/get_followers',expressJwt({secret: 'secret'}),function(req,res){
+    var username = req.body.username;
+
+    follower.get_followers(username).then(function(result){
+        res.send({success:true,result:result})
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 500;
+        res.send({success:false,result:err})
+    });
+
+});
+
+app.post('/get_followings',expressJwt({secret: 'secret'}),function(req,res){
+    var currentUser = req.user.username;
+    
+    follower.get_followings(currentUser).then(function(result){
+        res.send({success:true,result:result})
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 500;
+        res.send({success:false,result:err})
+    });    
 
 });
 
 
-app.route('/api/test/add').get((req,res) => {
-    database_helper.user.insert_user("sebbe@gmail.com","sebbe","passw");
-    res.send("Done");
-});
-
-app.route('/api/test/addg').get((req,res) => {
-    database_helper.user.insert_google_user("sebbe@gmail.com","sebbe", "123234543234543");
-    res.send("Done");
-});
 
 app.route('/api/test/get1').get((req,res) => {
     
@@ -378,17 +379,25 @@ app.route('/api/test/get1').get((req,res) => {
     })
 });
 
-app.route('/get_online_by_game').post((req,res) => {
-    var game = req.body.game;
-    return stream_sequelize.get_online_by_game(game)
-    .then(function(onlineGames){
-        res.send({success: true, result : onlineGames})
-    }).catch(function(err){
-        console.log(err)
-        res.statusCode = 404;
-        res.send({success : false});
+app.route('/api/test/get2').get((req,res) => {
+    
+    var name = rand.generate(1);
+
+    var user1 = user_sequelize.create_user("idol@gmail.com" + name,"idol" + name,"secret")
+    var user2 = user1.then(function(user){
+        return user_sequelize.create_user("fan@gmail.com","fan","secret")
     })
     
+    user2.then(function(result){
+        return follower.add_follower(user1.value(),user2.value())
+    }).then(function(something){
+        return follower.is_following(user1.value(),user2.value())
+    }).then(function(result){
+        res.send(result)
+    }).catch(function(err){
+        console.log(err)
+        res.send(err)
+    })
 });
 
 
