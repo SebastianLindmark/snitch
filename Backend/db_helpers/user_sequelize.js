@@ -13,9 +13,7 @@ function generate_streamkey(){
 
 module.exports = {
 
-
     create_user : function(email,username,password){
-        
         var userPromise = models.User.create({email : email, username: username})
         return userPromise.then(function(user){
             return models.Password.create({pwd : password})

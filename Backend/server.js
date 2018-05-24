@@ -35,11 +35,6 @@ app.route('/').get((req, res) => {
     res.send("Welcome")
 });
 
-app.get('/protected/hello',function(req,res){
-    console.log("This is nice");
-    res.send("This path is only accessible by authenticated users");
-});
-
 
 app.post('/protected/update_username', function(req, res){
     var username = req.user.username;
@@ -370,7 +365,7 @@ app.route('/api/test/get1').get((req,res) => {
 
     user_sequelize.create_user("sebbe@gmail.com" + name,"uncleseb" + name,"secret")
     .then(function(user){
-        return stream_sequelize.create_stream_config(user,"Fortnite","Sweden")
+        return stream_sequelize.create_stream_config(user,"Test title","Fortnite","Sweden")
     }).then(function(result){
         res.send(result)
     }).catch(function(err){
@@ -402,28 +397,45 @@ app.route('/api/test/get2').get((req,res) => {
 
 
 
-app.route('/api/test/exists').get((req,res) => {
-    database_helper.user.exists_user("sebbe",function(exists){
-        if(exists){
-            res.statusCode = 404;
-            res.send("User already exists");
-            return;
-        }else{
-            res.send("Success");
-        }
-    });
-});
-
-
 
 console.log("About to sync")
 models.sequelize.sync({force:true}).then(function(){
     console.log("Database successfully synced")
     app.listen(hostPort, '0.0.0.0', () => {
         models.insertStaticData()
+        name()
         console.log('Server started!');
+        
+        //name()
     });    
 })
+
+
+function name(){
+    
+
+    
+    var titles = ["Playing with Drake", "Rampage with MirroW", "New Session stream"]
+    var emails = ["1@gmail.com", "2@gmail.com", "3@gmail.com"]
+    var usernames = ["Ninja", "Kitboga", "shroud"]
+    var promises = []
+    
+    for(var i = 0; i < emails.length; i++){
+        var title = titles[i];
+        var userPromise = user_sequelize.create_user(emails[i],usernames[i],"password")
+        var promise = userPromise.then(function(user){
+            return stream_sequelize.create_stream_config(user, "Example stream", "League of Legends","Sweden");
+        }).then(function(streamConfig){
+            return stream_sequelize.set_stream_online(userPromise.value());
+        })
+        promises.push(promise)
+    }
+
+    Promise.all(promises).then(function(res){
+        //do nothing
+    })
+   
+}
 
   
   
