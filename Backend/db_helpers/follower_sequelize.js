@@ -37,6 +37,23 @@ module.exports = {
         return userPromise.then(function(user){
             return user.getFollowings()
         })
+    },
+
+    get_live_followings(username){
+
+        return user_sequelize.username_to_user(username).then(function(result){
+            if(result !== null){
+            var id = result.id;
+            return models.sequelize.query('SELECT Users.username,StreamConfigs.title, StreamConfigs.live, StreamConfigs.viewers, Games.name, Games.url, Games.wide_image_url FROM Users, FollowTable, StreamConfigs, Games WHERE Users.id = StreamConfigs.userId AND Users.id = FollowTable.followerId AND StreamConfigs.game = Games.id AND StreamConfigs.live = 1 AND FollowTable.followingId = ' + id , { type: models.sequelize.QueryTypes.SELECT}).then(projects => {
+                return projects
+              })
+            }else{
+                throw ["Username does not exist"]
+            }
+        })
+
+        
+
     }
 
 

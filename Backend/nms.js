@@ -1,6 +1,7 @@
-const NodeMediaServer = require('node-media-server');
+const NodeMediaServer = require('./node-media-server');
 var models = require("./db_helpers/models");
 var stream = require("./db_helpers/stream_sequelize");
+var VOD = require("./db_helpers/vod_sequelize");
 
 const config = {
     rtmp: {
@@ -23,18 +24,17 @@ const config = {
           /*app: 'live',
           ac: 'aac',
           mp4: true,
-          mp4Flags: '[movflags=faststart]',*/
+          mp4Flags: '[movflags=faststart]'*/
 
-          /*app: 'live',
+          app: 'live',
           ac: 'aac',
           hls: true,
           hlsFlags: '[hls_time=2:hls_list_size=3]',
-          dash: true,
-          dashFlags: '[f=dash:window_size=3:extra_window_size=5]'*/
+          dash: false,
+          dashFlags: '[f=dash:window_size=3:extra_window_size=5]'
         }
       ]
     }
-
   };
 
 var nms = new NodeMediaServer(config)
@@ -96,7 +96,7 @@ function onViewerLeave(id, streamPath, args){
 module.exports = {
 
     start : function () {
-        nms.run();    
+          
         nms.on('postPublish',onStreamBegin);
         //nms.on('donePublish',onStreamEnd);
         nms.on('donePublish', onStreamEnd); //There is a bug in nms where the StreamPath is set to empty before the callback is invoked.
@@ -104,7 +104,12 @@ module.exports = {
 
         nms.on('postPlay', onViewerEnter);
         nms.on('donePlay', onViewerLeave);
-         
+        nms.on('fileSaved', function(streamKey,rootPath){
+          streamKey = streamKey.split('/')[2]
+          VOD.save_vod(streamKey,rootPath)
+        })
+
+        nms.run();  
 
     },
 

@@ -15,6 +15,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/protected', expressJwt({secret: "secret"}));
 
+var path = require('path');
+app.use(express.static('media'))
+
+console.log(path.join(__dirname,'./media'))
+
 var rand = require("random-key");
 
 var models = require('./db_helpers/models')
@@ -358,6 +363,16 @@ app.post('/get_followings',expressJwt({secret: 'secret'}),function(req,res){
 });
 
 
+//get_live_followings
+
+app.route('/api/test/get3').get((req,res) => {
+
+    follower.get_live_followings("Kitboga").then(function(resssss){
+        res.send({res : resssss})
+    })
+    
+
+})
 
 app.route('/api/test/get1').get((req,res) => {
     
@@ -396,8 +411,6 @@ app.route('/api/test/get2').get((req,res) => {
 });
 
 
-
-
 console.log("About to sync")
 models.sequelize.sync({force:true}).then(function(){
     console.log("Database successfully synced")
@@ -419,20 +432,51 @@ function name(){
     var emails = ["1@gmail.com", "2@gmail.com", "3@gmail.com"]
     var usernames = ["Ninja", "Kitboga", "shroud"]
     var promises = []
+    var users = []
     
-    for(var i = 0; i < emails.length; i++){
-        var title = titles[i];
-        var userPromise = user_sequelize.create_user(emails[i],usernames[i],"password")
-        var promise = userPromise.then(function(user){
-            return stream_sequelize.create_stream_config(user, "Example stream", "League of Legends","Sweden");
-        }).then(function(streamConfig){
-            return stream_sequelize.set_stream_online(userPromise.value());
-        })
-        promises.push(promise)
-    }
+    var userPromise1 = user_sequelize.create_user("1@gmail.com","Ninja","password")
+    var promise = userPromise1.then(function(user){
+        return stream_sequelize.create_stream_config(user, "Example stream", "League of Legends","Sweden");
+    }).then(function(streamConfig){
+        return stream_sequelize.set_stream_online(userPromise1.value());
+    })
+
+    var userPromise2 = user_sequelize.create_user("2@gmail.com","Kitboga","password")
+    promise = userPromise2.then(function(user){
+        return stream_sequelize.create_stream_config(user, "Playing old lady", "League of Legends","Sweden");
+    }).then(function(streamConfig){
+        //return stream_sequelize.set_stream_online(userPromise2.value());
+    })
+
+    var userPromise3 = user_sequelize.create_user("3@gmail.com","snake","password")
+    promise = userPromise3.then(function(user){
+        return stream_sequelize.create_stream_config(user, "Snake game", "League of Legends","Sweden");
+    }).then(function(streamConfig){
+        //return stream_sequelize.set_stream_online(userPromise2.value());
+    })
+
+
+    users.push(userPromise1)
+    users.push(userPromise2)
+    users.push(userPromise3)
+
+
+    promises.push(promise)
+    
 
     Promise.all(promises).then(function(res){
         //do nothing
+        return ""
+    }).then(function(something){
+        return follower.add_follower(users[0].value().username,users[1].value().username)
+    }).then(function(asd){
+        return follower.add_follower(users[2].value().username,users[1].value().username)
+    }).then(function(asd){
+        return follower.add_follower(users[0].value().username,users[2].value().username)
+    }).then(function(asd){
+        return follower.add_follower(users[1].value().username,users[0].value().username)
+    }).catch(function(err){
+        console.log(err)
     })
    
 }

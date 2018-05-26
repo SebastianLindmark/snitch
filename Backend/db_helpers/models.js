@@ -115,8 +115,18 @@ const User = sequelize.define('user', {
     });
 
 
-    //db.run('CREATE TABLE follower(user INTEGER, following INTEGER, PRIMARY KEY(user, following), FOREIGN KEY(user) REFERENCES user(id),FOREIGN KEY(following) REFERENCES user(id));', insert_test_data);
-//UNCOMMENT HERE
+    const VOD = sequelize.define('vod', {
+        title : {
+             type: Sequelize.STRING
+        },
+        path : {
+            type:Sequelize.STRING
+        },
+        
+     });
+ 
+
+
 
 User.hasOne(Password, {as : "Password",foreignKey: 'userId'}) //userId will be added in Password model
 
@@ -137,9 +147,11 @@ StreamConfig.belongsTo(User, {as : "User", foreignKey:'userId'})
 //StreamConfig.belongsTo(Stream, {through: 'ConfigStream'});
 
 
-Game.hasMany(StreamConfig, {as : "StreamConfig", foreignKey: 'game' }) //Is this correct?
+Game.hasMany(StreamConfig, {as : "StreamConfig", foreignKey: 'game' })
 StreamConfig.belongsTo(Game, {as: "Game", foreignKey: 'game'})
 
+User.hasMany(VOD, {as : {singular : 'VOD', plural : 'VODS'}, foreignKey:'userId'})
+VOD.belongsTo(User, {as: "User", foreignKey: 'userId'})
 
 
 Country.hasMany(StreamConfig, {as : "StreamConfig"})
@@ -182,7 +194,7 @@ function insert_static_data(){
 }
 
 
-models = {'sequelize' : sequelize, 'User' : User, 'Password' : Password, "GoogleUser" : GoogleUser, "StreamKey" : StreamKey,"StreamConfig": StreamConfig, "Game":Game,"Country":Country, "insertStaticData" : insert_static_data}
+models = {'sequelize' : sequelize, 'User' : User, 'Password' : Password, "GoogleUser" : GoogleUser, "StreamKey" : StreamKey,"StreamConfig": StreamConfig, "Game":Game,"Country":Country,"VOD":VOD, "insertStaticData" : insert_static_data}
 module.exports = models
 
 

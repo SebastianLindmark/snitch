@@ -25,9 +25,11 @@ module.exports = {
 
     set_stream_online : function(user){
         return user.getStreamConfig().then(function(streamConfig){
+            
             return streamConfig.updateAttributes({
                 live: true
             }) 
+            
         })},
 
 

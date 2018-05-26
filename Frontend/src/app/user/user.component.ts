@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import {UserRequestService} from '../_services/user-request.service'
 import {Router, ActivatedRouteSnapshot, ActivatedRoute} from '@angular/router'
 import flvjs from 'flv.js';
+import * as hls from 'hls.js';
 import { BrowseService } from '../_services/browse.service';
 import * as Globals from 'globals';
 
@@ -28,8 +29,20 @@ export class UserComponent  {
     var request = this.userRequest.getUserStreamKey(this.username);
     request.subscribe(response => {
       this.streamKey = response;
-      if (flvjs.isSupported()) {
-        var videoElement = <HTMLMediaElement>document.getElementById('videoElement');
+
+
+      if(hls.isSupported()){
+        let videoElement = <HTMLVideoElement>document.getElementById('videoElement');
+        var streaming = new hls();
+        streaming.loadSource('http://127.0.0.1:8000/live/snitch_live_csrPcslTpdCe0wHi6ZgBSl3Bx9IZ3tbgEZuv2Gh2ezvUxd9mOV/DBHVCHVcfl/index.m3u8')
+        streaming.attachMedia(videoElement)
+        streaming.on(hls.Events.MANIFEST_PARSED,function() {
+          videoElement.play();
+      });
+
+      }
+      else if (flvjs.isSupported()) {
+        let videoElement = <HTMLMediaElement>document.getElementById('videoElement');
         this.flvPlayer = flvjs.createPlayer({
             type: 'flv',
             url: Globals.STREAM_BASE_URL + '/live/' + this.streamKey + '.flv'           
