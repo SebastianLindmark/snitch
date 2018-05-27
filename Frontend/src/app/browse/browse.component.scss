@@ -5,13 +5,14 @@
 .directory-item {
     width: 200px;
     flex-grow: 999;
-    cursor: pointer;
+    
 }
 
 .directory-item>img {
     border-radius: 0;
     border: none;
     padding: 0;
+    cursor: pointer;
 }
 
 .title {

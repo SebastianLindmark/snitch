@@ -167,3 +167,50 @@ $dark-color: #2A6D7A;
     font-size: 24px;
     color: lightgray;
 }
+
+
+
+
+:host {
+    display: block;
+}
+
+.directory-item {
+    width: 200px;
+    flex-grow: 999;
+    
+}
+
+.directory-item>img {
+    border-radius: 0;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.vod-list{
+    margin-top: 15px;
+}
+
+.title {
+    font-size: 18px;
+    margin-left: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden; 
+}
+
+.viewer-count {
+    color: gray;
+    font-size: 12px;
+    margin-left: 2px;
+}
+
+#document-selection {
+    height: 80;
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 80px;
+    background-color: white;
+    border: 1px solid #FFC3C3;
+}

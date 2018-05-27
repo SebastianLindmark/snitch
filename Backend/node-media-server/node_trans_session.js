@@ -53,9 +53,9 @@ class NodeTransSession extends EventEmitter {
     let argv = ['-y', '-fflags', 'nobuffer', '-analyzeduration', '1000000', '-i', inPath, '-c:v', vc, '-c:a', ac, '-f', 'tee', '-map', '0:a?', '-map', '0:v?'  ,mapStr];
     //let argv = ['ffmpeg', '-i' ,inPath, '-r', '1', '-an', '-updatefirst' ,'1', '-y', 'thumbnail.jpg',mapStr];
     
-    console.log('Spawning ffmpeg ' + argv.join(' '));
-    console.log("HERE COMES THE DATA")
-    console.log(argv)
+    //console.log('Spawning ffmpeg ' + argv.join(' '));
+    //console.log("HERE COMES THE DATA")
+    //console.log(argv)
     // Logger.debug(argv.toString());
     this.ffmpeg_exec = spawn(this.conf.ffmpeg, argv);
     this.ffmpeg_exec.on('error', (e) => {
@@ -72,7 +72,9 @@ class NodeTransSession extends EventEmitter {
 
     this.ffmpeg_exec.on('close', (code) => {
       Logger.log('[Transmuxing end] ' + this.conf.streamPath);
-      context.nodeEvent.emit('fileSaved',this.conf.streamPath, ouPath + "/index.m3u8");
+
+      //Substring to remove ./media path.
+      context.nodeEvent.emit('fileSaved',this.conf.streamPath, ouPath.substring(7) + "/index.m3u8");
       this.emit('end');
       fs.readdir(ouPath, function (err, files) {
         if (!err) {

@@ -27,6 +27,8 @@ var user_sequelize = require('./db_helpers/user_sequelize');
 var stream_sequelize = require('./db_helpers/stream_sequelize');
 var database_helper = require("./database_helper");
 var follower = require('./db_helpers/follower_sequelize');
+var vod = require('./db_helpers/vod_sequelize')
+
 
 var nms = require("./nms");
 nms.start();
@@ -370,9 +372,33 @@ app.route('/api/test/get3').get((req,res) => {
     follower.get_live_followings("Kitboga").then(function(resssss){
         res.send({res : resssss})
     })
-    
-
 })
+
+
+app.route('/get_vods_by_user').post((req,res) => {
+    let username = req.body.username;
+    vod.get_vods_from_user(username).then(function(result){
+        res.send({success:true,result:result})
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 500;
+        res.send({success:false,result:err})
+    })
+})
+
+app.route('/get_vod_by_id').post((req,res) => {
+    let id = req.body.id;
+    vod.get_vod_by_id(id).then(function(result){
+        res.send({success:true,result:result})
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 500;
+        res.send({success:false,result:err})
+    })
+})
+
+
+
 
 app.route('/api/test/get1').get((req,res) => {
     

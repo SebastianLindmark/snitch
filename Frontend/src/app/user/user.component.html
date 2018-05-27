@@ -2,17 +2,17 @@
   <div class="row">
     <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'" class="no-padding">
       <ul class="nav nav-tabs">
-        <li role="presentation" class="nav-item" [class.active]=true>
+        <li role="presentation" class="nav-item" [class.active] = 'selectedTabIndex == 0' (click)=tabClick(0)>
           <a class="nav-link custom-tab-button">
             <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
             <a class="bold-text">{{username}}</a>
           </a>
         </li>
 
-        <li role="presentation" class="nav-item">
+        <li role="presentation" class="nav-item" [class.active] = 'selectedTabIndex == 1' (click)=tabClick(1)>
           <a class="nav-link custom-tab-button">Videos</a>
         </li>
-        <li role="presentation" class="nav-item">
+        <li role="presentation" class="nav-item" [class.active] = 'selectedTabIndex == 2' (click)=tabClick(2)>
           <a class="nav-link custom-tab-button">Subscribers</a>
         </li>
         <li role="presentation" class="nav-item follow-button">
@@ -25,15 +25,16 @@
 
     </div>
 
-  <div [hidden]="!chatOpen" class="col-md-3 no-padding" style="background-color: lightgray; display: flex;">
+  <div [hidden]="!chatOpen || selectedTabIndex != 0 && !vodSelected" class="col-md-3 no-padding" style="background-color: lightgray; display: flex;">
       <p style="margin-left: 20px; margin-top: auto; margin-bottom: auto; font-size: 18px; color: black;">Stream Chat</p>
     </div>
   </div>
 
+  <div [hidden]="selectedTabIndex != 0 && !vodSelected">
   <div class="row">
     <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'" class="no-padding">
       <div [ngClass]="(chatOpen)?'player-window embed-responsive embed-responsive-16by9':'player-window embed-responsive embed-responsive-21by9'">
-        
+        <video id="videoElement" class="embed-responsive-item" controls></video>
       </div>
     </div>
     <div class="col-md-3 no-padding" [hidden]="!chatOpen">
@@ -42,7 +43,7 @@
       </div>
     </div>
   </div>
-
+  
   <div class="row" *ngIf="gameInfo">
     <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'" class="no-padding">
       <div class="game-info-container flex-container">
@@ -54,4 +55,35 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<div class="vod-list d-flex flex-wrap">
+  <div class="p-2 directory-item" *ngFor="let vod of vods">
+    <img src="{{vod.url}}" routerLinkActive="active" class="img-thumbnail" (click)=playVOD(vod.id) >
+    <div class="text-left title">{{vod.title}}</div>
+    <div class="text-left viewer-count">124,344 viewers</div>
+  </div>
+
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+<div class="p-2 directory-item"></div>
+
+
+
 </div>

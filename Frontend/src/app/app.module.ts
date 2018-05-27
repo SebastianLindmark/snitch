@@ -37,6 +37,8 @@ import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 import { BrowseService } from './_services/browse.service';
 import { GameCollectionComponent } from './game-collection/game-collection.component';
 import { LivesettingsComponent } from './livesettings/livesettings.component';
+import { VodRequestService } from './_services/vod-request.service';
+import { VideoPlayerService } from './_services/video-player.service';
 
 
 @NgModule({
@@ -60,7 +62,8 @@ import { LivesettingsComponent } from './livesettings/livesettings.component';
     PageNotFoundComponent,
     StreamsettingsComponent,
     GameCollectionComponent,
-    LivesettingsComponent
+    LivesettingsComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,7 @@ import { LivesettingsComponent } from './livesettings/livesettings.component';
     HttpClientModule,
     RoutingModule
   ],
-  providers: [BrowseService, AuthenticationService, SettingsService, HttpClient, CurrentUserService, AuthGuardService, ChannelGuardService, JwtHelper, UserRequestService, {
+  providers: [BrowseService, AuthenticationService, SettingsService, HttpClient, CurrentUserService, AuthGuardService, ChannelGuardService, JwtHelper, UserRequestService,VodRequestService,VideoPlayerService, {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,
     multi: true

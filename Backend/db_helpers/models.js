@@ -116,13 +116,18 @@ const User = sequelize.define('user', {
 
 
     const VOD = sequelize.define('vod', {
+        id: { 
+            type: Sequelize.INTEGER, 
+            autoIncrement: true,
+            primaryKey: true
+        },
+       
         title : {
              type: Sequelize.STRING
         },
         path : {
             type:Sequelize.STRING
-        },
-        
+        }
      });
  
 
@@ -152,6 +157,9 @@ StreamConfig.belongsTo(Game, {as: "Game", foreignKey: 'game'})
 
 User.hasMany(VOD, {as : {singular : 'VOD', plural : 'VODS'}, foreignKey:'userId'})
 VOD.belongsTo(User, {as: "User", foreignKey: 'userId'})
+
+Game.hasOne(VOD, {as : "VOD" , foreignKey:'game'})
+VOD.belongsTo(Game, {as : "Game",foreignKey: 'game'})
 
 
 Country.hasMany(StreamConfig, {as : "StreamConfig"})

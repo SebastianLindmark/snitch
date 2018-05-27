@@ -29,7 +29,7 @@ const config = {
           app: 'live',
           ac: 'aac',
           hls: true,
-          hlsFlags: '[hls_time=2:hls_list_size=3]',
+          hlsFlags: '[hls_time=10:hls_list_size=0]',
           dash: false,
           dashFlags: '[f=dash:window_size=3:extra_window_size=5]'
         }
