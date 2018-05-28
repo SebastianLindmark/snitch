@@ -57,33 +57,34 @@
   </div>
 </div>
 
+<div [hidden]="selectedTabIndex != 1" class="vod-list">
 
-<div class="vod-list d-flex flex-wrap">
-  <div class="p-2 directory-item" *ngFor="let vod of vods">
-    <img src="{{vod.url}}" routerLinkActive="active" class="img-thumbnail" (click)=playVOD(vod.id) >
-    <div class="text-left title">{{vod.title}}</div>
-    <div class="text-left viewer-count">124,344 viewers</div>
-  </div>
+  <div class="d-flex flex-wrap" >
+    <div class="p-2 directory-item" *ngFor="let vod of vods">
+      <img src="{{vod.url}}" routerLinkActive="active" class="img-thumbnail" (click)=playVOD(vod.id) >
+      <div class="text-left title">{{vod.title}}</div>
+      <div class="text-left viewer-count">{{vod.date}}</div>
+    </div>
 
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
 
-
+</div>
 
 </div>

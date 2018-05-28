@@ -71,7 +71,12 @@ export class UserComponent  {
   loadVODS(){
     this.vodRequestService.getVODSByUser(this.username).subscribe(response => {
       if(response.success){
-        console.log(response)
+       
+        for(var i = 0; i < response.result.length; i++){
+          let date = new Date(response.result[i].createdAt);
+          let dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+          response.result[i].date = dateString;
+        }
         this.vods = response.result;
       }
     })
@@ -80,9 +85,6 @@ export class UserComponent  {
   playVOD(vodID){
     this.loadVODPlayer(vodID)
   }
-
-
-
 
   tabClick(tabIndex){
     this.selectedTabIndex = tabIndex
