@@ -1,3 +1,8 @@
+// Remove negative margin on rows
+.row {
+    margin: 0;
+}
+
 p {
     color: black !important;
 }
@@ -22,4 +27,9 @@ ul > li:hover {
     background-color: rgb(250, 250, 250);
     border-radius: 0px;
     border-color: rgb(216, 216, 216);
+}
+
+#settings-col {
+    border-right: 1px solid whitesmoke;
+    padding-right: 2px;
 }

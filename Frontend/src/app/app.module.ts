@@ -14,8 +14,6 @@ import { HttpClient,HttpClientModule } from '@angular/common/http';
 import { HelpComponent } from './help/help.component';
 import { FooterComponent } from './footer/footer.component';
 import { CurrentUserService } from './_services/current-user.service';
-import { UserObserverExampleComponent } from './user-observer-example/user-observer-example.component';
-import { RepeatValidatorDirective } from './repeat-validator.directive';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { UserComponent } from './user/user.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -50,8 +48,6 @@ import { VideoPlayerService } from './_services/video-player.service';
     BrowseComponent,
     HelpComponent,
     FooterComponent,
-    UserObserverExampleComponent,
-    RepeatValidatorDirective,
     SearchbarComponent,
     UserComponent,
     SettingsComponent,

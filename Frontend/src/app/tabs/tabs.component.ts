@@ -6,6 +6,10 @@ import { Tab } from '../tab/tab.component';
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.scss']
 })
+
+/*
+ * Used together with the tab component to create the settings page. 
+ */
 export class Tabs implements AfterContentInit {
   
   @ContentChildren(Tab) tabs: QueryList<Tab>;
