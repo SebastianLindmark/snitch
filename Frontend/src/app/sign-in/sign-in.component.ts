@@ -1,6 +1,6 @@
 import { Component, OnInit, Input,NgZone, ViewChild,ElementRef, Output, EventEmitter } from '@angular/core';
-import {AuthenticationService} from '../_services/authentication.service'
-import {UIRouterModule} from "@uirouter/angular";
+import { AuthenticationService } from '../_services/authentication.service'
+import { UIRouterModule } from "@uirouter/angular";
 import { User } from '../_models/user';
 import { CurrentUserService } from '../_services/current-user.service';
 declare const gapi: any;
@@ -41,7 +41,6 @@ export class SignInComponent implements OnInit {
   }
 
   public closeThisComponent(){
-    console.log("Running emit");
     this.closeEvent.emit(true);
   }
 
@@ -68,14 +67,12 @@ export class SignInComponent implements OnInit {
   }
 
   customLogIn(username,password){
-    console.log("Custom login");
       var loginFunction = this.authentication.loginCustomUser(this.username,this.password);
       this.login(loginFunction);
   }
 
 
   customRegister(username, email,password){
-    console.log("Custom register");
     var registerFunction = this.authentication.registerCustomUser(username,email,password).subscribe(data => {
       this.customLogIn(username,password);
     },
@@ -87,7 +84,6 @@ export class SignInComponent implements OnInit {
 
   googleRegister(username,email,googleID){
     var registerFunction = this.authentication.registerGoogleUser(username,email,googleID).subscribe(data => {
-      console.log("Registered google user");
       this.googleLogin(username, email, googleID);
     },
     error => {
@@ -98,6 +94,9 @@ export class SignInComponent implements OnInit {
   }
 
 
+  /*
+   * Google Sign-In API 
+   */
   public auth2: any;
   public googleInit() {
     gapi.load('auth2', () => {
@@ -120,6 +119,9 @@ export class SignInComponent implements OnInit {
         var parsedUsername =  email.substring(0,email.indexOf("@"));
         var profileID = profile.getId();
 
+        /*
+         * Make changes in angular zone, making it update faster. 
+         */
         this.zone.run(() => {
           this.googleRegister(parsedUsername,email,profileID);
           this.closeThisComponent();
@@ -135,14 +137,5 @@ export class SignInComponent implements OnInit {
   ngOnInit() {
     this.googleInit();
   }
-
-
-  /*
-  ---HELPER FUNCTIONS FOR GOOGLE AUTH---
-  console.log('Token || ' + googleUser.getAuthResponse().id_token);
-  console.log('ID: ' + profile.getId());
-  console.log('Name: ' + profile.getName());
-  console.log('Image URL: ' + profile.getImageUrl());
-  console.log('Email: ' + profile.getEmail());*/
 
 }

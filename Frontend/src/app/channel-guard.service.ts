@@ -4,6 +4,9 @@ import { UserRequestService } from './_services/user-request.service';
 import { Observable } from 'rxjs/Observable';
 import {Router} from '@angular/router';
 
+/*
+ * Routing guard that only allows routing to existing user pages, otherwise routes to 404.
+ */
 @Injectable()
 export class ChannelGuardService implements CanActivate {
 
