@@ -44,6 +44,10 @@
     cursor: pointer;
 }
 
+.username:hover{
+    text-decoration: underline;
+}
+
 .title {
     font-size: 18px;
     margin-left: 2px;

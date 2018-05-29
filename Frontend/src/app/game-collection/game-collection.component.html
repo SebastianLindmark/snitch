@@ -16,35 +16,85 @@
         </div>
       </div>
     
-      <div class="p-3">
-      <div class="d-flex flex-wrap" *ngIf="!noStreamsAvailable">
-          <div class="p-2 directory-item" *ngFor="let stream of liveStreams">
-            <img src="{{stream.Game.url}}" routerLinkActive="active" class="img-thumbnail" routerLink="/channel/{{stream.User.username}}">
-            <div class="text-left title-text">{{stream.title}}</div>
-            <div class="text-left viewer-count subtitle-text">{{stream.viewers}} viewers on {{stream.User.username}}</div>
-          </div>
       
-          
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-          <div class="p-2 directory-item"></div>
-      </div>
 
-      <div class="no-stream-text" *ngIf="noStreamsAvailable">No available streams for {{name}}</div>
+      <div class="row">
+          <div class="col-md-6">
+            <div class="column-header">
+                <p>Live streams</p>
+              </div>
+                
+            
+            <div class="d-flex flex-wrap">
+                <div class="p-2 no-stream-text" *ngIf="noStreamsAvailable">No live streams for {{name}}</div>                 
+                  <div class="p-2 directory-item" *ngFor="let stream of liveStreams">
+                      <img class="img-thumbnail" src="{{stream.Game.url}}" routerLinkActive="active" routerLink="/channel/{{stream.User.username}}">
+                      <i class="fa fa-circle live-circle-icon"></i>
+                      <div class="text-left title follower-game-title">{{stream.title}}</div>
+                      <div class="text-left viewer-count">
+                        {{stream.viewers}} viewers on 
+                        <p class="username" routerLinkActive="active" routerLink="/channel/{{stream.User.username}}">{{stream.User.username}}</p>
+                      </div> 
+                  </div>
 
+              
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+            </div> 
+          </div>
+          <div class="col-md-6">
+              <div class="column-header">
+                  <p>VODS</p>
+              </div>
+        
+              <div class="d-flex flex-wrap">
+                  <div class="p-2 no-stream-text" *ngIf="vods.length == 0">No VODS for {{name}}</div>                 
+                  <div class="p-2 directory-item" *ngFor="let stream of vods">
+                      <img class="img-thumbnail" src="{{stream.url}}" routerLinkActive="active" routerLink="/channel/">
+                      
+                      <div class="text-left title follower-game-title">{{stream.title}}</div>
+                      <div class="text-left viewer-count">
+                        by 
+                       <p class="username" routerLinkActive="active" routerLink="/channel/{{stream.username}}">{{stream.username}}</p>
+                      </div> 
+                  </div>
+
+              
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+              <div class="p-2 directory-item"></div>
+            </div> 
+
+
+        </div>
+      
+
+
+
+
+
+
+
+
+
+
+
+      
 </div>

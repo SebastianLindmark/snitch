@@ -24,4 +24,13 @@ export class VodRequestService {
     });
   }
 
+  getVODSBygame(gameId){
+    var request = this.http.post<any>(this.BASE_URL + '/get_vods_by_game', {id : gameId});
+    return request.map((res : any) => {
+      return res;
+    });
+  }
+
+  
+
 }

@@ -276,8 +276,21 @@ app.route('/search_game').post((req,res) => {
         res.statusCode = 404;
         res.send({success:false,result:err})
     })
-
 })
+
+
+app.route('/get_vods_by_game').post((req,res) => {
+    let gameId = req.body.id;
+
+    vod.get_vods_by_game(gameId).then(result => {
+        res.send({success:true,result : result})
+    }).catch(err => {
+        console.log(err)
+        res.statusCode = 404;
+        res.send({success:false,result:err})
+    })
+})
+
 
 
 

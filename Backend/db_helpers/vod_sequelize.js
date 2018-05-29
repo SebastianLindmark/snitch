@@ -50,8 +50,18 @@ module.exports = {
 
     get_vod_by_id : function(id){
         return models.VOD.findOne({where : {id : id}})
-    }
+    },
 
+
+    get_vods_by_game : function(id){
+
+            return models.sequelize.query('SELECT Users.username,VODS.id,VODS.path,VODS.createdAt, VODS.title, Games.url, Games.name FROM Users, VODS, Games WHERE Users.id = VODS.userId AND VODS.game = Games.id AND Games.id = ' + id , { type: models.sequelize.QueryTypes.SELECT}).then(projects => {
+                return projects
+              })
+            
+            //return user.getVODS()
+
+    }
 
 
 }

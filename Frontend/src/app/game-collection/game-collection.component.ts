@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BrowseService } from '../_services/browse.service';
+import { VodRequestService } from '../_services/vod-request.service';
 
 @Component({
   selector: 'app-game-collection',
@@ -13,17 +14,21 @@ export class GameCollectionComponent implements OnInit {
   image_url = "";
   wide_image_url = "";
   liveStreams = []
+  vods = []
   noStreamsAvailable = false;
   
-  constructor(private gameService :BrowseService, private route: ActivatedRoute) { }
+  
+  constructor(private gameService :BrowseService, private route: ActivatedRoute, private vodRequestService : VodRequestService) { }
 
   ngOnInit() {
     var urlGame = this.route.snapshot.url[1].toString();
     let game = decodeURI(urlGame);
     this.gameService.loadGame(game).subscribe(response => {
+      console.log(response.result)
       this.name = response.result.name;
       this.image_url = response.result.url;
       this.wide_image_url = response.result.wide_image_url;
+      this.loadVODsByGame(response.result.id)
     })
 
 
@@ -40,7 +45,15 @@ export class GameCollectionComponent implements OnInit {
       console.log(error);
     });
 
-    
+   
+  }
+
+
+  loadVODsByGame(gameId){
+    this.vodRequestService.getVODSBygame(gameId).subscribe(response => {
+      console.log(response)
+      this.vods = response.result;
+    })
   }
 
 }

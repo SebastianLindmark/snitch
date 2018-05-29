@@ -72,7 +72,6 @@
 .directory-item {
     width: 200px;
     flex-grow: 999;
-    cursor: pointer;
 }
 
 .directory-item>img {
@@ -81,3 +80,71 @@
     padding: 0;
 }
 
+.img-thumbnail{
+    cursor: pointer;
+}
+
+
+#document-selection {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+    line-height: 80px;
+    background-color: white;
+    border: 1px solid #FFC3C3;
+    font-size: 18px;
+}
+
+.column-header {
+    margin-top: 15px;
+    height: 40px;
+    padding: 5px 20px 5px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: white;
+    border: 1px solid #FFC3C3;
+    margin-bottom: 15px;
+}
+
+.news-container {
+    margin: 15px;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid rgba(211, 211, 211, 0.425);
+}
+
+.news {
+    font-size: 18px;
+    color: black;
+}
+
+.patch-title {
+    font-weight: bold;
+}
+
+.follower-game-title{
+    display: inline;
+}
+
+.viewer-count {
+    color: gray;
+    font-size: 14px;
+    margin-left: 2px;
+}
+
+.live-circle-icon{
+    font-size:14px;
+    color:red;
+    margin: auto;
+}
+
+.username{
+    color:firebrick;
+    display: inline;
+    cursor: pointer;
+}
+
+.username:hover{
+    text-decoration: underline;
+}
