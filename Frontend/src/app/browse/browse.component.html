@@ -44,10 +44,15 @@
             <p>Followers</p>
         </div>
       <div class="d-flex flex-wrap">
-        <div class="p-2 directory-item" *ngFor="let game of popularGames">
-          <img src="{{game.url}}" routerLinkActive="active" class="img-thumbnail" routerLink="/game/{{game.name}}">
-          <div class="text-left title">{{game.name}}</div>
-          <div class="text-left viewer-count">124,344 viewers</div>
+        <div class="p-2 directory-item" *ngFor="let game of followerStreams">
+          <img [ngClass]="(game.live)? 'img-thumbnail' :'img-thumbnail offline-stream' " src="{{game.url}}" routerLinkActive="active" class="img-thumbnail" routerLink="/channel/{{game.username}}">
+          <i [hidden] = "game.live == 0"  class="fa fa-circle live-circle-icon"></i>
+          <div class="text-left title follower-game-title">{{game.name}}</div>
+          <div class="text-left viewer-count">
+            {{game.viewers}} viewers on 
+            <p class="username" routerLinkActive="active" routerLink="/channel/{{game.username}}">{{game.username}}</p>
+          </div>
+          
         </div>
     
         

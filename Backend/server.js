@@ -264,7 +264,7 @@ app.route('/get_game_by_id').post((req,res) => {
 
 app.route('/get_viewers_by_game').post((req,res) => {
     console.log("SEBASTIN")
-    game.count_viewers_by_game().then(result => {
+    game.get_games_with_viewer_count().then(result => {
         console.log(result)
     })
 })
@@ -401,11 +401,14 @@ app.post('/get_followings',expressJwt({secret: 'secret'}),function(req,res){
 
 
 //get_live_followings
-
-app.route('/api/test/get3').get((req,res) => {
-
-    follower.get_live_followings("Kitboga").then(function(resssss){
-        res.send({res : resssss})
+app.post('/get_follower_streams',expressJwt({secret: 'secret'}),function(req,res){
+    let username = req.user.username;
+    follower.get_follower_streams(username).then(function(result){
+        res.send({success: true, result : result})
+    }).catch(err => {
+        console.log(err)
+        res.statusCode = 500;
+        res.send({success:false,result:err})
     })
 })
 
