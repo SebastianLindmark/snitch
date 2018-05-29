@@ -39,7 +39,6 @@ export class BrowseComponent implements OnInit {
 
   ngOnInit() {
     this.followerRequestService.getFollowerStreams().subscribe(response => {
-      console.log(response)
       this.followerStreams = response.result
     })
   }

@@ -262,14 +262,6 @@ app.route('/get_game_by_id').post((req,res) => {
 })
 
 
-app.route('/get_viewers_by_game').post((req,res) => {
-    console.log("SEBASTIN")
-    game.get_games_with_viewer_count().then(result => {
-        console.log(result)
-    })
-})
-
-
 app.route('/search_game').post((req,res) => {
     var game = req.body.game_name;
     models.Game.find({where : {name : {[Op.like] : game + '%'}}}).then(function(game){
