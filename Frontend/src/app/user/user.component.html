@@ -13,10 +13,10 @@
           <a class="nav-link custom-tab-button">Videos ({{vods.length}})</a>
         </li>
         <li role="presentation" class="nav-item" [class.active] = 'selectedTabIndex == 2' (click)=tabClick(2)>
-          <a class="nav-link custom-tab-button">Subscribers</a>
+          <a class="nav-link custom-tab-button">Followers</a>
         </li>
-        <li role="presentation" class="nav-item follow-button">
-          <a class="nav-link custom-tab-button follow-link">Follow</a>
+        <li role="presentation" [ngClass]="(isFollower)?'nav-item follow-button following':'nav-item follow-button not_following'" (click)=followButton() >
+          <a class="nav-link custom-tab-button follow-link">{{isFollower ? 'Follower' : 'Follow'}}</a>
         </li>
         <div class="nav-item icon-container"  (click)=toggleChat()>
           <div  [ngClass]="(chatOpen)?'fa fa-caret-right':'fa fa-caret-left'" class="f-awesome"></div>
@@ -58,6 +58,17 @@
   </div>
 </div>
 
+<div [hidden]="selectedTabIndex != 2">
+  <div class="d-flex flex-wrap" *ngFor="let follower of followers">
+      <div class="follow-user-container" routerLinkActive="active" routerLink="/channel/{{follower.username}}">  
+        <img class="follower-user-img" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">  
+        <div class="follower-user-username"> {{follower.username}} </div>
+        
+      </div>
+  </div>
+</div>
+
+
 <div [hidden]="selectedTabIndex != 1" class="vod-list">
   <div class="d-flex flex-wrap" >
     <div class="p-2 directory-item" *ngFor="let vod of vods">
@@ -83,8 +94,10 @@
   <div class="p-2 directory-item"></div>
   <div class="p-2 directory-item"></div>
   <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-
+  <div class="p-2 directory-item"></div>  
 </div>
+
+
+
 
 </div>

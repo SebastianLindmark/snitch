@@ -37,6 +37,7 @@ import { GameCollectionComponent } from './game-collection/game-collection.compo
 import { LivesettingsComponent } from './livesettings/livesettings.component';
 import { VodRequestService } from './_services/vod-request.service';
 import { VideoPlayerService } from './_services/video-player.service';
+import { FollowerRequestService } from './_services/follower-request.service';
 
 
 @NgModule({
@@ -68,7 +69,7 @@ import { VideoPlayerService } from './_services/video-player.service';
     HttpClientModule,
     RoutingModule
   ],
-  providers: [BrowseService, AuthenticationService, SettingsService, HttpClient, CurrentUserService, AuthGuardService, ChannelGuardService, JwtHelper, UserRequestService,VodRequestService,VideoPlayerService, {
+  providers: [BrowseService, AuthenticationService, SettingsService, HttpClient, CurrentUserService, AuthGuardService, ChannelGuardService, JwtHelper, UserRequestService,VodRequestService,VideoPlayerService, FollowerRequestService, {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,
     multi: true
