@@ -60,6 +60,17 @@ export class BrowseService {
   }
 
 
+  getViewersByGame(){
+    console.log("About to do getViewersByGame")
+    var request = this.http.post<any>(this.BASE_URL + '/get_viewers_by_game',{});
+    return request.map((res : any) => {  
+      console.log("Response from getViewersByGame")
+      return res.result;
+    }
+    );      
+  }
+
+
 
 
 

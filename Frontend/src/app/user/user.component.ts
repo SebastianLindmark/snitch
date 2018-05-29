@@ -74,6 +74,9 @@ export class UserComponent  {
     this.loadLivePlayer()
     this.loadVODS()
     this.isFollower()
+    this.gameRequestService.getViewersByGame().subscribe(response => {
+      console.log(response)
+    })
   }
 
   isFollower(){

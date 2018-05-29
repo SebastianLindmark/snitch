@@ -28,6 +28,7 @@ var stream_sequelize = require('./db_helpers/stream_sequelize');
 var database_helper = require("./database_helper");
 var follower = require('./db_helpers/follower_sequelize');
 var vod = require('./db_helpers/vod_sequelize')
+var game = require('./db_helpers/game_sequelize')
 
 
 var nms = require("./nms");
@@ -230,14 +231,13 @@ app.post('/get_user',function(req,res){
 
 
 app.route('/get_games').post((req,res) => {
-    models.Game.findAll().then(function(games){
+    game.get_games_with_viewer_count().then(games => {
         res.send({success : true, result : games})
-    }).catch(function(err){
+    }).catch(err => {
         console.log(err)
         res.statusCode = 404
         res.send({success : false, result : err})
     })
-
 })
 
 app.route('/get_game').post((req,res) => {
@@ -261,6 +261,13 @@ app.route('/get_game_by_id').post((req,res) => {
     })
 })
 
+
+app.route('/get_viewers_by_game').post((req,res) => {
+    console.log("SEBASTIN")
+    game.count_viewers_by_game().then(result => {
+        console.log(result)
+    })
+})
 
 
 app.route('/search_game').post((req,res) => {
@@ -327,7 +334,7 @@ app.post('/follow_user',expressJwt({secret: 'secret'}),function(req,res){
     var userToFollow = req.body.username;
     
     return follower.add_follower(userToFollow,currentUser).then(function(result){
-        res.send({success:true,result:"Successfully followed user"})
+        res.send({success:true,result:true})
     }).catch(function(err){
         console.log(err)
         res.statusCode = 500;
@@ -349,6 +356,22 @@ app.post('/is_following',expressJwt({secret: 'secret'}),function(req,res){
     });
 
 });
+
+app.post('/follow_user_remove',expressJwt({secret: 'secret'}),function(req,res){
+    var currentUser = req.user.username;
+    var userToFollow = req.body.username;
+    
+   follower.remove_follower(userToFollow,currentUser).then(function(result){
+        res.send({success:true,result:false})
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 500;
+        res.send({success:false,result:err})
+    });
+
+});
+
+
 
 app.post('/get_followers',expressJwt({secret: 'secret'}),function(req,res){
     var username = req.body.username;
