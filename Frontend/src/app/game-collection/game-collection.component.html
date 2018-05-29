@@ -57,7 +57,7 @@
               </div>
         
               <div class="d-flex flex-wrap">
-                  <div class="p-2 no-stream-text" *ngIf="vods.length == 0">No VODS for {{name}}</div>                 
+                  <div class="p-2 no-stream-text" *ngIf="vods === null || vods.length == 0">No VODS for {{name}}</div>                 
                   <div class="p-2 directory-item" *ngFor="let stream of vods">
                       <img class="img-thumbnail" src="{{stream.url}}" routerLinkActive="active" routerLink="/channel/">
                       
