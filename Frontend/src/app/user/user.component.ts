@@ -7,6 +7,7 @@ import { BrowseService } from '../_services/browse.service';
 import * as Globals from 'globals';
 import { VodRequestService } from '../_services/vod-request.service';
 import { VideoPlayerService } from '../_services/video-player.service';
+import { FollowerRequestService } from '../_services/follower-request.service';
 
 @Component({
   selector: 'app-user',
@@ -26,9 +27,12 @@ export class UserComponent  {
 
   private vodSelected = false;
 
+  private isFollowing = false;
+  private followers = []
   private vods = []
 
-  constructor(private route: ActivatedRoute, private userRequest : UserRequestService, private gameRequestService : BrowseService, private vodRequestService: VodRequestService, private videoPlayer : VideoPlayerService) { 
+  constructor(private route: ActivatedRoute, private userRequest : UserRequestService,
+    private gameRequestService : BrowseService, private vodRequestService: VodRequestService, private videoPlayer : VideoPlayerService, private followRequestService : FollowerRequestService) { 
     this.username = this.route.snapshot.url[1].toString();
   }
 
@@ -69,6 +73,30 @@ export class UserComponent  {
   ngOnInit(){
     this.loadLivePlayer()
     this.loadVODS()
+    this.isFollower()
+  }
+
+  isFollower(){
+    this.followRequestService.isFollower(this.username).subscribe(response => {
+      if(response.success){
+        console.log("Is follower " + response.result)
+        this.isFollower = response.result
+      }
+    })
+  }
+
+  followButton(){
+    if(!this.isFollower){
+      this.followRequestService.followUser(this.username).subscribe(handleFollowResponse)
+    }else{
+      this.followRequestService.followUserRemove(this.username).subscribe(handleFollowResponse)
+    }
+
+    let selfRef = this;
+    function handleFollowResponse(response){  
+      selfRef.isFollower = response.result;
+    }
+
   }
 
   loadVODS(){
@@ -85,6 +113,13 @@ export class UserComponent  {
     })
   }
 
+  loadFollowers(){
+    let selfRef = this
+    this.followRequestService.getFollowers(this.username).subscribe(response => {
+      selfRef.followers = response.result
+    })
+  }
+
   playVOD(vodID){
     this.loadVODPlayer(vodID)
   }
@@ -93,6 +128,8 @@ export class UserComponent  {
     this.selectedTabIndex = tabIndex
     if(tabIndex == 0){
       this.loadLivePlayer()
+    }else if(tabIndex == 2){
+      this.loadFollowers()
     }
   }
 }
