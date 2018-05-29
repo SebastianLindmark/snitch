@@ -40,4 +40,14 @@ export class FollowerRequestService {
   }
 
 
+  getFollowerStreams(){
+    var request = this.http.post<any>(this.BASE_URL + '/get_follower_streams', {});
+    return request.map((res : any) => {
+      return res;
+    });
+  }
+
+  
+
+
 }

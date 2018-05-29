@@ -262,14 +262,6 @@ app.route('/get_game_by_id').post((req,res) => {
 })
 
 
-app.route('/get_viewers_by_game').post((req,res) => {
-    console.log("SEBASTIN")
-    game.count_viewers_by_game().then(result => {
-        console.log(result)
-    })
-})
-
-
 app.route('/search_game').post((req,res) => {
     var game = req.body.game_name;
     models.Game.find({where : {name : {[Op.like] : game + '%'}}}).then(function(game){
@@ -401,11 +393,14 @@ app.post('/get_followings',expressJwt({secret: 'secret'}),function(req,res){
 
 
 //get_live_followings
-
-app.route('/api/test/get3').get((req,res) => {
-
-    follower.get_live_followings("Kitboga").then(function(resssss){
-        res.send({res : resssss})
+app.post('/get_follower_streams',expressJwt({secret: 'secret'}),function(req,res){
+    let username = req.user.username;
+    follower.get_follower_streams(username).then(function(result){
+        res.send({success: true, result : result})
+    }).catch(err => {
+        console.log(err)
+        res.statusCode = 500;
+        res.send({success:false,result:err})
     })
 })
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrentUserService } from '../_services/current-user.service';
 import { BrowseService } from '../_services/browse.service';
+import { FollowerRequestService } from '../_services/follower-request.service';
 
 @Component({
   selector: 'app-browse',
@@ -11,12 +12,12 @@ export class BrowseComponent implements OnInit {
 
   public text = "Please sign in";
   private popularGames = []
+  private followerStreams = []
 
-  constructor(private currentUser : CurrentUserService, private browseService : BrowseService) {
+  constructor(private currentUser : CurrentUserService, private gameRequestService : BrowseService, private followerRequestService : FollowerRequestService) {
      
     this.currentUser.registerState().subscribe((response : any) => {
       if(response.logged_in){
-        //customized user content can be loaded here
         this.text = "Welcome " + response.user.username;
       }        
     });
@@ -26,7 +27,7 @@ export class BrowseComponent implements OnInit {
 
    loadPopularGames(){
 
-    this.browseService.loadPopularGames().subscribe(response => {
+    this.gameRequestService.loadPopularGames().subscribe(response => {
       this.popularGames = response;
     },
     error => {
@@ -37,6 +38,10 @@ export class BrowseComponent implements OnInit {
   
 
   ngOnInit() {
+    this.followerRequestService.getFollowerStreams().subscribe(response => {
+      this.followerStreams = response.result
+    })
   }
+
 
 }

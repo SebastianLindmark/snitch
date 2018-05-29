@@ -28,6 +28,22 @@
     cursor: pointer;
 }
 
+.follower-user-img{
+    text-align: center;
+    height: 35px;
+    width: 35px;
+    margin:auto;
+    display: block;
+    display: inline;
+}
+
+
+.username{
+    color:firebrick;
+    display: inline;
+    cursor: pointer;
+}
+
 .title {
     font-size: 18px;
     margin-left: 2px;
@@ -36,9 +52,28 @@
     overflow-x: hidden; 
 }
 
+.live-circle-icon{
+    font-size:14px;
+    color:red;
+    margin: auto;
+}
+
+.img-thumbnail{
+    background-color: black
+}
+
+.offline-stream{
+    opacity: 0.35;
+    filter: alpha(opacity=100); 
+}
+
+.follower-game-title{
+    display: inline;
+}
+
 .viewer-count {
     color: gray;
-    font-size: 12px;
+    font-size: 14px;
     margin-left: 2px;
 }
 

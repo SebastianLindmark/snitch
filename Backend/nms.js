@@ -48,12 +48,10 @@ function onStreamBegin(id,streamPath, args){
     }    
   }).then(function(user){
     return stream.set_stream_online(user)
-  }).then(function(res){
-    //We need to decrement viewers by one because the node-media-server "adds" a viewer automatically to the stream outside of our control. 
-    return onViewerLeave(id,streamPath,args) 
   }).catch(function(err){
     console.log(err)
   })
+
 
 };
 
