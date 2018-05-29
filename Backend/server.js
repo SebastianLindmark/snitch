@@ -248,8 +248,20 @@ app.route('/get_game').post((req,res) => {
         res.statusCode = 404;
         res.send({success:false,result:err})
     })
-
 })
+
+
+app.route('/get_game_by_id').post((req,res) => {
+    let id = req.body.id;
+    models.Game.find({where : {id : id}}).then(function(game){
+        res.send({success:true,result : game})
+    }).catch(function(err){
+        res.statusCode = 404;
+        res.send({success:false,result:err})
+    })
+})
+
+
 
 app.route('/search_game').post((req,res) => {
     var game = req.body.game_name;
@@ -438,11 +450,11 @@ app.route('/api/test/get2').get((req,res) => {
 
 
 console.log("About to sync")
-models.sequelize.sync({force:true}).then(function(){
+models.sequelize.sync({force:false}).then(function(){
     console.log("Database successfully synced")
     app.listen(hostPort, '0.0.0.0', () => {
-        models.insertStaticData()
-        name()
+        //models.insertStaticData()
+        //name()
         console.log('Server started!');
         
         //name()

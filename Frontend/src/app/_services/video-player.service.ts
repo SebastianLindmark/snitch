@@ -74,17 +74,25 @@ export class VideoPlayerService {
         let videoElement = playerWindow //<HTMLVideoElement>document.getElementById('videoElement');
         this.hlsPlayer = new hls();
         let vodPath = response.result.path
-
-        this.hlsPlayer.loadSource(Globals.VOD_BASE_URL + vodPath)
+        let streamUrl = Globals.STREAM_BASE_URL + '/live/snitch_live_PHmq7DFb5hIDEXP8d7yC9ZGi3ANMZJ2ZRUiMhKaAoygRXwAfHe/index.m3u8'
+        this.hlsPlayer.loadSource(streamUrl)
         this.hlsPlayer.attachMedia(videoElement)
         this.hlsPlayer.on(hls.Events.MANIFEST_PARSED,function() {
           videoElement.play();
       });
 
       }
+      
       let streamTitle = response.result.title
-      let game = response.result.title;
-      videoInfoCallback(streamTitle,game)
+      let gameId = response.result.game;
+      
+      this.gameRequestService.loadGameById(gameId).subscribe(response => {
+        if(response.success){
+          videoInfoCallback(streamTitle,response.result.name)
+        }
+      })
+      
+      
     })
   }
 
