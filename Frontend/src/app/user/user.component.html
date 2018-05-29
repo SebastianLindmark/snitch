@@ -1,3 +1,48 @@
+<app-chat></app-chat>
+<div class="user-page-container">
+    <ngb-tabset>
+        <ngb-tab>
+            <ng-template ngbTabTitle>
+                <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
+                <a class="bold-text">{{username}}</a>
+            </ng-template>
+          <ng-template ngbTabContent>
+              <div [ngClass]="(chatOpen)?'player-window embed-responsive embed-responsive-16by9':'player-window embed-responsive embed-responsive-21by9'">
+                <video id="videoElement" class="embed-responsive-item" controls></video>
+              </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>
+            Videos
+          </ng-template>
+          <ng-template ngbTabContent>
+              <div class="vod-list">
+                  <div class="d-flex flex-wrap" >
+                    <div class="p-2 directory-item" *ngFor="let vod of vods">
+                      <img src="{{vod.url}}" routerLinkActive="active" class="img-thumbnail" (click)=playVOD(vod.id) >
+                      <div class="text-left title">{{vod.title}}</div>
+                      <div class="text-left viewer-count">{{vod.date}}</div>
+                    </div>
+                
+                  <div class="p-2 directory-item"></div>
+                  <div class="p-2 directory-item"></div>
+                  <div class="p-2 directory-item"></div>
+                  <div class="p-2 directory-item"></div>
+                  <div class="p-2 directory-item"></div>
+                  <div class="p-2 directory-item"></div>
+                  <div class="p-2 directory-item"></div>
+                  <div class="p-2 directory-item"></div>
+                  <div class="p-2 directory-item"></div>
+                  <div class="p-2 directory-item"></div> 
+                </div>
+              </div>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+</div>
+
+<!--
 <div class="main">
   <div class="row">
     <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'" class="no-padding">
@@ -102,3 +147,4 @@
 
 
 </div>
+-->

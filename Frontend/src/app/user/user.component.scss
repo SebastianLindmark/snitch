@@ -18,16 +18,6 @@ $main-color: #666666;
     margin-right: 15px;
 }
 
-.chat-window{   
-    background-color: rgb(231, 231, 231);
-    height:100%;
-    margin-right: 0px;
-}
-
-.chat-window > p{
-    color: red;
-}
-
 .follow-user-container{
     background-color: rgb(43, 43, 43);
     margin: 10px;
@@ -241,4 +231,12 @@ $main-color: #666666;
     line-height: 80px;
     background-color: white;
     border: 1px solid #FFC3C3;
+}
+
+.user-page-container {
+    width: calc(100% - 400px);
+}
+
+ngb-tabset /deep/ ul, ngb-tabset /deep/ .nav-link  {
+    height: 50px;
 }
