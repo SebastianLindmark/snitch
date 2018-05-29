@@ -1,49 +1,77 @@
 <div class="p-3">
-    <div id="document-selection"class="text-left m-2">
-        <p class="d-inline-block">Search for </p>
-        <div ngbDropdown class="d-inline-block">
-          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button class="dropdown-item">Action - 1</button>
-            <button class="dropdown-item">Another Action</button>
-            <button class="dropdown-item">Something else is here</button>
-          </div>
-        </div>
-        <p class="d-inline-block"> order by </p>
-        <div ngbDropdown class="d-inline-block">
-            <button class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Toggle dropdown</button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
-              <button class="dropdown-item">Action - 1</button>
-              <button class="dropdown-item">Another Action</button>
-              <button class="dropdown-item">Something else is here</button>
-            </div>
-          </div>
-    </div>
-  <div class="d-flex flex-wrap">
-    <div class="p-2 directory-item" *ngFor="let game of popularGames">
-      <img src="{{game.url}}" routerLinkActive="active" class="img-thumbnail" routerLink="/game/{{game.name}}">
-      <div class="text-left title">{{game.name}}</div>
-      <div class="text-left viewer-count">124,344 viewers</div>
+    <div id="document-selection"class="text-left">
+        <p class="d-inline-block">Browse all of our games <b>streamed</b> live by our members, see what the channels you <b>follow</b> are up to and read about what's <b>new</b> with Snitch.TV </p>
     </div>
 
+  <div class="row">
+    <div class="col-md-6">
+      <div class="column-header">
+          <p>Browse</p>
+      </div>
+      <div class="d-flex flex-wrap">
+        <div class="p-2 directory-item" *ngFor="let game of popularGames">
+          <img src="{{game.url}}" routerLinkActive="active" class="img-thumbnail" routerLink="/game/{{game.name}}">
+          <div class="text-left title">{{game.name}}</div>
+          <div class="text-left viewer-count">124,344 viewers</div>
+        </div>
     
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-    <div class="p-2 directory-item"></div>
-  </div> 
+        
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+      </div> 
+    </div>
+    <div class="col-md-6">
+        <div class="column-header">
+            <p>Recent News</p>
+        </div>
+        <div class="news-container">
+            <div class="news">
+              <h3>Snitch is live!</h3>
+              <p class="patch-title">Patch Notes 1.0.0</p>
+              <p>Descriptive text about the news, this text has the only purpose of being a placeholder text for news. Instead of using Lorem Ipsum I'd rather use my own text to display here as placeholder.</p>
+            </div>
+          </div>
+        <div class="column-header">
+            <p>Followers</p>
+        </div>
+      <div class="d-flex flex-wrap">
+        <div class="p-2 directory-item" *ngFor="let game of popularGames">
+          <img src="{{game.url}}" routerLinkActive="active" class="img-thumbnail" routerLink="/game/{{game.name}}">
+          <div class="text-left title">{{game.name}}</div>
+          <div class="text-left viewer-count">124,344 viewers</div>
+        </div>
+    
+        
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+        <div class="p-2 directory-item"></div>
+      </div>
+    </div>
+
+  </div>
+  
+
+
+
+
+
+
+  
 </div>
+

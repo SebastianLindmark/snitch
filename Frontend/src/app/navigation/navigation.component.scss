@@ -14,6 +14,10 @@ a {
     color: white !important;
 }
 
+.account-button {
+    height: 100%;
+}
+
 .custom-navbar {
     position: fixed;
     top: 0;
@@ -93,11 +97,11 @@ a {
     overflow-x: hidden;
     display: inline-grid;
 }
+
 .dropdown-toggle {
     width: 200px;
     padding-right: 5px;
 }
-
 
 .custom-dropdown-item {
     color: white;
@@ -110,7 +114,6 @@ a {
     display: inline-block;
     height: 100%;
 }
-
 
 .custom-dropdown-item:active, .custom-dropdown-item:hover, .custom-dropdown-item:focus {
     background-color: #CD0505;

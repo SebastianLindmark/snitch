@@ -8,6 +8,7 @@ import { CurrentUserService } from '../_services/current-user.service';
   templateUrl: './livesettings.component.html',
   styleUrls: ['./livesettings.component.scss']
 })
+
 export class LivesettingsComponent implements OnInit {
 
   private games = [];

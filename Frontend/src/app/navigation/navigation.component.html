@@ -4,7 +4,7 @@
   <div class="mobile-login-container">
       <button [hidden]="loggedIn" type="button" class="btn btn-outline-success custom-button" (click)="clickedLogIn()">Log In</button>
       <button [hidden]="loggedIn" type="button" class="btn btn-outline-success custom-button" (click)="clickedSignUp()">Sign Up</button>
-      <div [hidden]="!loggedIn" ngbDropdown class="d-inline-block" style="height: 100%;" placement="bottom-right">
+      <div [hidden]="!loggedIn" ngbDropdown class="d-inline-block account-button" placement="bottom-right">
           <button [hidden]="!loggedIn" class="btn btn-outline-danger custom-button text-left" id="dropdownBasic1" ngbDropdownToggle>
             <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
             <p class="username-text">{{user.username}}</p>
@@ -40,7 +40,7 @@
     <button id="desktop-login-button" [hidden]="loggedIn" type="button" class="btn btn-outline-success my-2 my-sm-0 mr-2 custom-button" (click)="clickedLogIn()">Log In</button>
     <button id="desktop-signup-button" [hidden]="loggedIn" type="button" class="btn btn-outline-success my-2 my-sm-0 custom-button" (click)="clickedSignUp()">Sign Up</button>    
 
-    <div id="desktop-account-button" [hidden]="!loggedIn" ngbDropdown class="d-inline-block" style="height: 100%;" placement="bottom-right">
+    <div id="desktop-account-button" [hidden]="!loggedIn" ngbDropdown class="d-inline-block account-button" placement="bottom-right">
         <button [hidden]="!loggedIn" class="btn btn-outline-danger custom-button text-left" id="dropdownBasic1" ngbDropdownToggle>
           <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
           <p class="username-text">{{user.username}}</p>
