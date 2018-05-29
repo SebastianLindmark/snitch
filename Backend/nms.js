@@ -55,6 +55,7 @@ function onStreamBegin(id,streamPath, args){
     console.log(err)
   })
 
+  
 };
 
 function onStreamEnd(id, streamPath, args){
