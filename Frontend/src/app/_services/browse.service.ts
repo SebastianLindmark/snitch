@@ -26,6 +26,14 @@ export class BrowseService {
     );
   }
 
+  loadGameById(id){
+    let request = this.http.post<any>(this.BASE_URL + '/get_game_by_id',{id:id});
+    return request.map((res : any) => {  
+      return res;
+    }
+    );
+  }
+
   searchGame(gameSubstr){
     var request = this.http.post<any>(this.BASE_URL + '/search_game',{game_name:gameSubstr});
     return request.map((res : any) => {  

@@ -54,8 +54,10 @@ export class UserComponent  {
   loadVideoInformation(selfRef,videoTitle, gameId){
     selfRef.streamTitle = videoTitle
     selfRef.gameRequestService.loadGame(gameId).subscribe(response => {
+      console.log(response)
       if(response.success){
         selfRef.gameInfo = response.result;
+        console.log(selfRef.gameInfo)
       }
     })
   }
@@ -66,12 +68,18 @@ export class UserComponent  {
 
   ngOnInit(){
     this.loadLivePlayer()
+    this.loadVODS()
   }
 
   loadVODS(){
     this.vodRequestService.getVODSByUser(this.username).subscribe(response => {
       if(response.success){
-        console.log(response)
+       
+        for(var i = 0; i < response.result.length; i++){
+          let date = new Date(response.result[i].createdAt);
+          let dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+          response.result[i].date = dateString;
+        }
         this.vods = response.result;
       }
     })
@@ -81,16 +89,10 @@ export class UserComponent  {
     this.loadVODPlayer(vodID)
   }
 
-
-
-
   tabClick(tabIndex){
     this.selectedTabIndex = tabIndex
     if(tabIndex == 0){
       this.loadLivePlayer()
-    }
-    else if(tabIndex == 1){
-      this.loadVODS()
     }
   }
 }

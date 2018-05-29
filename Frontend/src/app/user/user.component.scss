@@ -70,12 +70,16 @@ $main-color: #666666;
     border-bottom: 5px solid rgba(128, 128, 128, 0.2);
     border-right: 1px solid gray;
     color: $main-color;
-    padding: 10px 15px 10px 15px;
+
 }
 
 .nav-tabs>li>a {
     color: $main-color;
     border-radius: 0;    
+}
+
+.prev-streams-text{
+    font-size: 20px;
 }
 
 .nav-tabs>li>a:hover {

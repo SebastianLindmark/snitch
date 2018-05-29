@@ -10,7 +10,7 @@
         </li>
 
         <li role="presentation" class="nav-item" [class.active] = 'selectedTabIndex == 1' (click)=tabClick(1)>
-          <a class="nav-link custom-tab-button">Videos</a>
+          <a class="nav-link custom-tab-button">Videos ({{vods.length}})</a>
         </li>
         <li role="presentation" class="nav-item" [class.active] = 'selectedTabIndex == 2' (click)=tabClick(2)>
           <a class="nav-link custom-tab-button">Subscribers</a>
@@ -25,12 +25,12 @@
 
     </div>
 
-  <div [hidden]="!chatOpen || selectedTabIndex != 0 && !vodSelected" class="col-md-3 no-padding" style="background-color: lightgray; display: flex;">
+  <div [hidden]="!chatOpen" class="col-md-3 no-padding" style="background-color: lightgray; display: flex;">
       <p style="margin-left: 20px; margin-top: auto; margin-bottom: auto; font-size: 18px; color: black;">Stream Chat</p>
     </div>
   </div>
 
-  <div [hidden]="selectedTabIndex != 0 && !vodSelected">
+  <div [hidden]="!vodSelected && selectedTabIndex != 0">
   <div class="row">
     <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'" class="no-padding">
       <div [ngClass]="(chatOpen)?'player-window embed-responsive embed-responsive-16by9':'player-window embed-responsive embed-responsive-21by9'">
@@ -43,6 +43,7 @@
       </div>
     </div>
   </div>
+  
   
   <div class="row" *ngIf="gameInfo">
     <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'" class="no-padding">
@@ -57,33 +58,33 @@
   </div>
 </div>
 
+<div [hidden]="selectedTabIndex != 1" class="vod-list">
+  <div class="d-flex flex-wrap" >
+    <div class="p-2 directory-item" *ngFor="let vod of vods">
+      <img src="{{vod.url}}" routerLinkActive="active" class="img-thumbnail" (click)=playVOD(vod.id) >
+      <div class="text-left title">{{vod.title}}</div>
+      <div class="text-left viewer-count">{{vod.date}}</div>
+    </div>
 
-<div class="vod-list d-flex flex-wrap">
-  <div class="p-2 directory-item" *ngFor="let vod of vods">
-    <img src="{{vod.url}}" routerLinkActive="active" class="img-thumbnail" (click)=playVOD(vod.id) >
-    <div class="text-left title">{{vod.title}}</div>
-    <div class="text-left viewer-count">124,344 viewers</div>
-  </div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
+  <div class="p-2 directory-item"></div>
 
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-<div class="p-2 directory-item"></div>
-
-
+</div>
 
 </div>
