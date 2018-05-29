@@ -70,7 +70,7 @@ export class UserComponent  {
     this.chatOpen = !this.chatOpen;
   }   
 
-  ngOnInit(){
+  ngAfterViewInit(){
     this.loadLivePlayer()
     this.loadVODS()
     this.isFollower()
@@ -105,7 +105,6 @@ export class UserComponent  {
   loadVODS(){
     this.vodRequestService.getVODSByUser(this.username).subscribe(response => {
       if(response.success){
-       
         for(var i = 0; i < response.result.length; i++){
           let date = new Date(response.result[i].createdAt);
           let dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();

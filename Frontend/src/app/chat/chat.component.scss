@@ -1,28 +1,62 @@
-$chat-input-height: 100px;
 
 
-:host{
-    display: block;
-    width: 100%;
+.chat-container {
+    position: fixed;
+    top: 50px;
+    right: 0;
     height: 100%;
+    width: 400px;
+    background-color: whitesmoke;
+    border-left: 1px solid rgb(216, 216, 216);
 }
 
-.container{
+.chat-header {
     width: 100%;
-    height: 100%;
-    padding: 10px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    background-color: rgb(250, 250, 250);
+    border-bottom: 1px solid rgb(216, 216, 216);
 }
 
-.chat-message-window{
-    height: calc(100% - #{$chat-input-height});
+#chat-header-title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+.chat-window {
+    height: 70%;
+    padding-left: 15px;
     overflow-y: scroll;
-    word-break: normal;
-    background-color: white;
+    word-wrap: break-word;
+    margin-bottom: 10px;
 }
 
-.chat-input{
-    width: 100%;
-    height: $chat-input-height;
+.chat-message {
+    margin-bottom: 5px;
+}
+
+.chat-message-username {
+    font-weight: bold;
+    color: red;
+}
+
+.chat-input-container {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#chat-input {
+    border-radius: 0px;
+    margin-bottom: 5px;
+}
+
+.submit-button {
+    border-radius: 0px;
+    width: 100px !important;
+    margin-left: auto;
+    margin-right: 0;
 }
 
 ::-webkit-scrollbar {
@@ -44,24 +78,3 @@ $chat-input-height: 100px;
 ::-webkit-scrollbar-thumb:hover {
     background: #555; 
 }
-
-
-.input-chat-field{
-    margin-bottom: 10px;
-
-}
-
-.submit-button,{
-    background-color: #D90202 !important;
-    border-color: #A80000 !important;
-    box-shadow: none;
-}
-
-.submit-button:hover,
-{
-  color: #ffffff;
-  background-color: #A80000 !important;
-  border-color: #A80000 !important;
-  box-shadow: none;
-}
-
