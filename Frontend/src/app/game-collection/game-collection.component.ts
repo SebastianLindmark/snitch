@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BrowseService } from '../_services/browse.service';
 import { VodRequestService } from '../_services/vod-request.service';
+import { StreamThumbnailComponent } from '../stream-thumbnail/stream-thumbnail.component';
+
+
 
 @Component({
   selector: 'app-game-collection',
@@ -16,7 +19,6 @@ export class GameCollectionComponent implements OnInit {
   liveStreams = []
   vods = []
   noStreamsAvailable = false;
-  
   
   constructor(private gameService :BrowseService, private route: ActivatedRoute, private vodRequestService : VodRequestService) { }
 
@@ -33,6 +35,7 @@ export class GameCollectionComponent implements OnInit {
 
 
     this.gameService.loadLiveStreamsByGame(game).subscribe(response => {
+      console.log("HERE COMES THE RESULT")
       console.log(response.result);
       if(response.success && response.result.length > 0){
         this.liveStreams = response.result;
@@ -45,12 +48,12 @@ export class GameCollectionComponent implements OnInit {
       console.log(error);
     });
 
-   
   }
 
 
   loadVODsByGame(gameId){
     this.vodRequestService.getVODSBygame(gameId).subscribe(response => {
+      console.log("Received VODS")
       console.log(response)
       this.vods = response.result;
     })

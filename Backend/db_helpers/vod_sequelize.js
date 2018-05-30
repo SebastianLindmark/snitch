@@ -4,7 +4,7 @@ user_sequelize = require('./user_sequelize')
 module.exports = {
 
 
-    save_vod : function(stream_key, filename){
+    save_vod : function(stream_key, filename, rootPath){
         var userPromise = models.StreamKey.findOne({where : {key : stream_key}})
         .then(function(streamKey){
             if(streamKey !== null) return streamKey.getUser()
@@ -21,7 +21,7 @@ module.exports = {
 
         return gamePromise.then(function(result){
             let streamConfig = streamConfigPromise.value()
-            return models.VOD.create({title : streamConfig.title, path : filename, game : streamConfig.game})
+            return models.VOD.create({title : streamConfig.title, path : filename, game : streamConfig.game, root_path : rootPath})
         }).then(function(VOD){
             var streamConfig = streamConfigPromise.value()
             var user = userPromise.value()
@@ -40,7 +40,7 @@ module.exports = {
     get_vods_from_user : function(username){
         return user_sequelize.username_to_user(username).then(function(user){
             let id = user.id;
-            return models.sequelize.query('SELECT VODS.id,VODS.path,VODS.createdAt, VODS.title, Games.url, Games.name FROM Users, VODS, Games WHERE Users.id = VODS.userId AND VODS.game = Games.id AND Users.id = ' + id , { type: models.sequelize.QueryTypes.SELECT}).then(projects => {
+            return models.sequelize.query('SELECT VODS.id,VODS.path,VODS.root_path,VODS.createdAt, VODS.title, Games.url, Games.name FROM Users, VODS, Games WHERE Users.id = VODS.userId AND VODS.game = Games.id AND Users.id = ' + id , { type: models.sequelize.QueryTypes.SELECT}).then(projects => {
                 return projects
               })
             
@@ -55,7 +55,7 @@ module.exports = {
 
     get_vods_by_game : function(id){
 
-            return models.sequelize.query('SELECT Users.username,VODS.id,VODS.path,VODS.createdAt, VODS.title, Games.url, Games.name FROM Users, VODS, Games WHERE Users.id = VODS.userId AND VODS.game = Games.id AND Games.id = ' + id , { type: models.sequelize.QueryTypes.SELECT}).then(projects => {
+            return models.sequelize.query('SELECT Users.username,VODS.id,VODS.root_path,VODS.path,VODS.createdAt, VODS.title, Games.url, Games.name FROM Users, VODS, Games WHERE Users.id = VODS.userId AND VODS.game = Games.id AND Games.id = ' + id , { type: models.sequelize.QueryTypes.SELECT}).then(projects => {
                 return projects
               })
             

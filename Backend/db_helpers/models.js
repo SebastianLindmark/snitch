@@ -111,7 +111,12 @@ const User = sequelize.define('user', {
        
         viewers : {
            type: Sequelize.INTEGER
+       },
+
+       live_url : {
+        type: Sequelize.STRING
        }
+
     });
 
 
@@ -125,9 +130,15 @@ const User = sequelize.define('user', {
         title : {
              type: Sequelize.STRING
         },
+        //The path to the stream 
         path : {
             type:Sequelize.STRING
+        },
+        //The path to the folder of the stream
+        root_path : {
+            type:Sequelize.STRING
         }
+
      });
  
 
@@ -185,7 +196,7 @@ User.belongsToMany(User, { as: {singular : 'Following', plural : 'Followings'}, 
 
 
 function insert_static_data(){
-    var games = ["Fortnite", "League of Legends", "Overwatch", "PLAYERSUNKNOWN'S BATTLEGROUNDS","Dota 2", "Hearthstone","GTA V", "Destiny 2", "Tom Clancy's Rainbox Six"]
+    var games = ["Fortnite", "League of Legends", "Overwatch", "PLAYERUNKNOWN'S BATTLEGROUNDS","Dota 2", "Hearthstone","GTA V", "Destiny 2", "Tom Clancy's Rainbox Six"]
     var image_urls = ["https://static-cdn.jtvnw.net/ttv-boxart/Fortnite-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/League%20of%20Legends-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/Overwatch-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/PLAYERUNKNOWN%27S%20BATTLEGROUNDS-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Dota%202-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Hearthstone-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Grand%20Theft%20Auto%20V-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/Destiny%202-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/Tom%20Clancy%27s%20Rainbow%20Six:%20Siege-285x380.jpg"]
     var wide_image_url = ["https://static-cdn.jtvnw.net/community-images/26d866a4-a30d-424c-b25a-cc99466d42fa/fff01bbe-2f5c-4216-846e-d0946057154b-1200x180.jpeg","https://static-cdn.jtvnw.net/community-images/6a723096-3135-4972-a296-ecd3b08be1ad/fa79e187-6dad-414a-b410-07b11093fc76-1200x180.jpeg","https://static-cdn.jtvnw.net/community-images/0b9c1e27-bac5-4dfb-985c-ceb54f08f072/5cb8aa1f-2526-48ad-bb12-6b63291adec9-1200x180.png","https://static-cdn.jtvnw.net/community-images/088c0a99-4aee-4fa0-a0fc-954293dabcfd/791d9f22-962a-473a-adab-8b9460330663-1200x180.png","https://static-cdn.jtvnw.net/community-images/cfbc881f-3e02-4d7c-bf15-efa905522236/a53210e8-59b3-4879-b1e3-b9902eab293a-1200x180.png", "https://static-cdn.jtvnw.net/community-images/227e76f0-66e7-47c5-9653-cf26e7790bde/0671053f-9bc3-4633-aa15-9e95441ae5db-1200x180.png","https://static-cdn.jtvnw.net/community-images/2fa75b53-3c09-44a8-8668-da22c7a60ba4/01699f1e-375e-4bf4-9c1c-a269b8a2c4e4-1200x180.png","https://static-cdn.jtvnw.net/community-images/11138eda-4be3-4df4-9761-eae075e5433b/043d77f8-96bd-4222-9bb5-bb6f82076243-1200x180.jpeg","https://static-cdn.jtvnw.net/community-images/26af0d17-7dc9-4f1b-9339-06ddd0085105/f82b881b-d16a-4cf9-a301-bc3692df5bb2-1200x180.jpeg"]
     var countries = ["USA","Sweden","Ireland","Italy","France","Finland","Norway"]

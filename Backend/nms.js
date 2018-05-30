@@ -2,6 +2,9 @@ const NodeMediaServer = require('./node-media-server');
 var models = require("./db_helpers/models");
 var stream = require("./db_helpers/stream_sequelize");
 var VOD = require("./db_helpers/vod_sequelize");
+const path = require('path')
+
+const { spawn } = require('child_process');
 
 const config = {
     rtmp: {
@@ -39,6 +42,7 @@ const config = {
 
 var nms = new NodeMediaServer(config)
 function onStreamBegin(id,streamPath, args){
+  console.log("STREAM PATH " + streamPath)
   var key = streamPath.split('/')[2]
   models.StreamKey.find({where : {key : key}}).then(function(streamkey){
     if(streamkey !== null){
@@ -90,6 +94,43 @@ function onViewerLeave(id, streamPath, args){
   })
 };
 
+function onFileSaved(streamKey, rootPath, file_name){
+
+  var filePath = rootPath + "/" + file_name
+  var fileInUrl ="http://localhost:8000" + filePath;
+  
+  let paths = __dirname + '/../' + 'Backend/media/.' + rootPath + "/video.gif"
+  paths = path.normalize(paths)
+
+  let argv = ['-t','100' ,'-i' ,fileInUrl , '-r','2', '-vf', 'scale=640:-1', paths]
+
+  streamKey = streamKey.split('/')[2]
+  VOD.save_vod(streamKey,filePath, rootPath)
+
+  this.ffmpeg_exec = spawn(config.trans.ffmpeg, argv);
+  this.ffmpeg_exec.on('error', (e) => {
+    console.log("errror")
+    console.log(e)
+    
+  });
+
+}
+
+
+function onVideoFileCreated(streamKey, root_path){
+    streamKey = streamKey.split('/')[2]
+    models.StreamKey.find({where : {key : streamKey}}).then(function(streamkey){
+      return streamkey.getUser()
+    }).then(function(user){
+      return stream.update_stream_url(user,root_path)
+    }).then(function(result){
+    }).catch(function(err){
+      console.log("Received error " + err)
+    })
+    
+    
+}
+
 
 module.exports = {
 
@@ -97,15 +138,12 @@ module.exports = {
           
         nms.on('postPublish',onStreamBegin);
         //nms.on('donePublish',onStreamEnd);
-        nms.on('donePublish', onStreamEnd); //There is a bug in nms where the StreamPath is set to empty before the callback is invoked.
-        //Fix this by navigating to node_rtmp_session.js, within the function onDeleteStream() create a temp variable to store the streamId.
+        nms.on('donePublish', onStreamEnd);
 
         nms.on('postPlay', onViewerEnter);
         nms.on('donePlay', onViewerLeave);
-        nms.on('fileSaved', function(streamKey,rootPath){
-          streamKey = streamKey.split('/')[2]
-          VOD.save_vod(streamKey,rootPath)
-        })
+        nms.on('fileSaved', onFileSaved);
+        nms.on('videoFileCreated', onVideoFileCreated);
 
         nms.run();  
 

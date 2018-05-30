@@ -12,6 +12,8 @@ const dateFormat = require('dateformat');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
 
+const path = require('path')
+
 var random = require("random-key");
 
 class NodeTransSession extends EventEmitter {
@@ -50,31 +52,55 @@ class NodeTransSession extends EventEmitter {
       Logger.log('[Transmuxing DASH] ' + this.conf.streamPath + ' to ' + ouPath + '/' + dashFileName);
     }
     mkdirp.sync(ouPath);
-    let argv = ['-y', '-fflags', 'nobuffer', '-analyzeduration', '1000000', '-i', inPath, '-c:v', vc, '-c:a', ac, '-f', 'tee', '-map', '0:a?', '-map', '0:v?'  ,mapStr];
-    //let argv = ['ffmpeg', '-i' ,inPath, '-r', '1', '-an', '-updatefirst' ,'1', '-y', 'thumbnail.jpg',mapStr];
+    let argv = ['-y', '-fflags', 'nobuffer', '-analyzeduration', '1000000', '-i', inPath, '-c:v', vc, '-c:a', ac, '-f', 'tee', '-map', '0:a?', '-map', '0:v?' ,'-y','-an',mapStr];
+  
+    var pathToModule = require.resolve('module');
+  
+    let paths = __dirname + '/.' + ouPath
+    paths = path.normalize(paths);
+
+    let gifArgv = ['-i', inPath, '-vf', 'fps=fps=1/10','-update','1', paths + "\\image.png"]
     
-    //console.log('Spawning ffmpeg ' + argv.join(' '));
-    //console.log("HERE COMES THE DATA")
-    //console.log(argv)
+    context.nodeEvent.emit('videoFileCreated',this.conf.streamPath,ouPath.substring(7));
+
+    this.ffmpeg_exec2 = spawn(this.conf.ffmpeg, gifArgv);
+    this.ffmpeg_exec2.on('error', (e) => {
+      Logger.debug(e);
+    });
+
+    this.ffmpeg_exec2.stdout.on('data', (data) => {
+      Logger.debug(`ERRORRRR：${data}`);
+    });
+
+    this.ffmpeg_exec2.stderr.on('data', (data) => {
+      Logger.debug(`ERREEROROR：${data}`);
+    });
+
+    this.ffmpeg_exec2.on('close', (code) => {
+      Logger.log('[Transmuxing end] ' + this.conf.streamPath);
+    })
+
+
+
     // Logger.debug(argv.toString());
     this.ffmpeg_exec = spawn(this.conf.ffmpeg, argv);
     this.ffmpeg_exec.on('error', (e) => {
-      // Logger.debug(e);
+      Logger.debug(e);
     });
 
     this.ffmpeg_exec.stdout.on('data', (data) => {
-      // Logger.debug(`输出：${data}`);
+      Logger.debug(`ERRORRRR：${data}`);
     });
 
     this.ffmpeg_exec.stderr.on('data', (data) => {
-      // Logger.debug(`错误：${data}`);
+      Logger.debug(`ERREEROROR：${data}`);
     });
 
     this.ffmpeg_exec.on('close', (code) => {
       Logger.log('[Transmuxing end] ' + this.conf.streamPath);
 
       //Substring to remove ./media path.
-      context.nodeEvent.emit('fileSaved',this.conf.streamPath, ouPath.substring(7) + "/index.m3u8");
+      context.nodeEvent.emit('fileSaved',this.conf.streamPath, ouPath.substring(7), "index.m3u8");
       this.emit('end');
       fs.readdir(ouPath, function (err, files) {
         if (!err) {

@@ -498,8 +498,6 @@ models.sequelize.sync({force:false}).then(function(){
 
 function name(){
     
-
-    
     var titles = ["Playing with Drake", "Rampage with MirroW", "New Session stream"]
     var emails = ["1@gmail.com", "2@gmail.com", "3@gmail.com"]
     var usernames = ["Ninja", "Kitboga", "shroud"]
@@ -508,21 +506,21 @@ function name(){
     
     var userPromise1 = user_sequelize.create_user("1@gmail.com","Ninja","password")
     var promise = userPromise1.then(function(user){
-        return stream_sequelize.create_stream_config(user, "Example stream", "League of Legends","Sweden");
+        return stream_sequelize.create_stream_config(user, "Fortnite with Drake", "Fortnite","Sweden");
     }).then(function(streamConfig){
         return stream_sequelize.set_stream_online(userPromise1.value());
     })
 
     var userPromise2 = user_sequelize.create_user("2@gmail.com","Kitboga","password")
     promise = userPromise2.then(function(user){
-        return stream_sequelize.create_stream_config(user, "Playing old lady", "League of Legends","Sweden");
+        return stream_sequelize.create_stream_config(user, "Let's Game!", "League of Legends","Sweden");
     }).then(function(streamConfig){
         //return stream_sequelize.set_stream_online(userPromise2.value());
     })
 
     var userPromise3 = user_sequelize.create_user("3@gmail.com","snake","password")
     promise = userPromise3.then(function(user){
-        return stream_sequelize.create_stream_config(user, "Snake game", "League of Legends","Sweden");
+        return stream_sequelize.create_stream_config(user, "3RD ROUND XAL", "League of Legends","Sweden");
     }).then(function(streamConfig){
         //return stream_sequelize.set_stream_online(userPromise2.value());
     })
