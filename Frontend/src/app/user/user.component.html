@@ -1,52 +1,8 @@
-<app-chat></app-chat>
-<div class="user-page-container">
-    <ngb-tabset>
-        <ngb-tab>
-            <ng-template ngbTabTitle>
-                <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
-                <a class="bold-text">{{username}}</a>
-            </ng-template>
-          <ng-template ngbTabContent>
-              <div [ngClass]="(chatOpen)?'player-window embed-responsive embed-responsive-16by9':'player-window embed-responsive embed-responsive-21by9'">
-                <video id="videoElement" class="embed-responsive-item" controls></video>
-              </div>
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab>
-          <ng-template ngbTabTitle>
-            Videos
-          </ng-template>
-          <ng-template ngbTabContent>
-              <div class="vod-list">
-                  <div class="d-flex flex-wrap" >
-                    <div class="p-2 directory-item" *ngFor="let vod of vods">
-                      <img src="{{vod.url}}" routerLinkActive="active" class="img-thumbnail" (click)=playVOD(vod.id) >
-                      <div class="text-left title">{{vod.title}}</div>
-                      <div class="text-left viewer-count">{{vod.date}}</div>
-                    </div>
-                
-                  <div class="p-2 directory-item"></div>
-                  <div class="p-2 directory-item"></div>
-                  <div class="p-2 directory-item"></div>
-                  <div class="p-2 directory-item"></div>
-                  <div class="p-2 directory-item"></div>
-                  <div class="p-2 directory-item"></div>
-                  <div class="p-2 directory-item"></div>
-                  <div class="p-2 directory-item"></div>
-                  <div class="p-2 directory-item"></div>
-                  <div class="p-2 directory-item"></div> 
-                </div>
-              </div>
-          </ng-template>
-        </ngb-tab>
-      </ngb-tabset>
-</div>
-
-<!--
+<app-chat [hidden]="!chatOpen"></app-chat>
 <div class="main">
-  <div class="row">
-    <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'" class="no-padding">
-      <ul class="nav nav-tabs">
+  <div  [ngClass]="(chatOpen)?'custom-content':'no-chat-custom-content'">
+    <div class="no-padding">
+      <ul class="nav nav-tabs custom-nav-tabs">
         <li role="presentation" class="nav-item" [class.active] = 'selectedTabIndex == 0' (click)=tabClick(0)>
           <a class="nav-link custom-tab-button">
             <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
@@ -69,29 +25,20 @@
       </ul>
 
     </div>
-
-  <div [hidden]="!chatOpen" class="col-md-3 no-padding" style="background-color: lightgray; display: flex;">
-      <p style="margin-left: 20px; margin-top: auto; margin-bottom: auto; font-size: 18px; color: black;">Stream Chat</p>
-    </div>
   </div>
 
   <div [hidden]="!vodSelected && selectedTabIndex != 0">
-  <div class="row">
-    <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'" class="no-padding">
+  <div  [ngClass]="(chatOpen)?'custom-content':'no-chat-custom-content'">
+    <div class="no-padding">
       <div [ngClass]="(chatOpen)?'player-window embed-responsive embed-responsive-16by9':'player-window embed-responsive embed-responsive-21by9'">
         <video id="videoElement" class="embed-responsive-item" controls></video>
       </div>
     </div>
-    <div class="col-md-3 no-padding" [hidden]="!chatOpen">
-      <div class="chat-window">
-        <app-chat></app-chat>
-      </div>
-    </div>
   </div>
   
   
-  <div class="row" *ngIf="gameInfo">
-    <div [ngClass]="(chatOpen)?'col-md-9':'col-md-12'" class="no-padding">
+  <div [ngClass]="(chatOpen)?'custom-content':'no-chat-custom-content'" *ngIf="gameInfo">
+    <div  class="no-padding">
       <div class="game-info-container flex-container">
         <img src="{{gameInfo.url}}" routerLinkActive="active" class="game-icon img-thumbnail" routerLink="/game/{{gameInfo.name}}">
         <div class="flex-item">
@@ -142,9 +89,4 @@
   <div class="p-2 directory-item"></div>
   <div class="p-2 directory-item"></div>  
 </div>
-
-
-
-
 </div>
--->

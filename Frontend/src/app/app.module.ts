@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { GoogleSignInComponent } from './google-sign-in/google-sign-in.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { BrowseComponent } from './browse/browse.component';
 
@@ -25,7 +24,7 @@ import { RoutingModule } from './routing.module';
 import { AuthGuardService } from './authguard.service'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JwtHelper } from 'angular2-jwt';
-import {UserRequestService} from './_services/user-request.service';
+import { UserRequestService } from './_services/user-request.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorService } from './_services/jwt-interceptor.service';
 import { SettingsService } from './_services/settings.service';
@@ -44,7 +43,6 @@ import { FollowerRequestService } from './_services/follower-request.service';
   declarations: [
     AppComponent,
     NavigationComponent,
-    GoogleSignInComponent,
     SignInComponent,
     BrowseComponent,
     HelpComponent,
