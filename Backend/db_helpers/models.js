@@ -111,7 +111,12 @@ const User = sequelize.define('user', {
        
         viewers : {
            type: Sequelize.INTEGER
+       },
+
+       live_url : {
+        type: Sequelize.STRING
        }
+
     });
 
 

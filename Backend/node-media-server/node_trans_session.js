@@ -61,6 +61,8 @@ class NodeTransSession extends EventEmitter {
 
     let gifArgv = ['-i', inPath, '-vf', 'fps=fps=1/10','-update','1', paths + "\\image.png"]
     
+    context.nodeEvent.emit('videoFileCreated',this.conf.streamPath,ouPath.substring(7));
+
     this.ffmpeg_exec2 = spawn(this.conf.ffmpeg, gifArgv);
     this.ffmpeg_exec2.on('error', (e) => {
       Logger.debug(e);

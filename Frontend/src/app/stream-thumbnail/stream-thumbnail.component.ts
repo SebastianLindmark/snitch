@@ -12,6 +12,7 @@ export class StreamThumbnailComponent implements OnInit {
   
 
   @Input() mapPath:string;
+  @Input() loadGif:boolean;
   
   private imagePath = "";
   private serverPath;
@@ -19,17 +20,24 @@ export class StreamThumbnailComponent implements OnInit {
   private gifName = "video.gif"
   private imageName = "image.png"
 
+  private shouldLoadGif;
+
   constructor() { 
 
-    this.serverPath = Globals.DB_BASE_URL;
-    this.imagePath = this.serverPath + "/" + this.mapPath + "/" + this.gifName;
-  }
-
-  ngOnInit() {
     
   }
 
+  ngOnInit() {
+    this.serverPath = Globals.DB_BASE_URL;
+    this.shouldLoadGif = this.loadGif === undefined ? false : this.loadGif;
+    this.imagePath = this.serverPath + "/" + this.mapPath + "/" + this.gifName;
+  }
+
   mouseEnter(){
+    if(!this.shouldLoadGif){
+      return;
+    }
+
     if(this.imageName !== this.serverPath + "/" + this.mapPath + "/" + this.gifName){
       this.imagePath = this.serverPath + "/" + this.mapPath + "/" + this.gifName;
     }

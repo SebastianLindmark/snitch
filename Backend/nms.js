@@ -68,8 +68,6 @@ function onStreamEnd(id, streamPath, args){
   }).catch(function(err){
     console.log(err)
   })
-
-
 };
 
 
@@ -119,6 +117,21 @@ function onFileSaved(streamKey, rootPath, file_name){
 }
 
 
+function onVideoFileCreated(streamKey, root_path){
+    streamKey = streamKey.split('/')[2]
+    models.StreamKey.find({where : {key : streamKey}}).then(function(streamkey){
+      return streamkey.getUser()
+    }).then(function(user){
+      return stream.update_stream_url(user,root_path)
+    }).then(function(result){
+    }).catch(function(err){
+      console.log("Received error " + err)
+    })
+    
+    
+}
+
+
 module.exports = {
 
     start : function () {
@@ -130,6 +143,7 @@ module.exports = {
         nms.on('postPlay', onViewerEnter);
         nms.on('donePlay', onViewerLeave);
         nms.on('fileSaved', onFileSaved);
+        nms.on('videoFileCreated', onVideoFileCreated);
 
         nms.run();  
 

@@ -33,6 +33,14 @@ module.exports = {
         })},
 
 
+    update_stream_url : function(user,url){
+        return user.getStreamConfig().then(function(streamConfig){
+            return streamConfig.updateAttributes({
+                live_url: url
+            }) 
+        })
+    },
+
     add_viewer_to_stream : function(user){
         return user.getStreamConfig().then(function(streamConfig){
             return streamConfig.increment('viewers')
