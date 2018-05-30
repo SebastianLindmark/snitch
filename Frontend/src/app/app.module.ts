@@ -38,6 +38,7 @@ import { LivesettingsComponent } from './livesettings/livesettings.component';
 import { VodRequestService } from './_services/vod-request.service';
 import { VideoPlayerService } from './_services/video-player.service';
 import { FollowerRequestService } from './_services/follower-request.service';
+import { StreamThumbnailComponent } from './stream-thumbnail/stream-thumbnail.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { FollowerRequestService } from './_services/follower-request.service';
     StreamsettingsComponent,
     GameCollectionComponent,
     LivesettingsComponent,
+    StreamThumbnailComponent,
 
   ],
   imports: [
@@ -69,7 +71,7 @@ import { FollowerRequestService } from './_services/follower-request.service';
     HttpClientModule,
     RoutingModule
   ],
-  providers: [BrowseService, AuthenticationService, SettingsService, HttpClient, CurrentUserService, AuthGuardService, ChannelGuardService, JwtHelper, UserRequestService,VodRequestService,VideoPlayerService, FollowerRequestService, {
+  providers: [BrowseService, AuthenticationService, SettingsService, HttpClient, CurrentUserService, AuthGuardService, ChannelGuardService, JwtHelper, UserRequestService,VodRequestService,VideoPlayerService, FollowerRequestService, StreamThumbnailComponent, {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,
     multi: true

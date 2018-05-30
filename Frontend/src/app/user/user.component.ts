@@ -83,23 +83,26 @@ export class UserComponent  {
     this.followRequestService.isFollower(this.username).subscribe(response => {
       if(response.success){
         console.log("Is follower " + response.result)
-        this.isFollower = response.result
+        this.isFollowing = response.result
+        this.followButton()
       }
     })
   }
 
   followButton(){
-    if(!this.isFollower){
+    
+    if(!this.isFollowing){
+      console.log("About to follow")
       this.followRequestService.followUser(this.username).subscribe(handleFollowResponse)
     }else{
+      console.log("Defollowing")
       this.followRequestService.followUserRemove(this.username).subscribe(handleFollowResponse)
     }
 
     let selfRef = this;
     function handleFollowResponse(response){  
-      selfRef.isFollower = response.result;
+      selfRef.isFollowing = response.result;
     }
-
   }
 
   loadVODS(){
@@ -118,7 +121,7 @@ export class UserComponent  {
   loadFollowers(){
     let selfRef = this
     this.followRequestService.getFollowers(this.username).subscribe(response => {
-      selfRef.followers = response.result
+      selfRef.isFollowing = response.result
     })
   }
 
