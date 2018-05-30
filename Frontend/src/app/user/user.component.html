@@ -16,8 +16,8 @@
         <li role="presentation" class="nav-item" [class.active] = 'selectedTabIndex == 2' (click)=tabClick(2)>
           <a class="nav-link custom-tab-button">Followers</a>
         </li>
-        <li role="presentation" [ngClass]="(isFollower)?'nav-item follow-button following':'nav-item follow-button not_following'" (click)=followButton() >
-          <a class="nav-link custom-tab-button follow-link">{{isFollower ? 'Follower' : 'Follow'}}</a>
+        <li role="presentation" [ngClass]="(isFollowing)?'nav-item follow-button following':'nav-item follow-button not_following'" (click)=followButton() >
+          <a class="nav-link custom-tab-button follow-link">{{isFollowing ? 'Follower' : 'Follow'}}</a>
         </li>
         <div class="nav-item icon-container"  (click)=toggleChat()>
           <div  [ngClass]="(chatOpen)?'fa fa-caret-right':'fa fa-caret-left'" class="f-awesome"></div>

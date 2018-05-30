@@ -84,7 +84,6 @@ export class UserComponent  {
       if(response.success){
         console.log("Is follower " + response.result)
         this.isFollowing = response.result
-        this.followButton()
       }
     })
   }

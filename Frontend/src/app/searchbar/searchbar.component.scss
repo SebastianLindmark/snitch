@@ -39,7 +39,7 @@
 .search-bar{
     background-color: white !important;
     font-family: Arial, FontAwesome;
-    width:300px;
+    
     
 }
 
@@ -48,8 +48,8 @@ ng-select /deep/ .ui-select-choices{
     display: block;
 }
 
-ng-seleect /deep/ u.i-select-match{
-    width: 300px;
+ng-select /deep/ u.i-select-match{
+    width: 219px !important;
 }
 
 ng-select /deep/ .btn-secondary{
