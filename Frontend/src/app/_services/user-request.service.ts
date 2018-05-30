@@ -50,5 +50,13 @@ getUserProfile(username){
   })
 }
 
+searchUsers(username){
+  var request = this.http.post<User>(this.BASE_URL + '/search_user',{username:username});
+  return request.map((res : any) => {  
+    return res;
+  })
+}
+
+
 
 }

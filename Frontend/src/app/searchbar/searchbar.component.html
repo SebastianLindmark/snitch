@@ -1,8 +1,19 @@
-<form class="form-inline">
+<!--<form class="form-inline">
   <div id="search-bar-container">
     <div id="icon-container">
       <i id="search-bar-icon" class="fa fa-search"></i>
     </div>
     <input id="custom-input" class="form-control" type="search" placeholder="Search" aria-label="Search">
   </div>
-</form>
+</form>-->
+
+<ng-select class="search-bar" [allowClear]="true"
+    [items]="items"
+    [disabled]="disabled"
+    [allowClear]="true"
+    (data)="refreshValue($event)"
+    (selected)="selected($event)"
+    (removed)="removed($event)"
+    (typed)="typed($event)"
+    placeholder="&#xF002; Search">
+</ng-select>

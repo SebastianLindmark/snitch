@@ -30,7 +30,7 @@ export class StreamThumbnailComponent implements OnInit {
   ngOnInit() {
     this.serverPath = Globals.DB_BASE_URL;
     this.shouldLoadGif = this.loadGif === undefined ? false : this.loadGif;
-    this.imagePath = this.serverPath + "/" + this.mapPath + "/" + this.gifName;
+    this.imagePath = this.serverPath + "/" + this.mapPath + "/" + this.imageName;
   }
 
   mouseEnter(){

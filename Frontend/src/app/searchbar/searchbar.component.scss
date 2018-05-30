@@ -34,3 +34,46 @@
 ::placeholder {
     color: lightgray;
 }
+
+
+.search-bar{
+    background-color: white !important;
+    font-family: Arial, FontAwesome;
+    width:300px;
+    
+}
+
+
+ng-select /deep/ .ui-select-choices{
+    display: block;
+}
+
+ng-seleect /deep/ u.i-select-match{
+    width: 300px;
+}
+
+ng-select /deep/ .btn-secondary{
+    background-color: white !important;
+    border-color: white !important;
+    width: 219px !important;
+} 
+
+ng-select /deep/ .ui-select-match-text{
+    color:black;
+}
+
+ng-select /deep/ .form-control{
+    border: 0px solid #ced4da;
+    border-radius: 0rem;
+    box-shadow: none;
+    outline: none;
+}
+
+ng-select /deep/ .ui-select-choices{
+    border-radius: 0;
+}
+
+.search-bar:hover{
+    background-color: red !important;
+}
+
