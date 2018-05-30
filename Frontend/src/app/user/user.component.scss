@@ -106,7 +106,6 @@ $main-color: #666666;
 
 .custom-tab-button{
     font-size : 20px;
-    padding: 10px 20px 10px 20px;
     cursor: pointer;
     font-size: 18px;
     border-right: 1px solid gray;
@@ -140,11 +139,6 @@ $main-color: #666666;
     width : 100%;    
 }
 
-.follow-button {
-    margin-left: auto;
-    margin-right: 20px;
-    height: 100%;
-}
 
 .following{
     background-color: #55AA55;
@@ -158,18 +152,27 @@ $main-color: #666666;
 .follow-link {
     border: none !important;
     color: white !important;
+    padding: 10px;
+    border-radius: 50%;
 }
 
-.follow-button:hover, .follow-button.active {
-    border: none !important;
-    background-color: lightcoral !important;
-    color: white !important;
+
+
+
+.nav-link.disabled {
+    background-color: lightcoral;
+    height: 50px;
+
 }
+
 
 .follow-link:hover, .follow-link.active {
     border: none !important;
     background-color: lightcoral !important;
     color: white !important;
+    padding: 10px;
+    border-radius: 50%;
+
 }
 
 .icon-container {
@@ -225,7 +228,6 @@ $main-color: #666666;
 }
 
 #document-selection {
-    height: 80;
     padding-left: 20px;
     padding-right: 20px;
     line-height: 80px;
@@ -239,4 +241,38 @@ $main-color: #666666;
 
 ngb-tabset /deep/ ul, ngb-tabset /deep/ .nav-link  {
     height: 50px;
+}
+
+ngb-tabset /deep/ ul {
+    width: 80%;
+}
+
+ngb-tabset /deep/ #ngb-tab-3 {
+    padding: 0;
+}
+
+.custom-follow {
+    float: right;
+    height: 50px;
+    width: 50px;
+    display: flex;
+}
+
+.custom-content {
+    width: calc(100% - 400px);
+}
+
+.no-chat-custom-content {
+    width: 100%;
+}
+
+.custom-nav-tabs {
+    margin: 0;
+    height: 50px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.follow-button {
+    margin-left: auto;
 }

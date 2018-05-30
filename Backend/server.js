@@ -9,6 +9,7 @@ var expressJwt = require("express-jwt");
 var jwt = require("jsonwebtoken");
 var Promise = require("promise");
 
+
 app.use(express.json())
 app.use(express.urlencoded());
 app.use(cors());
@@ -34,6 +35,8 @@ var game = require('./db_helpers/game_sequelize')
 var nms = require("./nms");
 nms.start();
 
+//var chat = require("./chat-server");
+//chat.start();
 
 
 database_helper.reset_database();
