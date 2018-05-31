@@ -26,15 +26,11 @@ export class ChatComponent implements OnInit {
     this.socket.emit('roomCreate', this.roomName,false, (error, data) => {
 
         if(error){
-          console.log("Error in RoomCREATE")
           console.log(error)
         }else{
-          console.log("Successfully created room");
           this.socket.emit('roomJoin', this.roomName, (error, data) => {
             if(error){
-              console.log("PROBLEMS JOINING ROOM WE JUST CREATED")
-            }else{
-              console.log("Succesffuly JOINED ROOM WE JUST CREATED")
+              console.log(error)
             }
           })
         }
@@ -46,7 +42,6 @@ export class ChatComponent implements OnInit {
   joinRoom(){
     this.socket.emit('roomJoin', this.roomName, (error, data) => {
       if (error) { 
-        console.log("Received error in room join, trying to create room")
         console.log(error);
         this.createRoom() 
       }
@@ -87,19 +82,11 @@ export class ChatComponent implements OnInit {
   
   ngOnInit(){
     let url = 'ws://localhost:8040/chat-service'
-    let userName = 'user' // for example and debug
     let token = localStorage.getItem('user-token');
     let query = `token=${token}`
     let opts = { query }
     this.socket = socketIO.connect(url, opts)
     this.initChatComponents()
-
-    /*this.currentUser.registerState().subscribe((response : any) => {
-      if(response.logged_in){
-        this.activeUser = response.user;
-        this.initChatComponents()
-      }        
-    });*/
   }
 
 }

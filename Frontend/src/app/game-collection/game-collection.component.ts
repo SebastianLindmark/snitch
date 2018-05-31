@@ -26,7 +26,7 @@ export class GameCollectionComponent implements OnInit {
     var urlGame = this.route.snapshot.url[1].toString();
     let game = decodeURI(urlGame);
     this.gameService.loadGame(game).subscribe(response => {
-      console.log(response.result)
+      
       this.name = response.result.name;
       this.image_url = response.result.url;
       this.wide_image_url = response.result.wide_image_url;
@@ -35,8 +35,6 @@ export class GameCollectionComponent implements OnInit {
 
 
     this.gameService.loadLiveStreamsByGame(game).subscribe(response => {
-      console.log("HERE COMES THE RESULT")
-      console.log(response.result);
       if(response.success && response.result.length > 0){
         this.liveStreams = response.result;
       }else if(response.success && response.result.length == 0){
@@ -53,8 +51,6 @@ export class GameCollectionComponent implements OnInit {
 
   loadVODsByGame(gameId){
     this.vodRequestService.getVODSBygame(gameId).subscribe(response => {
-      console.log("Received VODS")
-      console.log(response)
       this.vods = response.result;
     })
   }
