@@ -7,14 +7,15 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
 
   private activeUser;
   private socket;
   private roomName;
-  
+  private messages = [];
+  private message;
 
   constructor(private currentUser : CurrentUserService, private route : ActivatedRoute) { 
     this.roomName = this.route.snapshot.url[1].toString();
@@ -56,9 +57,15 @@ export class ChatComponent implements OnInit {
     })
   }
 
+  sendMessage(message) {
+    this.socket.emit('roomMessage', this.roomName, { textMessage: message })
+    this.message = "";
+  }
+
   initChatComponents(){
       console.log("Init chat components")
       this.socket.on('roomMessage', (room, msg) => {
+        this.messages.push(msg);
         console.log(`${msg.author}: ${msg.textMessage}`)
       })
         

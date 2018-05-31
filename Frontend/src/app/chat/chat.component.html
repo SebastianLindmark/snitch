@@ -3,135 +3,16 @@
           <p id="chat-header-title">Stream Chat</p>
         </div>
         <div class="chat-window">
-          <div class="chat-message">
-            <span class="chat-message-username">MirroW</span>
+          <div class="chat-message" *ngFor="let message of messages">
+            <span class="chat-message-username">{{message.author}}</span>
             <span>:</span>
-            <span class="chat-message-content">I would like to talk about how this streamer is full of shit, seriously just look at him...</span>
+            <span class="chat-message-content">{{message.textMessage}}</span>
           </div>
-          
-          <div class="chat-message">
-              <span class="chat-message-username" style="color: blue;">Kyle</span>
-              <span>:</span>
-              <span class="chat-message-content">@MirroW what the fuck do you know about it?</span>
-          </div>
-    
-    
-          <div class="chat-message">
-              <span class="chat-message-username" style="color: orange;">Jaaaack111</span>
-              <span>:</span>
-              <span class="chat-message-content">@Kyle LUL U mad bro?</span>
-          </div>
-    
-          <div class="chat-message">
-              <span class="chat-message-username">MirroW</span>
-              <span>:</span>
-              <span class="chat-message-content">@Kyle If you seriously can't see that this guy is talking bullshit, maybe you should vote blank in the election, do us all a favour.</span>
-            </div>
-    
-            <div class="chat-message">
-                <span class="chat-message-username">MirroW</span>
-                <span>:</span>
-                <span class="chat-message-content">I would like to talk about how this streamer is full of shit, seriously just look at him...</span>
-              </div>
-              
-              <div class="chat-message">
-                  <span class="chat-message-username" style="color: blue;">Kyle</span>
-                  <span>:</span>
-                  <span class="chat-message-content">@MirroW what the fuck do you know about it?</span>
-              </div>
-        
-        
-              <div class="chat-message">
-                  <span class="chat-message-username" style="color: orange;">Jaaaack111</span>
-                  <span>:</span>
-                  <span class="chat-message-content">@Kyle LUL U mad bro?</span>
-              </div>
-        
-              <div class="chat-message">
-                  <span class="chat-message-username">MirroW</span>
-                  <span>:</span>
-                  <span class="chat-message-content">@Kyle If you seriously can't see that this guy is talking bullshit, maybe you should vote blank in the election, do us all a favour.</span>
-                </div>
-    
-                <div class="chat-message">
-                    <span class="chat-message-username">MirroW</span>
-                    <span>:</span>
-                    <span class="chat-message-content">I would like to talk about how this streamer is full of shit, seriously just look at him...</span>
-                  </div>
-                  
-                  <div class="chat-message">
-                      <span class="chat-message-username" style="color: blue;">Kyle</span>
-                      <span>:</span>
-                      <span class="chat-message-content">@MirroW what the fuck do you know about it?</span>
-                  </div>
-            
-            
-                  <div class="chat-message">
-                      <span class="chat-message-username" style="color: orange;">Jaaaack111</span>
-                      <span>:</span>
-                      <span class="chat-message-content">@Kyle LUL U mad bro?</span>
-                  </div>
-            
-                  <div class="chat-message">
-                      <span class="chat-message-username">MirroW</span>
-                      <span>:</span>
-                      <span class="chat-message-content">@Kyle If you seriously can't see that this guy is talking bullshit, maybe you should vote blank in the election, do us all a favour.</span>
-                    </div>
-    
-                    <div class="chat-message">
-                        <span class="chat-message-username">MirroW</span>
-                        <span>:</span>
-                        <span class="chat-message-content">I would like to talk about how this streamer is full of shit, seriously just look at him...</span>
-                      </div>
-                      
-                      <div class="chat-message">
-                          <span class="chat-message-username" style="color: blue;">Kyle</span>
-                          <span>:</span>
-                          <span class="chat-message-content">@MirroW what the fuck do you know about it?</span>
-                      </div>
-                
-                
-                      <div class="chat-message">
-                          <span class="chat-message-username" style="color: orange;">Jaaaack111</span>
-                          <span>:</span>
-                          <span class="chat-message-content">@Kyle LUL U mad bro?</span>
-                      </div>
-                
-                      <div class="chat-message">
-                          <span class="chat-message-username">MirroW</span>
-                          <span>:</span>
-                          <span class="chat-message-content">@Kyle If you seriously can't see that this guy is talking bullshit, maybe you should vote blank in the election, do us all a favour.</span>
-                        </div>
-    
-                        <div class="chat-message">
-                            <span class="chat-message-username">MirroW</span>
-                            <span>:</span>
-                            <span class="chat-message-content">I would like to talk about how this streamer is full of shit, seriously just look at him...</span>
-                          </div>
-                          
-                          <div class="chat-message">
-                              <span class="chat-message-username" style="color: blue;">Kyle</span>
-                              <span>:</span>
-                              <span class="chat-message-content">@MirroW what the fuck do you know about it?</span>
-                          </div>
-                    
-                    
-                          <div class="chat-message">
-                              <span class="chat-message-username" style="color: orange;">Jaaaack111</span>
-                              <span>:</span>
-                              <span class="chat-message-content">@Kyle LUL U mad bro?</span>
-                          </div>
-                    
-                          <div class="chat-message">
-                              <span class="chat-message-username">MirroW</span>
-                              <span>:</span>
-                              <span class="chat-message-content">@Kyle If you seriously can't see that this guy is talking bullshit, maybe you should vote blank in the election, do us all a favour.</span>
-                            </div>
         </div>
         <div class="chat-input-container">
-          <form>
-            <input type="text" id="chat-input" name="chatinput" autocomplete="off" placeholder="Send a message" class="form-control custom-input input-chat-field" required minlength="1">
-            <input type="submit" value="Chat" class="btn btn-primary btn-block submit-button">
+          <form (ngSubmit)="sendMessage(message)" #chatForm="ngForm">
+            <input [(ngModel)]="message" type="text" id="chat-input" name="chatinput" autocomplete="off" placeholder="Send a message" class="form-control custom-input input-chat-field" required minlength="1">
+            <input type="submit" [disabled]="!chatForm.form.valid"  value="Chat" class="btn btn-primary btn-block submit-button">
           </form>
         </div>
     </div>
