@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CurrentUserService } from '../_services/current-user.service';
 import { BrowseService } from '../_services/browse.service';
 import { FollowerRequestService } from '../_services/follower-request.service';
+import * as socketIO from "socket.io-client";
 
 @Component({
   selector: 'app-browse',
@@ -14,8 +15,13 @@ export class BrowseComponent implements OnInit {
   private popularGames = []
   private followerStreams = []
 
+  private socket;
+
+
   constructor(private currentUser : CurrentUserService, private gameRequestService : BrowseService, private followerRequestService : FollowerRequestService) {
      
+    
+
     this.currentUser.registerState().subscribe((response : any) => {
       if(response.logged_in){
         this.text = "Welcome " + response.user.username;
@@ -24,7 +30,6 @@ export class BrowseComponent implements OnInit {
 
     this.loadPopularGames()
    }
-
    loadPopularGames(){
 
     this.gameRequestService.loadPopularGames().subscribe(response => {
@@ -41,6 +46,8 @@ export class BrowseComponent implements OnInit {
     this.followerRequestService.getFollowerStreams().subscribe(response => {
       this.followerStreams = response.result
     })
+
+
   }
 
 

@@ -19,7 +19,7 @@ app.use('/protected', expressJwt({secret: "secret"}));
 var path = require('path');
 app.use(express.static('media'))
 
-console.log(path.join(__dirname,'./media'))
+var chatServer = require('./chat-server')
 
 var rand = require("random-key");
 
