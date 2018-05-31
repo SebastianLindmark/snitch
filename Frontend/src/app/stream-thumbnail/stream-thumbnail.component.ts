@@ -54,6 +54,11 @@ export class StreamThumbnailComponent implements OnInit {
   errorLoadImage(){
     //Use default
     console.log("Recevied error in image load")
+
+    if(this.imagePath == this.defaultImageSrc){
+      return;
+    }
+
     if(this.imagePath === this.serverPath + "/" + this.mapPath + "/" + this.imageName){
       this.imagePath = this.defaultImageSrc;
     }
