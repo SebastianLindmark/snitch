@@ -19,7 +19,7 @@ app.use('/protected', expressJwt({secret: "secret"}));
 var path = require('path');
 app.use(express.static('media'))
 
-console.log(path.join(__dirname,'./media'))
+var chatServer = require('./chat-server')
 
 var rand = require("random-key");
 
@@ -264,6 +264,19 @@ app.route('/get_game_by_id').post((req,res) => {
 })
 
 
+app.route('/search_user').post((req,res) => {
+    var username = req.body.username;
+    user_sequelize.search_users(username).then(function(users){
+        res.send({success:true,result : users})
+    }).catch(function(err){
+        console.log(err)
+        res.statusCode = 404;
+        res.send({success:false,result:err})
+    })
+})
+
+
+
 app.route('/search_game').post((req,res) => {
     var game = req.body.game_name;
     models.Game.find({where : {name : {[Op.like] : game + '%'}}}).then(function(game){
@@ -489,8 +502,6 @@ models.sequelize.sync({force:false}).then(function(){
         //models.insertStaticData()
         //name()
         console.log('Server started!');
-        
-        //name()
     });    
 })
 

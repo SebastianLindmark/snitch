@@ -5,6 +5,9 @@ var rand = require("random-key");
 var bcrypt = require('bcrypt');
 const saltRounds = 5;
 
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
+
 function generate_streamkey(){
     var stream_key = "snitch_live_"
     stream_key += rand.generate(50);
@@ -12,7 +15,6 @@ function generate_streamkey(){
 }
 
 module.exports = {
-
     create_user : function(email,username,password){
         var userPromise = models.User.create({email : email, username: username})
         return userPromise.then(function(user){
@@ -60,6 +62,12 @@ module.exports = {
             return user.setStreamKey(streamKey)
         })
     },
+
+    search_users(userSearch){
+        return models.User.findAll({attributes: ['username'], where : {username : {[Op.like] : userSearch + '%'}}}).then(function(users){
+            console.log(users)
+            return users
+        })},
 
     username_to_user(username){
         return models.User.findOne({where : {username:username}})

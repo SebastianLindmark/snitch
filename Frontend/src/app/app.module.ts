@@ -38,6 +38,9 @@ import { VodRequestService } from './_services/vod-request.service';
 import { VideoPlayerService } from './_services/video-player.service';
 import { FollowerRequestService } from './_services/follower-request.service';
 import { StreamThumbnailComponent } from './stream-thumbnail/stream-thumbnail.component';
+import { SelectModule } from 'ng2-select';
+import * as Globals from 'globals';
+
 
 
 @NgModule({
@@ -63,6 +66,7 @@ import { StreamThumbnailComponent } from './stream-thumbnail/stream-thumbnail.co
 
   ],
   imports: [
+    SelectModule,
     BrowserModule,
     NgbModule.forRoot(),
     FormsModule,

@@ -45,7 +45,9 @@
         </div>
       <div class="d-flex flex-wrap">
         <div class="p-2 directory-item" *ngFor="let game of followerStreams">
-          <img [ngClass]="(game.live)? 'img-thumbnail' :'img-thumbnail offline-stream' " src="{{game.url}}" routerLinkActive="active" class="img-thumbnail" routerLink="/channel/{{game.username}}">
+          
+          <app-stream-thumbnail [ngClass]="(game.live)? '' :'offline-stream'" [mapPath]="game.live_url" [loadGif]="(!game.live)" routerLinkActive="active" routerLink="/channel/{{game.username}}"></app-stream-thumbnail>
+          
           <i [hidden] = "game.live == 0"  class="fa fa-circle live-circle-icon"></i>
           <div class="text-left title follower-game-title">{{game.title}}</div>
           <div class="text-left viewer-count">
