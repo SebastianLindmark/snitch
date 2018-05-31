@@ -44,39 +44,6 @@ export class UserComponent  {
   }
 
 
-  ngOnInit(){
-    this.currentUser.registerState().subscribe((response : any) => {
-      if(response.logged_in){
-        this.activeUser = response.user;
-    
-        this.socket.on('roomMessage', (room, msg) => {
-          console.log(`${msg.author}: ${msg.textMessage}`)
-        })
-         
-        // Auth success handler.
-        this.socket.on('loginConfirmed', userName => {
-          // Join room named 'default'.
-          this.socket.emit('roomJoin', 'default', (error, data) => {
-            // Check for a command error.
-            if (error) { return }
-            // Now we will receive 'default' room messages in 'roomMessage' handler.
-            // Now we can also send a message to 'default' room:
-            this.socket.emit('roomMessage', 'default', { textMessage: 'Hello!' })
-          })
-        })
-         
-        // Auth error handler.
-        this.socket.on('loginRejected', error => {
-          console.error(error)
-        })
-    
-    
-
-
-
-      }        
-    });
-  }
   
   loadLivePlayer(){
       this.vodSelected = false
@@ -86,26 +53,6 @@ export class UserComponent  {
         selfRef.loadVideoInformation(selfRef,videoTitle,gameId)
       })
   }
-
-  initChatComponents(){
-    let url = 'ws://localhost:8040/chat-service'
-    let userName = 'user' // for example and debug
-    let token = localStorage.getItem('user-token');
-    let query = `userName=${userName}&token=${token}`
-    let opts = { query }
-    this.socket = socketIO.connect(url, opts)
-    this.initChatCallbacks()
-  }
-
-
-
-
-  initChatCallbacks(){
-
-
-   }
-
-
   
 
   loadVODPlayer(vodID){

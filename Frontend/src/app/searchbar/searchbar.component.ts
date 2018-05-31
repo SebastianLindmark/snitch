@@ -32,30 +32,24 @@ export class SearchbarComponent implements OnInit {
   }
 
   private selected(value:any) {
-    console.log('Selected value is: ', value);
     this.router.navigate(['/channel/' + value.text]);
-    //this.items = ["Merkurius","Venus","Jorden","Mars","Jupiter"]
     this.items = []
     this.refreshValue(["Empty"])
   }
 
   private removed(value:any) {
-    console.log('Removed value is: ', value);
     this.refreshValue([])
   }
 
   private typed(value:any) {
     if(value.length == 1){
       this.userRequestService.searchUsers(value).subscribe(response => {
-        console.log(response)
         this.items = []
         for(var i = 0; i < response.result.length; i++){
           this.items.push(response.result[i].username);
         }
-        console.log(this.items)
       });
     }
-    console.log('New search input: ', value);
   }
 
   private refreshValue(value:any) {
