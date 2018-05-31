@@ -68,10 +68,8 @@ export class UserComponent  {
   loadVideoInformation(selfRef,videoTitle, gameId){
     selfRef.streamTitle = videoTitle
     selfRef.gameRequestService.loadGame(gameId).subscribe(response => {
-      console.log(response)
       if(response.success){
         selfRef.gameInfo = response.result;
-        console.log(selfRef.gameInfo)
       }
     })
   }
@@ -85,14 +83,12 @@ export class UserComponent  {
     this.loadVODS()
     this.isFollower()
     this.gameRequestService.getViewersByGame().subscribe(response => {
-      console.log(response)
     })
   }
 
   isFollower(){
     this.followRequestService.isFollower(this.username).subscribe(response => {
       if(response.success){
-        console.log("Is follower " + response.result)
         this.isFollowing = response.result
       }
     })
@@ -101,10 +97,8 @@ export class UserComponent  {
   followButton(){
     
     if(!this.isFollowing){
-      console.log("About to follow")
       this.followRequestService.followUser(this.username).subscribe(handleFollowResponse)
     }else{
-      console.log("Defollowing")
       this.followRequestService.followUserRemove(this.username).subscribe(handleFollowResponse)
     }
 

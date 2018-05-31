@@ -19,6 +19,7 @@ export class StreamThumbnailComponent implements OnInit {
 
   private gifName = "video.gif"
   private imageName = "image.png"
+  private defaultImageSrc = "https://shadeworks.ca/wp-content/themes/ShadeWorks/woocommerce/single-product/colors/Designer%20Blackout%20Roller%20Shades/Castle%20Rock/Black.jpg"
 
   private shouldLoadGif;
 
@@ -38,13 +39,13 @@ export class StreamThumbnailComponent implements OnInit {
       return;
     }
 
-    if(this.imageName !== this.serverPath + "/" + this.mapPath + "/" + this.gifName){
+    if(this.imagePath !== this.serverPath + "/" + this.mapPath + "/" + this.gifName){
       this.imagePath = this.serverPath + "/" + this.mapPath + "/" + this.gifName;
     }
   }
 
   mouseLeave(){
-    if(this.imageName !== this.serverPath + "/" + this.mapPath + "/" + this.imageName){
+    if(this.imagePath !== this.serverPath + "/" + this.mapPath + "/" + this.imageName){
       this.imagePath = this.serverPath + "/" + this.mapPath + "/" + this.imageName;
     }
   }
@@ -52,8 +53,11 @@ export class StreamThumbnailComponent implements OnInit {
 
   errorLoadImage(){
     //Use default
-    
-    if(this.imageName !== this.serverPath + "/" + this.mapPath + "/" + this.imageName){
+    console.log("Recevied error in image load")
+    if(this.imagePath === this.serverPath + "/" + this.mapPath + "/" + this.imageName){
+      this.imagePath = this.defaultImageSrc;
+    }
+    else if(this.imagePath !== this.serverPath + "/" + this.mapPath + "/" + this.imageName){
       this.imagePath = this.serverPath + "/" + this.mapPath + "/" + this.imageName;
     }
   }
