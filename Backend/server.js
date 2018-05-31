@@ -35,8 +35,7 @@ var game = require('./db_helpers/game_sequelize')
 var nms = require("./nms");
 nms.start();
 
-//var chat = require("./chat-server");
-//chat.start();
+var chat = require("./chat-server");
 
 
 database_helper.reset_database();
