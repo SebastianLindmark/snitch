@@ -8,9 +8,13 @@ function onConnect (service, id) {
     let { query } = service.transport.getHandshakeData(id)
     let { userName } = query
     // Actually check auth data.
-    // ...
-    // Return a promise that resolves with a login string.
-    return Promise.resolve(userName)
+    jwt.verify(token, 'secret', function(err, decoded) {
+        if (err) {
+            return Promise.reject("Expired or non valid token!"); 
+        }
+
+        return Promise.resolve(userName)
+    });
 }
 
 
