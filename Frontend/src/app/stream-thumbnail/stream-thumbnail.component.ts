@@ -7,6 +7,10 @@ import * as Globals from 'globals';
   templateUrl: './stream-thumbnail.component.html',
   styleUrls: ['./stream-thumbnail.component.scss']
 })
+
+/**
+ * Handles how the Streams and VODS are displayed on the Browsing page.
+ */
 export class StreamThumbnailComponent implements OnInit {
 
   
@@ -34,6 +38,9 @@ export class StreamThumbnailComponent implements OnInit {
     this.imagePath = this.serverPath + "/" + this.mapPath + "/" + this.imageName;
   }
 
+  /**
+   * Mouse enters preview image, replaces Image with GIF.
+   */
   mouseEnter(){
     if(!this.shouldLoadGif){
       return;
@@ -44,6 +51,9 @@ export class StreamThumbnailComponent implements OnInit {
     }
   }
 
+  /**
+   * Mouse leaves preview image, replaces GIF with Image.
+   */
   mouseLeave(){
     if(this.imagePath !== this.serverPath + "/" + this.mapPath + "/" + this.imageName){
       this.imagePath = this.serverPath + "/" + this.mapPath + "/" + this.imageName;
@@ -51,10 +61,10 @@ export class StreamThumbnailComponent implements OnInit {
   }
 
 
+  /**
+   * If an image for preview couldn't be loaded.
+   */
   errorLoadImage(){
-    //Use default
-    console.log("Recevied error in image load")
-
     if(this.imagePath == this.defaultImageSrc){
       return;
     }

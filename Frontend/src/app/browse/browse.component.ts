@@ -9,6 +9,7 @@ import * as socketIO from "socket.io-client";
   templateUrl: './browse.component.html',
   styleUrls: ['./browse.component.scss']
 })
+
 export class BrowseComponent implements OnInit {
 
   private popularGames = []
@@ -17,28 +18,24 @@ export class BrowseComponent implements OnInit {
   private socket;
 
 
-  constructor(private currentUser : CurrentUserService, private gameRequestService : BrowseService, private followerRequestService : FollowerRequestService) {
-
-
+  constructor(private currentUser: CurrentUserService, private gameRequestService: BrowseService, private followerRequestService: FollowerRequestService) {
     this.loadPopularGames()
-   }
-   loadPopularGames(){
+  }
 
+
+
+  loadPopularGames() {
     this.gameRequestService.loadPopularGames().subscribe(response => {
       this.popularGames = response;
     },
-    error => {
-      console.log(error);
-    });
-   }
+      error => {
+        console.log(error);
+      });
+  }
 
   ngOnInit() {
     this.followerRequestService.getFollowerStreams().subscribe(response => {
       this.followerStreams = response.result
     })
-
-
   }
-
-
 }

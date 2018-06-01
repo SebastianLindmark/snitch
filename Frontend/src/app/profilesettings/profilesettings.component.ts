@@ -18,6 +18,11 @@ export class ProfilesettingsComponent implements OnInit {
   }
 
 
+
+
+  /**
+   * Updates the username if it doesn't already exist.
+   */
   changeUserName(){
     var updateUsername = this.settings.updateUser(this.username);
       updateUsername.subscribe( response => {

@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 
-
+/**
+ * Base component for project
+ */
 export class AppComponent {}

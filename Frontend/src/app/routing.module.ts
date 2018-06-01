@@ -12,6 +12,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ChannelGuardService } from './channel-guard.service';
 import { GameCollectionComponent } from './game-collection/game-collection.component';
 
+/**
+ * Handles routing between components, uses guards to validate routing.
+ */
 export const ROUTES: Routes = [
   { path: '', redirectTo: '/browse', pathMatch: 'full' },
   { path: 'browse', component: BrowseComponent },

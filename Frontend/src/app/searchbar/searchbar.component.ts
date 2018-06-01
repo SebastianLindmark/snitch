@@ -7,10 +7,11 @@ import { Router } from '@angular/router';
   templateUrl: './searchbar.component.html',
   styleUrls: ['./searchbar.component.scss'],
 })
+/**
+ * The main search component used when navigating to users from the navbar
+ */
 export class SearchbarComponent implements OnInit {
 
-
-  
   constructor(private userRequestService : UserRequestService, private router : Router) { }
 
   ngOnInit() {
@@ -41,6 +42,9 @@ export class SearchbarComponent implements OnInit {
     this.refreshValue([])
   }
 
+  /** 
+   * When the user inputs a string, only the first letter is recognized to fetch all usernames from the database that begins with that letter.
+  */
   private typed(value:any) {
     if(value.length == 1){
       this.userRequestService.searchUsers(value).subscribe(response => {

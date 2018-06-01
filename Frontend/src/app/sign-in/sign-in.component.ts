@@ -10,6 +10,10 @@ declare const gapi: any;
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
+
+/**
+ * The component displayed when a user wants to log in or sign up.
+ */
 export class SignInComponent implements OnInit {
 
   private displaySignIn = false;
