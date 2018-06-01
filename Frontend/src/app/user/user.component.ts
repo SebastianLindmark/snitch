@@ -116,6 +116,9 @@ export class UserComponent  {
           let dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
           response.result[i].date = dateString;
         }
+
+        console.log("These are the vods")
+        console.log(response.result)
         this.vods = response.result;
       }
     })

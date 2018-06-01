@@ -62,10 +62,11 @@
 </div>
 
 
+
 <div [hidden]="selectedTabIndex != 1" class="vod-list">
   <div class="d-flex flex-wrap" >
     <div class="p-2 directory-item" *ngFor="let vod of vods">
-      <img src="{{vod.url}}" routerLinkActive="active" class="img-thumbnail" (click)=playVOD(vod.id) >
+      <app-stream-thumbnail [mapPath]="vod.root_path" [loadGif]=true (click)=playVOD(vod.id)></app-stream-thumbnail>
       <div class="text-left title">{{vod.title}}</div>
       <div class="text-left viewer-count">{{vod.date}}</div>
     </div>
