@@ -53,17 +53,16 @@ class NodeTransSession extends EventEmitter {
     }
     mkdirp.sync(ouPath);
     let argv = ['-y', '-fflags', 'nobuffer', '-analyzeduration', '1000000', '-i', inPath, '-c:v', vc, '-c:a', ac, '-f', 'tee', '-map', '0:a?', '-map', '0:v?' ,'-y','-an',mapStr];
-  
     var pathToModule = require.resolve('module');
   
     let paths = __dirname + '/.' + ouPath
     paths = path.normalize(paths);
 
-    let gifArgv = ['-i', inPath, '-vf', 'fps=fps=1/10','-update','1', paths + "\\image.png"]
+    let imageArgv = ['-i', inPath, '-vf', 'fps=fps=1/10','-update','1', paths + "\\image.png"]
     
     context.nodeEvent.emit('videoFileCreated',this.conf.streamPath,ouPath.substring(7));
 
-    this.ffmpeg_exec2 = spawn(this.conf.ffmpeg, gifArgv);
+    this.ffmpeg_exec2 = spawn(this.conf.ffmpeg, imageArgv);
     this.ffmpeg_exec2.on('error', (e) => {
       Logger.debug(e);
     });

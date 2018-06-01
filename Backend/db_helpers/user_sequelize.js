@@ -1,3 +1,8 @@
+/**
+ * The model for handling user database-queries 
+ */
+
+
 var models = require("./models");
 var Sequalize = require("sequelize");
 var rand = require("random-key");
@@ -15,6 +20,11 @@ function generate_streamkey(){
 }
 
 module.exports = {
+
+    /**
+     * Creates a user, along with a streamconfig automatically associated to them
+     * @returns the user created
+     */
     create_user : function(email,username,password){
         var userPromise = models.User.create({email : email, username: username})
         return userPromise.then(function(user){
@@ -32,7 +42,10 @@ module.exports = {
             return userPromise.value()
         })
     },
-
+    
+    /**
+     * Creates a GoogleUser, along with a streamconfig automatically associated to them
+     */
     create_google_user : function(email,username,google_id){
         var userPromise = models.User.findOrCreate({where : {email : email, username: username}})
 
@@ -50,6 +63,9 @@ module.exports = {
         })
     },
 
+    /**
+     * @argument {the user to create the streamkey for} username
+     */
     create_stream_key : function(username) {
         var userPromise = models.User.findOne({where : {username:username}})
         
@@ -63,6 +79,11 @@ module.exports = {
         })
     },
 
+    /**
+     * 
+     * @param {the prefix to match against all usernames in databse} userSearch 
+     * @returns {array of all users which username match with the userSearch param}
+     */
     search_users(userSearch){
         return models.User.findAll({attributes: ['username'], where : {username : {[Op.like] : userSearch + '%'}}}).then(function(users){
             console.log(users)
@@ -102,6 +123,13 @@ module.exports = {
         })
     },
 
+
+
+    /**
+     * 
+     * @param {the user to get the profile for} username 
+     * @returns {Returns the current game and title of the stream the user has set}
+     */
     get_user_profile(username){
         var streamConfigPromise = this.username_to_user(username)
         .then(function(user){
@@ -125,7 +153,12 @@ module.exports = {
     
     },
 
-
+    /**
+     * 
+     * @param {the username to update profile for} username 
+     * @param gameName 
+     * @param streamTitle 
+     */
     update_user_profile(username,gameName,streamTitle){
 
         var streamConfigPromise = this.username_to_user(username).then(function(user){

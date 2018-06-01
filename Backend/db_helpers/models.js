@@ -1,148 +1,182 @@
+/**
+ * 
+ * The models where every database-model is setup along with their relations to each other.
+ * 
+ */
+
+
 const Sequelize = require("sequelize");
 var sequelize = require('./db_conn_sequelize').sequelize;
 
+
+/**
+ * User model defines a user. 
+ */
 const User = sequelize.define('user', {
+id: { 
+    type: Sequelize.INTEGER,
+    primaryKey:true,
+    autoIncrement: true 
+},
+email: {
+    type: Sequelize.STRING,
+    unique : true
+},
+username: {
+    type: Sequelize.STRING,
+    unique : true
+}
+});
+
+/**
+* This model is used when signing up with a custom username and password (Not by 3rd-party login) 
+*/
+const Password = sequelize.define('password', {
+id: { 
+    type: Sequelize.INTEGER,
+    primaryKey:true,
+    autoIncrement: true 
+},
+pwd: {
+    type: Sequelize.STRING
+}
+});
+
+
+/**
+ * This model is used when creating an account by signing in via 3rd-party login. Contains the token to identify the user
+ * */  
+const GoogleUser = sequelize.define('googleuser', {
+
+token: {
+    type: Sequelize.STRING,
+    unique : true
+}
+});
+
+
+/**
+ * The streamkey is a unique key used to identify users when using a 3rd-party software (OBS:Open-Broadcast-Software).
+ */
+const StreamKey = sequelize.define('streamkey', {
+
+key: {
+    type: Sequelize.STRING,
+    unique : true
+}
+});
+
+
+
+/**
+ * The channel model of a User.
+ *  
+ */  
+const Channel = sequelize.define('channel', {
+
+biography: {
+    type: Sequelize.STRING
+}
+}); 
+
+
+
+/**
+ * This model stores games, along with their Image and Wide-Image urls.
+ * 
+ */ 
+const Game = sequelize.define('game', {
     id: { 
-        type: Sequelize.INTEGER,
-        primaryKey:true,
-        autoIncrement: true 
-    },
-    email: {
-        type: Sequelize.STRING,
-        unique : true
-    },
-    username: {
-        type: Sequelize.STRING,
-        unique : true
-    }
-  });
-
- const Password = sequelize.define('password', {
-    id: { 
-        type: Sequelize.INTEGER,
-        primaryKey:true,
-        autoIncrement: true 
-    },
-    pwd: {
-        type: Sequelize.STRING
-    }
-  });
-
-  //db.run('CREATE TABLE googleuser(id INTEGER PRIMARY KEY, token TEXT UNIQUE, FOREIGN KEY(id) REFERENCES user(id));');
-  
-  const GoogleUser = sequelize.define('googleuser', {
-   
-    token: {
-        type: Sequelize.STRING,
-        unique : true
-    }
-  });
+    type: Sequelize.INTEGER,
+    primaryKey:true,
+    autoIncrement: true 
+},
+name: {
+    type: Sequelize.STRING,
+    unique : true
+},
+url: {
+    type: Sequelize.STRING
+},
+wide_image_url:{
+    type: Sequelize.STRING
+}
+});
 
 
-  //db.run('CREATE TABLE streamkey(id INTEGER PRIMARY KEY, key TEXT UNIQUE, FOREIGN KEY(id) REFERENCES user(id));');
-
-  const StreamKey = sequelize.define('streamkey', {
-  
-    key: {
-        type: Sequelize.STRING,
-        unique : true
-    }
-  });
-
-  //db.run('CREATE TABLE channel(id INTEGER PRIMARY KEY, biography TEXT,FOREIGN KEY(id) REFERENCES user(id));');
-
-  
-  const Channel = sequelize.define('channel', {
     
-    biography: {
-        type: Sequelize.STRING
-    }
-  }); 
-
-    //db.run('CREATE TABLE stream(id INTEGER PRIMARY KEY, viewers INTEGER, FOREIGN KEY(id) REFERENCES user(id));');
-
-
-    //db.run('CREATE TABLE game(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, url TEXT);');
-
-    const Game = sequelize.define('game', {
-        id: { 
-        type: Sequelize.INTEGER,
-        primaryKey:true,
-        autoIncrement: true 
+/**
+ * The model that holds a country. Currently not implemented.
+ */
+const Country = sequelize.define('country', {
+    id: { 
+        type: Sequelize.INTEGER, 
+        autoIncrement: true,
+        primaryKey: true
     },
     name: {
         type: Sequelize.STRING,
-        unique : true
-    },
-    url: {
-        type: Sequelize.STRING
-    },
-    wide_image_url:{
-        type: Sequelize.STRING
+        unique: true
     }
-    });
-
+}); 
     
     
-    //db.run('CREATE TABLE country(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE);');
-   const Country = sequelize.define('country', {
-        id: { 
-            type: Sequelize.INTEGER, 
-            autoIncrement: true,
-            primaryKey: true
-        },
-        name: {
-            type: Sequelize.STRING,
-            unique: true
-        }
-      }); 
-      
-    
-    //db.run('CREATE TABLE stream_config(id INTEGER PRIMARY KEY, game INTEGER,title TEXT, FOREIGN KEY(id) REFERENCES stream(id),FOREIGN KEY(game) REFERENCES channel(id));');
+/**
+ * The models that holds information about a stream. 
+ * With this model we can connect StreamConfigs to certain games, or get how many viewers a certain game has.
+ * Live-url is the url for where the recorded data is stored on the server.
+ */
 
-    const StreamConfig = sequelize.define('streamconfig', {
-       title : {
-            type: Sequelize.STRING
-       },
-
-       live : {
-           type:Sequelize.BOOLEAN
-       },
-       
-        viewers : {
-           type: Sequelize.INTEGER
-       },
-
-       live_url : {
+const StreamConfig = sequelize.define('streamconfig', {
+    title : {
         type: Sequelize.STRING
-       }
+    },
+
+    live : {
+        type:Sequelize.BOOLEAN
+    },
+    
+    viewers : {
+        type: Sequelize.INTEGER
+    },
+
+    live_url : {
+    type: Sequelize.STRING
+    }
+
+});
+
+
+/**
+ * The VOD(Video-on-demand) holds the object for finished streams.
+ * Stores the current title and the path to the folder where video-information is stored
+ */
+
+const VOD = sequelize.define('vod', {
+    id: { 
+        type: Sequelize.INTEGER, 
+        autoIncrement: true,
+        primaryKey: true
+    },
+    
+    title : {
+            type: Sequelize.STRING
+    },
+    //The path to the stream 
+    path : {
+        type:Sequelize.STRING
+    },
+    //The path to the folder of the stream
+    root_path : {
+        type:Sequelize.STRING
+    }
 
     });
 
 
-    const VOD = sequelize.define('vod', {
-        id: { 
-            type: Sequelize.INTEGER, 
-            autoIncrement: true,
-            primaryKey: true
-        },
-       
-        title : {
-             type: Sequelize.STRING
-        },
-        //The path to the stream 
-        path : {
-            type:Sequelize.STRING
-        },
-        //The path to the folder of the stream
-        root_path : {
-            type:Sequelize.STRING
-        }
-
-     });
- 
-
-
+/**
+ * Below are all the associations between the models stored.
+ */
 
 User.hasOne(Password, {as : "Password",foreignKey: 'userId'}) //userId will be added in Password model
 
@@ -174,8 +208,9 @@ User.belongsToMany(User, { as: {singular : 'Follower', plural : 'Followers'}, th
 User.belongsToMany(User, { as: {singular : 'Following', plural : 'Followings'}, through : 'FollowTable', foreignKey: 'followingId' })
 
 
-
-
+/**
+ * Inserts static data into Game model.
+ */
 function insert_static_data(){
     var games = ["Fortnite", "League of Legends", "Overwatch", "PLAYERUNKNOWN'S BATTLEGROUNDS","Dota 2", "Hearthstone","GTA V", "Destiny 2", "Tom Clancy's Rainbox Six"]
     var image_urls = ["https://static-cdn.jtvnw.net/ttv-boxart/Fortnite-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/League%20of%20Legends-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/Overwatch-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/PLAYERUNKNOWN%27S%20BATTLEGROUNDS-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Dota%202-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Hearthstone-285x380.jpg","https://static-cdn.jtvnw.net/ttv-boxart/Grand%20Theft%20Auto%20V-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/Destiny%202-285x380.jpg", "https://static-cdn.jtvnw.net/ttv-boxart/Tom%20Clancy%27s%20Rainbow%20Six:%20Siege-285x380.jpg"]

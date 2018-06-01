@@ -1,7 +1,20 @@
+/**
+ * The module for handling follower database-queries.
+ */
+
+
 var models = require("./models");
 var user_sequelize = require("./user_sequelize");
 
 module.exports = {
+
+
+    /**
+     * @argument {The user fan_username should follow} idol_username 
+     * @argument {The user to follow idol_username} fan_username 
+     * @returns {The fan_username User instance}               
+     */
+
     add_follower(idol_username,fan_username){
             var idolPromise = user_sequelize.username_to_user(idol_username);
             var fanPromise = user_sequelize.username_to_user(fan_username);
@@ -14,6 +27,13 @@ module.exports = {
             })
     },
 
+
+    /**
+     * @argument idol_username 
+     * @argument fan_username 
+     * @returns {If fan_username follows idol_username} Boolean               
+     */
+
     is_following(idol_username,fan_username){
         var idolPromise = user_sequelize.username_to_user(idol_username);
         var fanPromise = user_sequelize.username_to_user(fan_username);
@@ -25,6 +45,11 @@ module.exports = {
         })
     },
 
+    /**
+     * @argument {The user fan_username should defollow} idol_username 
+     * @argument {The user to defollow idol_username} fan_username 
+     * @returns  {The fan_username User instance} User               
+     */
 
     remove_follower(idol_username,fan_username){
         var idolPromise = user_sequelize.username_to_user(idol_username);
@@ -39,7 +64,11 @@ module.exports = {
         },
 
 
-
+    /**
+     * 
+     * @param {the user to load followers for} username 
+     * @returns {the followers of username} User[]
+     */
     get_followers(username){
         var userPromise = models.User.findOne({where : {username:username}})
         return userPromise.then(function(user){
@@ -47,12 +76,24 @@ module.exports = {
         })
     },
 
+    /**
+     * 
+     * @param {returns the followings of} username 
+     * @returns {the users username follows} User[]
+     */
     get_followings(username){
         var userPromise = models.User.findOne({where : {username:username}})
         return userPromise.then(function(user){
             return user.getFollowings()
         })
     },
+
+
+    /**
+     * Loads Online/Offline streams of the users username follows. 
+     * @param {the username to load data for} username 
+     * @returns {Returns all the users username follows along with information about their latest stream and game} any[]
+     */
 
     get_follower_streams(username){
 
