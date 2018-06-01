@@ -1,12 +1,15 @@
 <div class="p-3">
-    <div id="document-selection"class="text-left">
-        <p class="d-inline-block">Browse all of our games <b>streamed</b> live by other members of Snitch, see what the channels you <b>follow</b> are up to and read about what's <b>new</b> with Snitch.TV </p>
-    </div>
+  <div id="document-selection" class="text-left">
+    <p class="d-inline-block">Browse all of our games
+      <b>streamed</b> live by other members of Snitch, see what the channels you
+      <b>follow</b> are up to and read about what's
+      <b>new</b> with Snitch.TV </p>
+  </div>
 
   <div class="row">
     <div class="col-md-6">
       <div class="column-header">
-          <p>Browse</p>
+        <p>Browse</p>
       </div>
       <div class="d-flex flex-wrap">
         <div class="p-2 directory-item" *ngFor="let game of popularGames">
@@ -14,8 +17,6 @@
           <div class="text-left title">{{game.name}}</div>
           <div class="text-left viewer-count">{{game.viewers ? game.viewers : 0}} viewers</div>
         </div>
-    
-        
         <div class="p-2 directory-item"></div>
         <div class="p-2 directory-item"></div>
         <div class="p-2 directory-item"></div>
@@ -27,38 +28,39 @@
         <div class="p-2 directory-item"></div>
         <div class="p-2 directory-item"></div>
         <div class="p-2 directory-item"></div>
-      </div> 
+      </div>
     </div>
     <div class="col-md-6">
-        <div class="column-header">
-            <p>Recent News</p>
+      <div class="column-header">
+        <p>Recent News</p>
+      </div>
+      <div class="news-container">
+        <div class="news">
+          <h3>Snitch is live!</h3>
+          <p class="patch-title">Patch Notes 1.0.0
+            <span class="badge badge-secondary">New</span>
+          </p>
+          <p>After months of hard work we are finally able to release version 1.0.0 of Snitch! We hope that you share this website
+            with your friends and that we build a community to remember! Enjoy your stay! </p>
         </div>
-        <div class="news-container">
-            <div class="news">
-              <h3>Snitch is live!</h3>
-              <p class="patch-title">Patch Notes 1.0.0 <span class="badge badge-secondary">New</span></p>
-              <p>After months of hard work we are finally able to release version 1.0.0 of Snitch! We hope that you share this website with your friends and that we build a community to remember! Enjoy your stay! </p>
-            </div>
-          </div>
-        <div class="column-header">
-            <p>Followings</p>
-        </div>
+      </div>
+      <div class="column-header">
+        <p>Followings</p>
+      </div>
       <div class="d-flex flex-wrap">
         <div class="p-2 directory-item" *ngFor="let game of followerStreams">
-          
 
-          <img [ngClass]="(game.live)? 'img-thumbnail' :'img-thumbnail offline-stream'" src={{game.url}} routerLinkActive="active" routerLink="/channel/{{game.username}}"/>
-          <!--<app-stream-thumbnail [ngClass]="(game.live)? '' :'offline-stream'" [mapPath]="game.live_url" [loadGif]="(!game.live)" routerLinkActive="active" routerLink="/channel/{{game.username}}"></app-stream-thumbnail>-->
-          
-          <i [hidden] = "game.live == 0"  class="fa fa-circle live-circle-icon"></i>
+
+          <img [ngClass]="(game.live)? 'img-thumbnail' :'img-thumbnail offline-stream'" src={{game.url}} routerLinkActive="active"
+            routerLink="/channel/{{game.username}}" />
+
+          <i [hidden]="game.live == 0" class="fa fa-circle live-circle-icon"></i>
           <div class="text-left title follower-game-title">{{game.title}}</div>
           <div class="text-left viewer-count">
-            {{game.viewers}} viewers on 
+            {{game.viewers}} viewers on
             <p class="username" routerLinkActive="active" routerLink="/channel/{{game.username}}">{{game.username}}</p>
-          </div> 
+          </div>
         </div>
-    
-        
         <div class="p-2 directory-item"></div>
         <div class="p-2 directory-item"></div>
         <div class="p-2 directory-item"></div>
@@ -73,13 +75,12 @@
     </div>
 
   </div>
-  
 
 
 
 
 
 
-  
+
+
 </div>
-

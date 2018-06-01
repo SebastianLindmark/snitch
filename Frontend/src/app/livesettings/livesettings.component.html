@@ -5,26 +5,26 @@
     <div class="flex-wrap">
 
 
-    <p class="spacing-top component-desc">Stream title</p>
-    <textarea [(ngModel)]="titleInput" type="text" name="title" class="input-width input-height"></textarea>
+      <p class="spacing-top component-desc">Stream title</p>
+      <textarea [(ngModel)]="titleInput" type="text" name="title" class="input-width input-height"></textarea>
 
 
-    <p class="spacing-top component-desc">Game</p>
-    <input [(ngModel)]="gameInput" type="text" (ngModelChange)="gameTextChange()" id="id-game" name="inp" #gameName="ngModel" #game="ngModel" class="input-width flex-wrap"> 
-    
-    <div [hidden]="!game.hasError('incorrect')" class="input-width alert alert-danger">
+      <p class="spacing-top component-desc">Game</p>
+      <input [(ngModel)]="gameInput" type="text" (ngModelChange)="gameTextChange()" id="id-game" name="inp" #gameName="ngModel"
+        #game="ngModel" class="input-width flex-wrap">
+
+      <div [hidden]="!game.hasError('incorrect')" class="input-width alert alert-danger">
         Game is not in our database
-    </div>
+      </div>
 
-    <button type="submit" [disabled]="!usernameForm.form.valid" class="spacing-top component-desc btn btn-primary btn-block settings-button">Update</button>
-    <div [hidden]="!updatedProfile" class="spacing-top input-width alert alert-success">
+      <button type="submit" [disabled]="!usernameForm.form.valid" class="spacing-top component-desc btn btn-primary btn-block settings-button">Update</button>
+      <div [hidden]="!updatedProfile" class="spacing-top input-width alert alert-success">
         Successfully updated profile
+      </div>
+
+
     </div>
 
 
-  </div>
-    
-    
   </form>
 </div>
-

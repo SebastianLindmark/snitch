@@ -2,63 +2,72 @@
 <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
   <i class="navbar-brand fa fa-twitch"></i>
   <div class="mobile-login-container">
-      <button [hidden]="loggedIn" type="button" class="btn btn-outline-success custom-button" (click)="clickedLogIn()">Log In</button>
-      <button [hidden]="loggedIn" type="button" class="btn btn-outline-success custom-button" (click)="clickedSignUp()">Sign Up</button>
-      <div [hidden]="!loggedIn" ngbDropdown class="d-inline-block account-button" placement="bottom-right">
-          <button [hidden]="!loggedIn" class="btn btn-outline-danger custom-button text-left" id="dropdownBasic1" ngbDropdownToggle>
-            <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
-            <p class="username-text">{{user.username}}</p>
-            <div class="fa fa-caret-down dropdown-icon"></div>
-          </button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="custom-dropdown">
-            <button class="dropdown-item custom-dropdown-item" routerLink="{{'/channel/' + user.username}}">
-              <div class="fa fa-video-camera f-awesome"></div><div>Channel</div>
-            </button>
-            <button class="dropdown-item custom-dropdown-item" routerLink="{{'/settings'}}">
-              <div class="fa fa-cog f-awesome"></div>Settings
-            </button>
-            <div class="divider"></div>
-            <button class="dropdown-item custom-dropdown-item" (click)="clickedLogout()">
-                <div class="fa fa-sign-out f-awesome"></div>Logout
-              </button>
-          </div>
-      </div>      
+    <button [hidden]="loggedIn" type="button" class="btn btn-outline-success custom-button" (click)="clickedLogIn()">Log In</button>
+    <button [hidden]="loggedIn" type="button" class="btn btn-outline-success custom-button" (click)="clickedSignUp()">Sign Up</button>
+    <div [hidden]="!loggedIn" ngbDropdown class="d-inline-block account-button" placement="bottom-right">
+      <button [hidden]="!loggedIn" class="btn btn-outline-danger custom-button text-left" id="dropdownBasic1" ngbDropdownToggle>
+        <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
+        <p class="username-text">{{user.username}}</p>
+        <div class="fa fa-caret-down dropdown-icon"></div>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="custom-dropdown">
+        <button class="dropdown-item custom-dropdown-item" routerLink="{{'/channel/' + user.username}}">
+          <div class="fa fa-video-camera f-awesome"></div>
+          <div>Channel</div>
+        </button>
+        <button class="dropdown-item custom-dropdown-item" routerLink="{{'/settings'}}">
+          <div class="fa fa-cog f-awesome"></div>Settings
+        </button>
+        <div class="divider"></div>
+        <button class="dropdown-item custom-dropdown-item" (click)="clickedLogout()">
+          <div class="fa fa-sign-out f-awesome"></div>Logout
+        </button>
+      </div>
+    </div>
   </div>
-  
-  <button (click)="toggleCollapse()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span  class="fa fa-bars nav-toggler-icon">
+
+  <button (click)="toggleCollapse()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fa fa-bars nav-toggler-icon">
     </span>
   </button>
-  
+
 
   <div [hidden]="collapse" class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li (click)="collapseMenu()" class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/browse" >Browse</a></li>
-      <li (click)="collapseMenu()" class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/help">Help</a></li>
+      <li (click)="collapseMenu()" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/browse">Browse</a>
+      </li>
+      <li (click)="collapseMenu()" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/help">Help</a>
+      </li>
       <app-searchbar></app-searchbar>
     </ul>
-    <button id="desktop-login-button" [hidden]="loggedIn" type="button" class="btn btn-outline-success my-2 my-sm-0 mr-2 custom-button" (click)="clickedLogIn()">Log In</button>
-    <button id="desktop-signup-button" [hidden]="loggedIn" type="button" class="btn btn-outline-success my-2 my-sm-0 custom-button" (click)="clickedSignUp()">Sign Up</button>    
+    <button id="desktop-login-button" [hidden]="loggedIn" type="button" class="btn btn-outline-success my-2 my-sm-0 mr-2 custom-button"
+      (click)="clickedLogIn()">Log In</button>
+    <button id="desktop-signup-button" [hidden]="loggedIn" type="button" class="btn btn-outline-success my-2 my-sm-0 custom-button"
+      (click)="clickedSignUp()">Sign Up</button>
 
     <div id="desktop-account-button" [hidden]="!loggedIn" ngbDropdown class="d-inline-block account-button" placement="bottom-right">
-        <button [hidden]="!loggedIn" class="btn btn-outline-danger custom-button text-left" id="dropdownBasic1" ngbDropdownToggle>
-          <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
-          <p class="username-text">{{user.username}}</p>
-          <div class="fa fa-caret-down dropdown-icon"></div>
+      <button [hidden]="!loggedIn" class="btn btn-outline-danger custom-button text-left" id="dropdownBasic1" ngbDropdownToggle>
+        <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
+        <p class="username-text">{{user.username}}</p>
+        <div class="fa fa-caret-down dropdown-icon"></div>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="custom-dropdown">
+        <button class="dropdown-item custom-dropdown-item" routerLink="{{'/channel/' + user.username}}">
+          <div class="fa fa-video-camera f-awesome"></div>
+          <div>Channel</div>
         </button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="custom-dropdown">
-          <button class="dropdown-item custom-dropdown-item" routerLink="{{'/channel/' + user.username}}">
-            <div class="fa fa-video-camera f-awesome"></div><div>Channel</div>
-          </button>
-          <button class="dropdown-item custom-dropdown-item" routerLink="{{'/settings'}}">
-            <div class="fa fa-cog f-awesome"></div>Settings
-          </button>
-          <div class="divider"></div>
-          <button class="dropdown-item custom-dropdown-item" (click)="clickedLogout()">
-              <div class="fa fa-sign-out f-awesome"></div>Logout
-            </button>
-        </div>
+        <button class="dropdown-item custom-dropdown-item" routerLink="{{'/settings'}}">
+          <div class="fa fa-cog f-awesome"></div>Settings
+        </button>
+        <div class="divider"></div>
+        <button class="dropdown-item custom-dropdown-item" (click)="clickedLogout()">
+          <div class="fa fa-sign-out f-awesome"></div>Logout
+        </button>
+      </div>
     </div>
-  
+
   </div>
 </nav>

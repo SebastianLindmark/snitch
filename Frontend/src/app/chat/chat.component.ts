@@ -17,38 +17,33 @@ export class ChatComponent implements OnInit {
   private messages = [];
   private message;
 
-  constructor(private currentUser : CurrentUserService, private route : ActivatedRoute) { 
+  constructor(private currentUser: CurrentUserService, private route: ActivatedRoute) {
     this.roomName = this.route.snapshot.url[1].toString();
   }
 
-
-  createRoom(){
-    this.socket.emit('roomCreate', this.roomName,false, (error, data) => {
-
-        if(error){
-          console.log(error)
-        }else{
-          this.socket.emit('roomJoin', this.roomName, (error, data) => {
-            if(error){
-              console.log(error)
-            }
-          })
-        }
+  createRoom() {
+    this.socket.emit('roomCreate', this.roomName, false, (error, data) => {
+      if (error) {
+        console.log(error)
+      } else {
+        this.socket.emit('roomJoin', this.roomName, (error, data) => {
+          if (error) {
+            console.log(error)
+          }
+        })
+      }
     })
   }
 
-
-
-  joinRoom(){
+  joinRoom() {
     this.socket.emit('roomJoin', this.roomName, (error, data) => {
-      if (error) { 
+      if (error) {
         console.log(error);
-        this.createRoom() 
+        this.createRoom()
       }
-      else{
-        console.log("Joined room")
+      else {
         this.socket.emit('roomMessage', this.roomName, { textMessage: 'Hello!' })
-      }   
+      }
     })
   }
 
@@ -57,30 +52,28 @@ export class ChatComponent implements OnInit {
     this.message = "";
   }
 
-  initChatComponents(){
-      console.log("Init chat components")
-      this.socket.on('roomMessage', (room, msg) => {
-        this.messages.push(msg);
-        console.log(`${msg.author}: ${msg.textMessage}`)
-      })
-        
-      // Auth success handler.
-      this.socket.on('loginConfirmed', userName => {
-        this.joinRoom()
-        // Join room named 'default'.
-        
-      })
-      
-      // Auth error handler.
-      this.socket.on('loginRejected', error => {
-        console.log("Recevied authentication error")
-        console.error(error)
-      })
-    }
+  initChatComponents() {
+    console.log("Init chat components")
+    this.socket.on('roomMessage', (room, msg) => {
+      this.messages.push(msg);
+      console.log(`${msg.author}: ${msg.textMessage}`)
+    })
+
+    // Auth success handler.
+    this.socket.on('loginConfirmed', userName => {
+      this.joinRoom()
+    })
+
+    // Auth error handler.
+    this.socket.on('loginRejected', error => {
+      console.log("Recevied authentication error")
+      console.error(error)
+    })
+  }
 
 
-  
-  ngOnInit(){
+
+  ngOnInit() {
     let url = 'ws://localhost:8040/chat-service'
     let token = localStorage.getItem('user-token');
     let query = `token=${token}`

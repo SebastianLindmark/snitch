@@ -19,14 +19,14 @@ export class GameCollectionComponent implements OnInit {
   liveStreams = []
   vods = []
   noStreamsAvailable = false;
-  
-  constructor(private gameService :BrowseService, private route: ActivatedRoute, private vodRequestService : VodRequestService) { }
+
+  constructor(private gameService: BrowseService, private route: ActivatedRoute, private vodRequestService: VodRequestService) { }
 
   ngOnInit() {
     var urlGame = this.route.snapshot.url[1].toString();
     let game = decodeURI(urlGame);
     this.gameService.loadGame(game).subscribe(response => {
-      
+
       this.name = response.result.name;
       this.image_url = response.result.url;
       this.wide_image_url = response.result.wide_image_url;
@@ -35,21 +35,21 @@ export class GameCollectionComponent implements OnInit {
 
 
     this.gameService.loadLiveStreamsByGame(game).subscribe(response => {
-      if(response.success && response.result.length > 0){
+      if (response.success && response.result.length > 0) {
         this.liveStreams = response.result;
-      }else if(response.success && response.result.length == 0){
+      } else if (response.success && response.result.length == 0) {
         this.noStreamsAvailable = true;
       }
-      
+
     },
-    error => {
-      console.log(error);
-    });
+      error => {
+        console.log(error);
+      });
 
   }
 
 
-  loadVODsByGame(gameId){
+  loadVODsByGame(gameId) {
     this.vodRequestService.getVODSBygame(gameId).subscribe(response => {
       this.vods = response.result;
     })

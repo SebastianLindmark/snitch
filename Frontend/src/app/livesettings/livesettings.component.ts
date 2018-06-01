@@ -29,25 +29,17 @@ export class LivesettingsComponent implements OnInit {
         var username = response.user.username;        
         this.loadProfile(username);
       }
-
     })
   }
 
   gameTextChange(){
     if(this.gameInput.length > 3){
-      
       this.gameService.searchGame(this.gameInput).subscribe(response => {
         if(response.success){
           var gameName = response.result.name;
-          if(gameName.includes(this.gameInput)){
-            console.log(gameName)
-          }
-
         }
       })
-
     }
-    //{ where: { columnName: { $like: '%awe%' } } }
   }
 
   loadProfile(username) {

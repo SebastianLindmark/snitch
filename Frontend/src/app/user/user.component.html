@@ -1,26 +1,27 @@
 <app-chat [hidden]="!chatOpen"></app-chat>
 <div class="main">
-  <div  [ngClass]="(chatOpen)?'custom-content':'no-chat-custom-content'">
+  <div [ngClass]="(chatOpen)?'custom-content':'no-chat-custom-content'">
     <div class="no-padding">
       <ul class="nav nav-tabs custom-nav-tabs">
-        <li role="presentation" class="nav-item" [class.active] = 'selectedTabIndex == 0' (click)=tabClick(0)>
+        <li role="presentation" class="nav-item" [class.active]='selectedTabIndex == 0' (click)=tabClick(0)>
           <a class="nav-link custom-tab-button">
             <img class="profile-icon" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
             <a class="bold-text">{{username}}</a>
           </a>
         </li>
 
-        <li role="presentation" class="nav-item" [class.active] = 'selectedTabIndex == 1' (click)=tabClick(1)>
+        <li role="presentation" class="nav-item" [class.active]='selectedTabIndex == 1' (click)=tabClick(1)>
           <a class="nav-link custom-tab-button">Videos ({{vods.length}})</a>
         </li>
-        <li role="presentation" class="nav-item" [class.active] = 'selectedTabIndex == 2' (click)=tabClick(2)>
+        <li role="presentation" class="nav-item" [class.active]='selectedTabIndex == 2' (click)=tabClick(2)>
           <a class="nav-link custom-tab-button">Followers</a>
         </li>
-        <li role="presentation" [ngClass]="(isFollowing)?'nav-item follow-button following':'nav-item follow-button not_following'" (click)=followButton() >
+        <li role="presentation" [ngClass]="(isFollowing)?'nav-item follow-button following':'nav-item follow-button not_following'"
+          (click)=followButton()>
           <a class="nav-link custom-tab-button follow-link">{{isFollowing ? 'Follower' : 'Follow'}}</a>
         </li>
-        <div class="nav-item icon-container"  (click)=toggleChat()>
-          <div  [ngClass]="(chatOpen)?'fa fa-caret-right':'fa fa-caret-left'" class="f-awesome"></div>
+        <div class="nav-item icon-container" (click)=toggleChat()>
+          <div [ngClass]="(chatOpen)?'fa fa-caret-right':'fa fa-caret-left'" class="f-awesome"></div>
         </div>
       </ul>
 
@@ -28,66 +29,62 @@
   </div>
 
   <div [hidden]="!vodSelected && selectedTabIndex != 0">
-  <div  [ngClass]="(chatOpen)?'custom-content':'no-chat-custom-content'">
-    <div class="no-padding">
-      <div [ngClass]="(chatOpen)?'player-window embed-responsive embed-responsive-16by9':'player-window embed-responsive embed-responsive-21by9'">
-        <video id="videoElement" class="embed-responsive-item" controls></video>
+    <div [ngClass]="(chatOpen)?'custom-content':'no-chat-custom-content'">
+      <div class="no-padding">
+        <div [ngClass]="(chatOpen)?'player-window embed-responsive embed-responsive-16by9':'player-window embed-responsive embed-responsive-21by9'">
+          <video id="videoElement" class="embed-responsive-item" controls></video>
+        </div>
       </div>
     </div>
-  </div>
-  
-  
-  <div [ngClass]="(chatOpen)?'custom-content':'no-chat-custom-content'" *ngIf="gameInfo">
-    <div  class="no-padding">
-      <div class="game-info-container flex-container">
-        <img src="{{gameInfo.url}}" routerLinkActive="active" class="game-icon img-thumbnail" routerLink="/game/{{gameInfo.name}}">
-        <div class="flex-item">
-          <div class="stream-title"> {{streamTitle}} </div>
-          <div class="game-title"> {{gameInfo.name}} </div>
+
+
+    <div [ngClass]="(chatOpen)?'custom-content':'no-chat-custom-content'" *ngIf="gameInfo">
+      <div class="no-padding">
+        <div class="game-info-container flex-container">
+          <img src="{{gameInfo.url}}" routerLinkActive="active" class="game-icon img-thumbnail" routerLink="/game/{{gameInfo.name}}">
+          <div class="flex-item">
+            <div class="stream-title"> {{streamTitle}} </div>
+            <div class="game-title"> {{gameInfo.name}} </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-
-<div [hidden]="selectedTabIndex != 2">
-  <div class="d-flex flex-wrap" *ngFor="let follower of followers">
-      <div class="follow-user-container" routerLinkActive="active" routerLink="/channel/{{follower.username}}">  
-        <img class="follower-user-img" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">  
+  <div [hidden]="selectedTabIndex != 2">
+    <div class="d-flex flex-wrap" *ngFor="let follower of followers">
+      <div class="follow-user-container" routerLinkActive="active" routerLink="/channel/{{follower.username}}">
+        <img class="follower-user-img" src="https://static-cdn.jtvnw.net/user-default-pictures/27103734-3cda-44d6-a384-f2ab71e4bb85-profile_image-300x300.jpg">
         <div class="follower-user-username"> {{follower.username}} </div>
-        
       </div>
-  </div>
-</div>
-
-
-
-<div [hidden]="selectedTabIndex != 1" class="vod-list">
-  <div class="d-flex flex-wrap" >
-    <div class="p-2 directory-item" *ngFor="let vod of vods">
-      <app-stream-thumbnail [mapPath]="vod.root_path" [loadGif]=true (click)=playVOD(vod.id)></app-stream-thumbnail>
-      <div class="text-left title">{{vod.title}}</div>
-      <div class="text-left viewer-count">{{vod.date}}</div>
     </div>
+  </div>
 
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>
-  <div class="p-2 directory-item"></div>  
-</div>
-</div>
+  <div [hidden]="selectedTabIndex != 1" class="vod-list">
+    <div class="d-flex flex-wrap">
+      <div class="p-2 directory-item" *ngFor="let vod of vods">
+        <app-stream-thumbnail [mapPath]="vod.root_path" [loadGif]=true (click)=playVOD(vod.id)></app-stream-thumbnail>
+        <div class="text-left title">{{vod.title}}</div>
+        <div class="text-left viewer-count">{{vod.date}}</div>
+      </div>
+
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+      <div class="p-2 directory-item"></div>
+    </div>
+  </div>

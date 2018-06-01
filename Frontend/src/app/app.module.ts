@@ -2,16 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { BrowseComponent } from './browse/browse.component';
-
 import { AuthenticationService } from './_services/authentication.service';
 import { HttpClient,HttpClientModule } from '@angular/common/http';
 import { HelpComponent } from './help/help.component';
-import { FooterComponent } from './footer/footer.component';
 import { CurrentUserService } from './_services/current-user.service';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { UserComponent } from './user/user.component';
@@ -50,7 +47,6 @@ import * as Globals from 'globals';
     SignInComponent,
     BrowseComponent,
     HelpComponent,
-    FooterComponent,
     SearchbarComponent,
     UserComponent,
     SettingsComponent,

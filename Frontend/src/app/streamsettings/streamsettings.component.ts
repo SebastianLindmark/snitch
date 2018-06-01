@@ -22,7 +22,7 @@ export class StreamsettingsComponent implements OnInit {
     },
     error => {
       console.log(error);
-      console.log("not retreive key");
+      console.log("could not retreive key");
     });
   }
 }
