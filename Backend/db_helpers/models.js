@@ -157,12 +157,6 @@ User.hasOne(StreamConfig, {as : "StreamConfig", foreignKey:'userId'})
 StreamConfig.belongsTo(User, {as : "User", foreignKey:'userId'})
 
 
-//Stream.hasOne(StreamConfig, {as : "StreamConfig", foreignKey: 'userId'})
-
-//Stream.hasOne(StreamKey, {through: 'ConfigStream'});
-//StreamConfig.belongsTo(Stream, {through: 'ConfigStream'});
-
-
 Game.hasMany(StreamConfig, {as : "StreamConfig", foreignKey: 'game' })
 StreamConfig.belongsTo(Game, {as: "Game", foreignKey: 'game'})
 
@@ -175,22 +169,9 @@ VOD.belongsTo(Game, {as : "Game",foreignKey: 'game'})
 
 Country.hasMany(StreamConfig, {as : "StreamConfig"})
 
-//Set up followers (Many to Many relation)
-//User.belongsToMany(User, {as: 'Following', through: 'followers'});
-//User.belongsToMany(User, {as: 'Followers', through: 'followers'});
-
-//User.belongsToMany(User, {as : 'Follower', through : 'FollowingTable'})
-//User.belongsToMany(User, {as : 'Following', through : 'FollowingTable'})
 
 User.belongsToMany(User, { as: {singular : 'Follower', plural : 'Followers'}, through : 'FollowTable', foreignKey: 'followerId'})
 User.belongsToMany(User, { as: {singular : 'Following', plural : 'Followings'}, through : 'FollowTable', foreignKey: 'followingId' })
-
-//User.getFollower(s) , User.setFollower
-//User.getFollowing(s), User.setFollowing
-
-//module.exports = User,Password,GoogleUser, StreamKey,Channel,Stream,StreamConfig,Country
-//module.exports = sequelize        
-//Create the models
 
 
 

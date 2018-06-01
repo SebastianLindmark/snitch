@@ -19,7 +19,6 @@ module.exports = {
         }).catch(function(err){
             console.log(err)
         })
-        //TODO add country
     },
 
 
