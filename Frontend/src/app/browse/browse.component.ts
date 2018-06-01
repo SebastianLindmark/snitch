@@ -11,7 +11,6 @@ import * as socketIO from "socket.io-client";
 })
 export class BrowseComponent implements OnInit {
 
-  public text = "Please sign in";
   private popularGames = []
   private followerStreams = []
 
@@ -19,14 +18,7 @@ export class BrowseComponent implements OnInit {
 
 
   constructor(private currentUser : CurrentUserService, private gameRequestService : BrowseService, private followerRequestService : FollowerRequestService) {
-     
-    
 
-    this.currentUser.registerState().subscribe((response : any) => {
-      if(response.logged_in){
-        this.text = "Welcome " + response.user.username;
-      }        
-    });
 
     this.loadPopularGames()
    }
@@ -39,8 +31,6 @@ export class BrowseComponent implements OnInit {
       console.log(error);
     });
    }
-
-  
 
   ngOnInit() {
     this.followerRequestService.getFollowerStreams().subscribe(response => {
