@@ -22,8 +22,6 @@ export class BrowseComponent implements OnInit {
     this.loadPopularGames()
   }
 
-
-
   loadPopularGames() {
     this.gameRequestService.loadPopularGames().subscribe(response => {
       this.popularGames = response;

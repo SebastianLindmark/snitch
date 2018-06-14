@@ -143,7 +143,7 @@ export class UserComponent {
   loadFollowers() {
     let selfRef = this
     this.followRequestService.getFollowers(this.username).subscribe(response => {
-      selfRef.isFollowing = response.result
+      selfRef.followers = response.result
     })
   }
 

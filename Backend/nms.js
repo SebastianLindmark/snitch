@@ -97,7 +97,7 @@ function onViewerLeave(id, streamPath, args){
 function onFileSaved(streamKey, rootPath, file_name){
 
   var filePath = rootPath + "/" + file_name
-  var fileInUrl ="http://localhost:8000" + filePath;
+  var fileInUrl =Globals.BASE_URL + filePath;
   
   let paths = __dirname + '/../' + 'Backend/media/.' + rootPath + "/video.gif"
   paths = path.normalize(paths)

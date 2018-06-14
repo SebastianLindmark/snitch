@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CurrentUserService } from '../_services/current-user.service';
 import * as socketIO from "socket.io-client";
 import { ActivatedRoute } from '@angular/router';
-
+import * as Globals from 'globals';
 
 @Component({
   selector: 'app-chat',
@@ -74,7 +74,8 @@ export class ChatComponent implements OnInit {
 
 
   ngOnInit() {
-    let url = 'ws://localhost:8040/chat-service'
+    
+    let url = Globals.CHAT_BASE_URL;
     let token = localStorage.getItem('user-token');
     let query = `token=${token}`
     let opts = { query }

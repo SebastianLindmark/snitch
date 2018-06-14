@@ -169,7 +169,7 @@ app.post('/api/user/google_login',function(req,res){
             var user = userPromise.value()
             token = generate_token(user.username, user.email);
             console.log("Everything went fine")
-            res.send({success : true, 'token': token });
+            res.send({success : true, 'token': token});
         } else throw ["Google user does not exist"]
     }).catch(function(err){
         console.log(err)

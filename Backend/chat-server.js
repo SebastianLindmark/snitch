@@ -15,14 +15,4 @@ function onConnect (service, id) {
 }
 
 const chatService = new ChatService({port}, {onConnect})
-//chatService.config.enableRoomsManagement = true;
 chatService.enableRoomsManagement = true;
-
-
-chatService.hasRoom('default').then(hasRoom => {
-    if (!hasRoom) {
-        return chatService.addRoom('default', { owner: 'admin' })
-}
-
-    
-})
