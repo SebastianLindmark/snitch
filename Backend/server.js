@@ -1,51 +1,46 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-const app = express();
-
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 var expressJwt = require("express-jwt");
 var jwt = require("jsonwebtoken");
 var Promise = require("promise");
-
+var path = require('path');
+var chatServer = require('./chat-server')
+var rand = require("random-key");
+var models = require('./db_helpers/models')
+var user_sequelize = require('./db_helpers/user_sequelize');
+var stream_sequelize = require('./db_helpers/stream_sequelize');
+var follower = require('./db_helpers/follower_sequelize');
+var vod = require('./db_helpers/vod_sequelize')
+var game = require('./db_helpers/game_sequelize')
+var nms = require("./nms");
+nms.start();
+const app = express();
 
 app.use(express.json())
 app.use(express.urlencoded());
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/protected', expressJwt({secret: "secret"}));
-
-var path = require('path');
 app.use(express.static('media'))
 
-var chatServer = require('./chat-server')
+function generate_token(username,email){
+    var profile = {
+        username: username,
+        email: email,
+    };
 
-var rand = require("random-key");
+    var token = jwt.sign(profile, "secret", { expiresIn: 60 * 60 * 24 }); // 60*5 minutes
+    return token;
+}
 
-var models = require('./db_helpers/models')
-var user_sequelize = require('./db_helpers/user_sequelize');
-var stream_sequelize = require('./db_helpers/stream_sequelize');
-var database_helper = require("./database_helper");
-var follower = require('./db_helpers/follower_sequelize');
-var vod = require('./db_helpers/vod_sequelize')
-var game = require('./db_helpers/game_sequelize')
-
-
-var nms = require("./nms");
-nms.start();
-
-var chat = require("./chat-server");
-
-
-database_helper.reset_database();
 var hostPort = 8000;
 
-app.route('/').get((req, res) => {
-    res.send("Welcome")
-});
-
-
+/**
+ * Authorized user wants to update username
+ */
 app.post('/protected/update_username', function(req, res){
     var username = req.user.username;
     var newusername = req.body.username;
@@ -78,6 +73,9 @@ app.post('/protected/update_username', function(req, res){
     })
 });
 
+/**
+ * Given a username, return stream_key;
+ */
 app.post('/get_user_stream_key', function(req, res){
     var username = req.body.username;
     models.User.findOne({where : {username:username}})
@@ -93,7 +91,6 @@ app.post('/get_user_stream_key', function(req, res){
         res.send({'success' : false, 'reason' : err})
     })
 });
-
 
 
 app.post('/protected/get_stream_key',expressJwt({secret: 'secret'}),function(req,res){
@@ -115,18 +112,6 @@ app.post('/protected/get_stream_key',expressJwt({secret: 'secret'}),function(req
         res.send({'success' : false, 'reason' : err})
     })
 });
-
-
-
-function generate_token(username,email){
-    var profile = {
-        username: username,
-        email: email,
-    };
-
-    var token = jwt.sign(profile, "secret", { expiresIn: 60 * 60 * 24 }); // 60*5 minutes
-    return token;
-}
 
 app.route('/api/user/custom_signup').post((req,res) => {
     var email = req.body.email;
@@ -179,7 +164,6 @@ app.post('/api/user/google_login',function(req,res){
 
 });
 
-
 app.route('/api/user/google_signup').post((req,res) => {
     var username = req.body.username;
     var email = req.body.email;
@@ -203,7 +187,6 @@ app.route('/api/user/google_signup').post((req,res) => {
   
 });
 
-
 app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
     var username = req.user.username;
     user_sequelize.username_to_user(username).then(function(user){
@@ -215,7 +198,6 @@ app.post('/get_logged_in_user',expressJwt({secret: 'secret'}),function(req,res){
         res.send({success:false,result:err})
     })
 });
-
 
 app.post('/get_user',function(req,res){
     var username = req.body.username;
@@ -229,8 +211,6 @@ app.post('/get_user',function(req,res){
 
     })
 });
-
-
 
 app.route('/get_games').post((req,res) => {
     game.get_games_with_viewer_count().then(games => {
@@ -252,7 +232,6 @@ app.route('/get_game').post((req,res) => {
     })
 })
 
-
 app.route('/get_game_by_id').post((req,res) => {
     let id = req.body.id;
     models.Game.find({where : {id : id}}).then(function(game){
@@ -262,7 +241,6 @@ app.route('/get_game_by_id').post((req,res) => {
         res.send({success:false,result:err})
     })
 })
-
 
 app.route('/search_user').post((req,res) => {
     var username = req.body.username;
@@ -274,8 +252,6 @@ app.route('/search_user').post((req,res) => {
         res.send({success:false,result:err})
     })
 })
-
-
 
 app.route('/search_game').post((req,res) => {
     var game = req.body.game_name;
@@ -293,7 +269,6 @@ app.route('/search_game').post((req,res) => {
     })
 })
 
-
 app.route('/get_vods_by_game').post((req,res) => {
     let gameId = req.body.id;
 
@@ -305,9 +280,6 @@ app.route('/get_vods_by_game').post((req,res) => {
         res.send({success:false,result:err})
     })
 })
-
-
-
 
 app.post('/update_user_profile',expressJwt({secret: 'secret'}),function(req,res){
     var username = req.user.username;
@@ -323,7 +295,6 @@ app.post('/update_user_profile',expressJwt({secret: 'secret'}),function(req,res)
     })
 })
 
-
 app.post('/get_user_profile',function(req,res){
     var username = req.body.username
     user_sequelize.get_user_profile(username).then(function(data){
@@ -334,7 +305,6 @@ app.post('/get_user_profile',function(req,res){
         res.send({success:false,result:err})
     })
 });
-
 
 app.route('/get_online_by_game').post((req,res) => {
     var game = req.body.game;
@@ -348,7 +318,6 @@ app.route('/get_online_by_game').post((req,res) => {
     })    
 });
 
-
 app.post('/follow_user',expressJwt({secret: 'secret'}),function(req,res){
     var currentUser = req.user.username;
     var userToFollow = req.body.username;
@@ -361,7 +330,6 @@ app.post('/follow_user',expressJwt({secret: 'secret'}),function(req,res){
         res.send({success:false,result:err})
     });
 });
-
 
 app.post('/is_following',expressJwt({secret: 'secret'}),function(req,res){
     var currentUser = req.user.username;
@@ -391,8 +359,6 @@ app.post('/follow_user_remove',expressJwt({secret: 'secret'}),function(req,res){
 
 });
 
-
-
 app.post('/get_followers',expressJwt({secret: 'secret'}),function(req,res){
     var username = req.body.username;
 
@@ -419,7 +385,6 @@ app.post('/get_followings',expressJwt({secret: 'secret'}),function(req,res){
 
 });
 
-
 //get_live_followings
 app.post('/get_follower_streams',expressJwt({secret: 'secret'}),function(req,res){
     let username = req.user.username;
@@ -431,7 +396,6 @@ app.post('/get_follower_streams',expressJwt({secret: 'secret'}),function(req,res
         res.send({success:false,result:err})
     })
 })
-
 
 app.route('/get_vods_by_user').post((req,res) => {
     let username = req.body.username;
@@ -454,9 +418,6 @@ app.route('/get_vod_by_id').post((req,res) => {
         res.send({success:false,result:err})
     })
 })
-
-
-
 
 app.route('/api/test/get1').get((req,res) => {
     
@@ -494,7 +455,6 @@ app.route('/api/test/get2').get((req,res) => {
     })
 });
 
-
 console.log("About to sync")
 models.sequelize.sync({force:false}).then(function(){
     console.log("Database successfully synced")
@@ -504,62 +464,3 @@ models.sequelize.sync({force:false}).then(function(){
         console.log('Server started!');
     });    
 })
-
-
-function name(){
-    
-    var titles = ["Playing with Drake", "Rampage with MirroW", "New Session stream"]
-    var emails = ["1@gmail.com", "2@gmail.com", "3@gmail.com"]
-    var usernames = ["Ninja", "Kitboga", "shroud"]
-    var promises = []
-    var users = []
-    
-    var userPromise1 = user_sequelize.create_user("1@gmail.com","Ninja","password")
-    var promise = userPromise1.then(function(user){
-        return stream_sequelize.create_stream_config(user, "Fortnite with Drake", "Fortnite","Sweden");
-    }).then(function(streamConfig){
-        return stream_sequelize.set_stream_online(userPromise1.value());
-    })
-
-    var userPromise2 = user_sequelize.create_user("2@gmail.com","Kitboga","password")
-    promise = userPromise2.then(function(user){
-        return stream_sequelize.create_stream_config(user, "Let's Game!", "League of Legends","Sweden");
-    }).then(function(streamConfig){
-        //return stream_sequelize.set_stream_online(userPromise2.value());
-    })
-
-    var userPromise3 = user_sequelize.create_user("3@gmail.com","snake","password")
-    promise = userPromise3.then(function(user){
-        return stream_sequelize.create_stream_config(user, "3RD ROUND XAL", "League of Legends","Sweden");
-    }).then(function(streamConfig){
-        //return stream_sequelize.set_stream_online(userPromise2.value());
-    })
-
-
-    users.push(userPromise1)
-    users.push(userPromise2)
-    users.push(userPromise3)
-
-
-    promises.push(promise)
-    
-
-    Promise.all(promises).then(function(res){
-        //do nothing
-        return ""
-    }).then(function(something){
-        return follower.add_follower(users[0].value().username,users[1].value().username)
-    }).then(function(asd){
-        return follower.add_follower(users[2].value().username,users[1].value().username)
-    }).then(function(asd){
-        return follower.add_follower(users[0].value().username,users[2].value().username)
-    }).then(function(asd){
-        return follower.add_follower(users[1].value().username,users[0].value().username)
-    }).catch(function(err){
-        console.log(err)
-    })
-   
-}
-
-  
-  
